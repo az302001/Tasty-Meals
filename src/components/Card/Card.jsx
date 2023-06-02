@@ -5,6 +5,7 @@ import { PlusCircleIcon } from "@heroicons/react/24/solid";
 
 
 const Card = ({ food }) => {
+
     const { id, name, image, price, description } = food;
 
     return (
