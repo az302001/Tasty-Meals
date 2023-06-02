@@ -14,12 +14,25 @@ const index = () => {
   }, [dispatch]);
 
   return (
-    <Layaout>
-      <div style={{ "marginTop": "2rem" }}>
-        <h1 style={{ "marginBottom": "1rem", "textAlign": "center", "fontSize": "2rem" }}>Home</h1>
-        <Cards foods={foods} />
-      </div>
-    </Layaout>
+
+     <Layaout>
+    <div style={{ "marginTop": "2rem" }}>
+      {
+        foods.slice(0,5).map((food) => {
+          <Cards />
+        })
+      }
+      <button>Menu</button>
+    </div>
+   </Layaout>                       
+
+//     <Layaout>
+//       <div style={{ "marginTop": "2rem" }}>
+//         <h1 style={{ "marginBottom": "1rem", "textAlign": "center", "fontSize": "2rem" }}>Home</h1>
+//         <Cards foods={foods} />
+//       </div>
+//     </Layaout>
+
   )
 }
 
