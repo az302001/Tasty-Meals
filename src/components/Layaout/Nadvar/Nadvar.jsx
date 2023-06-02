@@ -42,6 +42,9 @@ const Navbar = () => {
           <Link href="/ordenes">
             <button className="border-b pb-1 w-40 text-left">Mis ordenes</button>
           </Link>
+          <Link href="/dashboard/create">
+            <button className="border-b pb-1 w-40 text-left">Create</button>
+          </Link>
           <Link href="/login">
             <button className="border-b pb-1 text-color2 w-40 text-left">Salir</button>
           </Link>
