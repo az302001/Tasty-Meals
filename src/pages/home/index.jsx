@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getFoods } from '@/redux/actions';
 import Cards from '@/components/Cards/Cards';
+import Layaout from '@/components/Layaout/Layaout';
+
 
 const index = () => {
   const dispatch = useDispatch();
@@ -12,6 +14,8 @@ const index = () => {
   }, [dispatch]);
 
   return (
+
+     <Layaout>
     <div style={{ "marginTop": "2rem" }}>
       {
         foods.slice(0,5).map((food) => {
@@ -20,6 +24,15 @@ const index = () => {
       }
       <button>Menu</button>
     </div>
+   </Layaout>                       
+
+//     <Layaout>
+//       <div style={{ "marginTop": "2rem" }}>
+//         <h1 style={{ "marginBottom": "1rem", "textAlign": "center", "fontSize": "2rem" }}>Home</h1>
+//         <Cards foods={foods} />
+//       </div>
+//     </Layaout>
+
   )
 }
 
