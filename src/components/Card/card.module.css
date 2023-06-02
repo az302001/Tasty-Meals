@@ -1,19 +1,64 @@
-.card_container {
-    display: flex; /* lo utilizamos para poder acomodar con mayor facilidad los elementos dentro del div */
-    flex-direction: column; /* lo usamos para que lo separe en columnas .. por default viene en row */
-    background-color: #95dada; /* ponemos un fondo de color */
-    border: 1px solid grey; /* agregamos un borde a la tarjeta que se una linea solida de 1px de grosor y color gris */
-    border-radius: 5px; /*redondeamos un poco las puntas para que no quede tan cuadrado*/
-    padding: 25px; /* para darle un espacio interior a los elementos sobre el div que los contiene */
-    cursor: pointer; /* es para poner la manito del mouse cuando pasemos por las tarjetas */
-    transform: translateZ(
-            0
-    ); /* si obsevamos con el translateZ hacemos que la tarjeta se meta por debjao del elemnto que le sigue */
-    transition: transform 0.25s ease-out; /* le damos un efecto gradual al pasar el mouse por las tarjetas */
-}
+@media all and (min-width:390px){
+    .container{
+        display: flex;
+        flex-direction: row;
+        margin-left: 3%;
+        background-color:#F5E9CF;
+        height: 110px;
+        width: 360px;
+        left: 0px;
+        top: 0px;
+        border-radius: 15px;
 
-.card_container:hover {
-    transform: scale(
-            1.03
-    ); /* complementamos esa transition poniendole esta propiedad en el hover */
+    }
+    .info{
+        margin-left: 3%;
+        height: 30vh;
+    }
+    .info .name{
+        color:  #52525C;
+      left: 45.23%;
+      right: 18.26%;
+      top: 9%;
+      bottom: 68%;
+      font-family: 'Pacifico';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 150%;
+
+    }
+    .info .description{
+        left: 45.5%;
+        right: 11.99%;
+        top: 35%;
+        bottom: 18%;
+        color: #E96479;
+        font-family: 'Josefin Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 11px;
+        line-height: 150%;
+    }
+    .info .price{
+        left: 80.11%;
+        margin-left: 70%;
+        top: 68%;
+        bottom: 5%;
+
+        font-family: 'Pacifico';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 150%;
+    }
+ 
+    .figure{
+        height: 100px;
+    }
+    .image{
+        max-width: 40vw;
+        height: 100%;
+        border-radius: 5px;
+    }
 }

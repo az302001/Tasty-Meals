@@ -1,13 +1,18 @@
 import React from 'react';
 import Card from '../Card/Card';
+import style from './Cards.module.css';
 
-import styles from"./cards.module.css";
+
 
 const Cards = ({ foods }) => {
+  console.log(foods);
   return (
-    <div className={styles.card_list}>
+    <div className={style.cardsContainer}>
       { foods?.map((food, i) =>
-          <Card key={i} food={food} />
+      <div className={style.Card}>
+        <Card key={i} food={food}/>
+
+      </div>
       )}
     </div>
   );
