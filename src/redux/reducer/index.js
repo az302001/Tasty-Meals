@@ -8,6 +8,7 @@ const initialState = {
     foods: [],
     detailFoods: [],
     addFoods: [],
+    foodByName:[],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -20,7 +21,7 @@ const rootReducer = (state = initialState, action) => {
         case GET_FOOD_BY_NAME:
             return {
                 ...state,
-                foods: action.payload,
+                foodByName: action.payload,
             }
         case GET_FOOD_BY_ID:
             return {
