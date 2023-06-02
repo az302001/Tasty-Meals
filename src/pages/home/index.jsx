@@ -13,14 +13,18 @@ const index = () => {
     dispatch(getFoods());
   }, [dispatch]);
 
+console.log(foods);
+
+
   return (
 
      <Layaout>
     <div style={{ "marginTop": "2rem" }}>
       {
-        foods.slice(0,5).map((food) => {
-          <Cards />
-        })
+        // foods.slice(0,5).map((foods) => 
+        //   <Cards foods={foods} />
+        // )
+        <Cards foods={foods.slice(0,5)}/>
       }
       <button>Menu</button>
     </div>

@@ -5,6 +5,7 @@ import style from './Cards.module.css';
 
 
 const Cards = ({ foods }) => {
+  console.log(foods);
   return (
     <div className={style.cardsContainer}>
       { foods?.map((food, i) =>
