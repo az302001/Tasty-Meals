@@ -4,6 +4,7 @@ import Link from 'next/link';
 import styles from"./card.module.css";
 
 const Card = ({ food }) => {
+
     const { id, name, image, price, description } = food;
 
     return (

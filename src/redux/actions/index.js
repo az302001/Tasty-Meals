@@ -17,12 +17,17 @@ export const getFoods = () => {
 
 // Este seria para el input de search
 export const getFoodByName = (name) => {
-    return async (dispatch) => {
-        const response = (await axios.get(`http://localhost:3000/api/Products?name=${name}`)).data;
+   return async (dispatch) => {
+        try {
+        const response = (await axios.get(`http://localhost:3000/api/Products?name=${name}`)).data.GetproductByName;
         return dispatch({
-            type: 'GET_FOOD_BY_NAME',
-            payload: response,
-        });
+                    type: 'GET_FOOD_BY_NAME',
+                    payload: response,
+                });
+        } catch (error) {{
+            console.error('Ocurrió un error en la solicitud:', error);
+        }
+        }
     };
 }
 
