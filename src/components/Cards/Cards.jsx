@@ -1,10 +1,16 @@
-import React from 'react'
-import Card from '../Card/Card' // ejemplo de importacion 
+import React from 'react';
+import Card from '../Card/Card';
 
-const Cards = () => {
+import styles from"./cards.module.css";
+
+const Cards = ({ foods }) => {
   return (
-    <div>Cards</div>
-  )
-}
+    <div className={styles.card_list}>
+      { foods?.map((food, i) =>
+          <Card key={i} food={food} />
+      )}
+    </div>
+  );
+};
 
-export default Cards
+export default Cards;

@@ -1,8 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { getFoods } from '@/redux/actions';
+import Cards from '@/components/Cards/Cards';
 
 const index = () => {
+  const dispatch = useDispatch();
+  const foods = useSelector((state) => state.foods);
+
+  useEffect(() => {
+    dispatch(getFoods());
+  }, [dispatch]);
+
   return (
-    <div>Aqui va a estar renderizado de cartas ,layaout , filtros , search y lo que crea conveniente</div>
+    <div style={{ "marginTop": "2rem" }}>
+      <h1 style={{ "marginBottom": "1rem", "textAlign": "center", "fontSize": "2rem" }}>Home</h1>
+      <Cards foods={foods} />
+    </div>
   )
 }
 

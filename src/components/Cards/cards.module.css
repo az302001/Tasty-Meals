@@ -1,0 +1,7 @@
+.card_list {
+    width: 85vw; /* le decimos que el contenedor tiene que ocupar el 85% del viewport width(ancho de ventana) */
+    margin: 0 auto; /* le estamos dando un margen de 0 arr/aba y auto para los lados */
+    display: grid; /* display grid lo utilizamos al igual que el flex para acomodar con mayor facilidad los elementos*/
+    grid-template-columns: 1fr 1fr 1fr 1fr; /* y utilizamos esta propiedad de grid para automaticamente decirle en cuantos elementos queremos que nos los acomode en este caso 4 que ocupen 1fraccion*/
+    grid-gap: 20px; /* gap lo utilizamos para dar espacio entre los elementos */
+}

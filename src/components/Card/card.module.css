@@ -1,0 +1,19 @@
+.card_container {
+    display: flex; /* lo utilizamos para poder acomodar con mayor facilidad los elementos dentro del div */
+    flex-direction: column; /* lo usamos para que lo separe en columnas .. por default viene en row */
+    background-color: #95dada; /* ponemos un fondo de color */
+    border: 1px solid grey; /* agregamos un borde a la tarjeta que se una linea solida de 1px de grosor y color gris */
+    border-radius: 5px; /*redondeamos un poco las puntas para que no quede tan cuadrado*/
+    padding: 25px; /* para darle un espacio interior a los elementos sobre el div que los contiene */
+    cursor: pointer; /* es para poner la manito del mouse cuando pasemos por las tarjetas */
+    transform: translateZ(
+            0
+    ); /* si obsevamos con el translateZ hacemos que la tarjeta se meta por debjao del elemnto que le sigue */
+    transition: transform 0.25s ease-out; /* le damos un efecto gradual al pasar el mouse por las tarjetas */
+}
+
+.card_container:hover {
+    transform: scale(
+            1.03
+    ); /* complementamos esa transition poniendole esta propiedad en el hover */
+}

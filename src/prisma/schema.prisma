@@ -1,0 +1,111 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model Account {
+    id                String  @id @default(cuid())
+    userId            Int
+    type              String
+    provider          String
+    providerAccountId String
+    refresh_token     String? @db.Text
+    access_token      String? @db.Text
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String? @db.Text
+    session_state     String?
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([provider, providerAccountId])
+}
+
+model Session {
+    id           String   @id @default(cuid())
+    sessionToken String   @unique
+    userId       Int
+    expires      DateTime
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+    id            Int           @id @default(autoincrement())
+    name          String?
+    email         String        @unique
+    emailVerified DateTime?
+    password      String
+    image         String?
+    Accounts      Account[]
+    Sessions      Session[]
+    Favorite      Favorite[]
+    Review        Review[]
+    Transaction   Transaction[]
+}
+
+model Food {
+    id          Int           @id @default(autoincrement())
+    name        String
+    price       Float
+    description String
+    image       String
+    discount    Float
+    categoryId  Int
+    rating      Float
+    Favorite    Favorite[]
+    Category    Category      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+    Review      Review[]
+    Transaction Transaction[]
+}
+
+model Favorite {
+    id     Int  @id @default(autoincrement())
+    foodId Int
+    userId Int
+    user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    food   Food @relation(fields: [foodId], references: [id], onDelete: Cascade)
+}
+
+model Category {
+    id   Int    @id @default(autoincrement())
+    name String
+    food Food[]
+}
+
+model Review {
+    id        Int    @id @default(autoincrement())
+    foodId    Int
+    comentary String
+    rating    Float
+    userId    Int
+    user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    food      Food   @relation(fields: [foodId], references: [id], onDelete: Cascade)
+}
+
+model Transaction {
+    id     Int    @id @default(autoincrement())
+    userId Int
+    foodId Int
+    cost   Float
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    food   Food[]
+}
+
+enum Roles {
+    user
+    admin
+    employed
+}
+
+model VerificationToken {
+    identifier String
+    token      String   @unique
+    expires    DateTime
+
+    @@unique([identifier, token])
+}

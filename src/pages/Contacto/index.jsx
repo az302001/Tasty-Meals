@@ -1,8 +1,11 @@
 import React from 'react'
+import Layaout from '../../components/Layaout/Layaout'
 
 const index = () => {
   return (
-    <div>Aqui logica para el contacto</div>
+    <Layaout>
+      
+    </Layaout>
   )
 }
 
