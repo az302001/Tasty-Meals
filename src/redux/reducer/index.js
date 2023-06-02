@@ -25,7 +25,7 @@ const rootReducer = (state = initialState, action) => {
         case GET_FOOD_BY_ID:
             return {
                 ...state,
-                detailFoods: action.payload,
+                detailFoods: action.payload, 
             }
         default:
             return state;

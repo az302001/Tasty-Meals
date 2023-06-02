@@ -29,7 +29,7 @@ export const getFoodByName = (name) => {
 // Este seria para el detail food
 export const getFoodById = (id) => {
     return async (dispatch) => {
-        const response = (await axios.get(`http://localhost:3000/api/Products/${id}`)).data;
+        const response = (await axios.get(`http://localhost:3000/api/Products/${id}`)).data.product;//agrego .product ya que así viene de la peticion al back.
         return dispatch({
             type: 'GET_FOOD_BY_ID',
             payload: response,

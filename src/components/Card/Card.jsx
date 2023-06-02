@@ -8,7 +8,7 @@ const Card = ({ food }) => {
 
     return (
         <div className={styles.card_container}>
-            <Link href={`detail/${id}`}>
+            <Link href={`/detail?id=${id}`}>
                 <h1>{name}</h1> 
             </Link>
             <img src={image} alt={name} />

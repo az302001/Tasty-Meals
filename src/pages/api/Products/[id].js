@@ -22,6 +22,7 @@ export default async function handler(req, res) {
                 return res.status(200).json({ product })
 
             } catch (error) {
+
                 res.status(500).json({ error: error.message })
             }
 
@@ -46,6 +47,7 @@ export default async function handler(req, res) {
                     .status(201)
                     .json({ mensaje: `Platillo almacenado con éxito!` }); //si lo creó, no lo retorna al objeto sino un mensaje de éxito.
             } catch (error) {
+
                 res.status(500).json({ error: error.message });
             }
             break;
@@ -65,13 +67,12 @@ export default async function handler(req, res) {
 
         case "DELETE":
             try {
-                const { id } = query;
+                const { id } = req.query;
                 await prisma.food.delete({
                     where: { id: parseInt(id) },
                 });
                 res.status(200).json({ mensaje: `Plato removido correctamente!` });
             } catch (error) {
-                console.log(error);
                 res.status(500).json({ error: error.message });
             }
             break;
