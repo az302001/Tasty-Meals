@@ -3,6 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getFoodById } from "@/redux/actions";
 import { useRouter } from "next/router";
+import Link from "next/link";
+
+import { ArrowLeftIcon } from "@heroicons/react/20/solid";
+import Layaout from '@/components/Layaout/Layaout';
 
 const index = () => {
   const router = useRouter();
@@ -18,7 +22,15 @@ const index = () => {
   }, [dispatch, id]);
 
   return (
-    <section className="flex flex-col items-center bg-color3 h-screen w-screen">
+    <Layaout>
+
+      <div className='m-3'>
+        <Link href="/menu">
+          <ArrowLeftIcon className="h-8 w-8 text-color1" />
+        </Link>
+      </div>
+
+      <section className="flex flex-col items-center h-screen w-screen">
 
         <h1>Detalle de la búsqueda: </h1>
         <p>Nombre: {detailFoods.name}</p>
@@ -28,7 +40,8 @@ const index = () => {
         <p>Categoria: {detailFoods.categoryId} </p>
         <img src={detailFoods.image} alt={detailFoods.name} />
 
-    </section>
+      </section>
+    </Layaout>
   );
 };
 
