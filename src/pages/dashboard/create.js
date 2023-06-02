@@ -74,7 +74,7 @@ export default function create() {
 
     if (isValid) {
       axios
-        .post(`http://localhost:3001/api/Products/addFood`, formData)
+        .post(`http://localhost:3000/api/Products/addFood`, formData)
         .then((response) => {
           setSubmitSuccess(response.data);
           setSubmitError(null);
@@ -131,7 +131,7 @@ export default function create() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/api/Products/AllCategories")
+      .get("http://localhost:3000/api/Products/AllCategories")
       .then((response) => {
         const existingCategories = response.data;
         setExistingCategories(existingCategories);
