@@ -1,3 +1,4 @@
+
 import foodsData from '@/Data/Comidas';
 import categoriesData from '@/Data/categories';
 import prisma from '@/prisma/prisma';
@@ -84,7 +85,15 @@ export default async function handler(req, res) {
 
       return res.status(200).json({ GetProductByPrice });
     } else {
-      const GetAllFoods = await prisma.food.findMany();
+      const GetAllFoods = await prisma.food.findMany({
+        include: {
+          Category: {
+            select: {
+              name: true
+            }
+          }
+        }
+      });
       return res.status(200).json(GetAllFoods);
     }
   } catch (error) {
