@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Google from "@/assets/google.png";
 import Facebook from "@/assets/facebook.png";
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
+import GoogleLogin from '@/components/GoogleLogin/GoogleLogin';
 
 
 
@@ -54,6 +55,8 @@ const index = () => {
         Entrar
       </button>
       </Link>
+
+    <GoogleLogin/>
 
     </form>
     <div className="flex justify-around w-full mt-5">
