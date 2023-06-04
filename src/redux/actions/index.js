@@ -1,9 +1,12 @@
+
 import axios from 'axios';
 
 export const GET_FOODS = 'GET_FOODS';
 export const GET_FOOD_BY_NAME = 'GET_FOOD_BY_NAME';
 export const GET_FOOD_BY_ID = 'GET_FOOD_BY_ID';
-
+export const ORDER_BY_NAME = 'ORDER_BY_NAME';
+export const ORDER_BY_CATEGORY = 'ORDER_BY_CATEGORY';
+export const ORDER_BY_RATING = 'ORDER_BY_RATING';
 
 export const getFoods = () => {
     return async (dispatch) => {
@@ -14,6 +17,23 @@ export const getFoods = () => {
         });
     };
 };
+
+export const orderByName = (payload) => { // ordenar  de la A-Z Y DE LA Z-A
+    return {
+      type: ORDER_BY_NAME,
+      payload: payload,
+    };
+  };
+  
+export const orderByCategory=(payload)=>{  // ordenar por categoria
+    return{
+        type:ORDER_BY_CATEGORY,
+        payload:payload
+    }
+}
+
+
+
 
 // Este seria para el input de search
 export const getFoodByName = (name) => {
@@ -42,3 +62,10 @@ export const getFoodById = (id) => {
     };
 }
 
+
+export const orderByRating = (payload) => {
+    return {
+        type: ORDER_BY_RATING,
+        payload
+    }
+}
