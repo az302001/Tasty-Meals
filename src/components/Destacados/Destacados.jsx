@@ -9,7 +9,7 @@ import { StarIcon } from "@heroicons/react/24/solid";
 
 const Destacados = () => {
     const dispatch = useDispatch();
-    const foods = useSelector((state) => state.foods);
+    const foods = useSelector((state) => state.products.foods);
   
   
   

@@ -12,7 +12,7 @@ const index = () => {
   const [cartItems, setCartItems] = useState([]);
   const [userRating, setUserRating] = useState(1);
   const [userVote, setUserVote] = useState(false);
-  const detailFoods = useSelector((state) => state.detailFoods);
+  const detailFoods = useSelector((state) => state.products.detailFoods);
   const rating = parseFloat(detailFoods.rating);
 
   const router = useRouter();
