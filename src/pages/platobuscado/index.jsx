@@ -14,7 +14,7 @@ const index = () => {
   const router = useRouter();
   const { name } = router.query;
   const dispatch = useDispatch();
-  const foodByName = useSelector((state) => state.foodByName);
+  const foodByName = useSelector((state) => state.products.foodByName);
 
   useEffect(() => {
     if (name) {

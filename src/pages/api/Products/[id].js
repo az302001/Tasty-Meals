@@ -11,7 +11,14 @@ export default async function handler(req, res) {
         case 'GET':
             try {
                 const product = await prisma.food.findUnique({
-                    where: { id: parseInt(id) }
+                    where: { id: parseInt(id) },
+                    include: {
+                        Category: {
+                          select: {
+                            name: true
+                          }
+                        }
+                      }
                 });
 
                 if(!product) {
@@ -84,13 +91,3 @@ export default async function handler(req, res) {
             break;
     }
 }
-
-
-
-
-
-
-
-
-
-

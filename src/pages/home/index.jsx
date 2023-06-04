@@ -1,53 +1,24 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { getFoods } from '@/redux/actions';
-import Cards from '@/components/Cards/Cards';
-
+import React from 'react';
 import Layaout from '@/components/Layaout/Layaout';
+import Link from 'next/link';
+import Destacados from '@/components/Destacados/Destacados';
+
+
+
+
 
 const index = () => {
-  const dispatch = useDispatch();
-  const foods = useSelector((state) => state.foods);
-
-
-  useEffect(() => {
-    dispatch(getFoods());
-  }, [dispatch]);
-
-  // console.log(foods);
-
 
   return (
-
     <Layaout>
       <div style={{ "marginTop": "2rem" }}>
-
-        {/* <h1 style={{ "marginBottom": "1rem", "textAlign": "center", "fontSize": "2rem" }}>Home</h1>
-       <Cards foods={foods} />
-
-       <div>
-       <SearchBar/>
-      </div> */}
-
-
-        {/* foods.slice(0,5).map((foods) => 
-           <Cards foods={foods} />
-         ) */}
-
-        <Cards foods={foods.slice(0, 5)} />
-        <button>Menu</button>
-
+        <Destacados />
       </div>
+      <Link href='/menu'>
+        <button style={{ "marginTop": "3em", "marginLeft": "3em", "color":"#F5E9CF", "backgroundColor":"#4D455D", "width": "210px","height": "74px", "fontSize": "30px" }}>Ver menú</button>
+      </Link>
     </Layaout>
+  );
+};
 
-    //     <Layaout>
-    //       <div style={{ "marginTop": "2rem" }}>
-    //         <h1 style={{ "marginBottom": "1rem", "textAlign": "center", "fontSize": "2rem" }}>Home</h1>
-    //         <Cards foods={foods} />
-    //       </div>
-    //     </Layaout>
-
-  )
-}
-
-export default index
+export default index;

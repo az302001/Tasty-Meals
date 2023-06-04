@@ -2,23 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Pacifico";
+  src: url("../fonts/Pacifico.ttf");
+}
 
 @font-face {
-    font-family: "Pacifico";
-    src: url("../fonts/Pacifico.ttf");
+  font-family: "Manrope";
+  src: url("../fonts/Manrope.ttf");
+}
+
+@font-face {
+  font-family: "Josefin";
+  src: url("../fonts/JosefinSans.ttf");
+}
+@layer components {
+  .btn {
+    @apply bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded;
   }
-  
-  @font-face {
-    font-family: "Manrope";
-    src: url("../fonts/Manrope.ttf");
-  }
-  
-  @font-face {
-    font-family: "Josefin";
-    src: url("../fonts/JosefinSans.ttf");
-  }
-  @layer components {
-    .btn {
-      @apply bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded;
-    }
-  }
+}
