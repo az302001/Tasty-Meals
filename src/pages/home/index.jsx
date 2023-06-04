@@ -7,19 +7,20 @@ import Layaout from '@/components/Layaout/Layaout';
 
 const index = () => {
   const dispatch = useDispatch();
-  const foods = useSelector((state) => state.foods);
+  const foods = useSelector((state) => state.products.foods);
 
 
   useEffect(() => {
     dispatch(getFoods());
   }, [dispatch]);
 
-  // console.log(foods);
+  console.log(foods);
 
 
   return (
 
-    <Layaout>
+   
+<Layaout>
       <div style={{ "marginTop": "2rem" }}>
 
         {/* <h1 style={{ "marginBottom": "1rem", "textAlign": "center", "fontSize": "2rem" }}>Home</h1>
@@ -34,7 +35,7 @@ const index = () => {
            <Cards foods={foods} />
          ) */}
 
-        <Cards foods={foods.slice(0, 5)} />
+        <Cards foods={foods.slice(0,5)} />
         <button>Menu</button>
 
       </div>
@@ -48,6 +49,7 @@ const index = () => {
     //     </Layaout>
 
   )
+
 }
 
 export default index

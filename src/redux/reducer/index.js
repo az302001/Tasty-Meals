@@ -35,5 +35,5 @@ const rootReducer = (state = initialState, action) => {
 
 
 
-export default rootReducer;
+// export default rootReducer;
 
