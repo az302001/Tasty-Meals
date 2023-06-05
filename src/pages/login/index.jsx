@@ -8,12 +8,6 @@ import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
 import GoogleLogin from '@/components/GoogleLogin/GoogleLogin';
 
 
-
-
-
-
-
-
 const index = () => {
   return (
     <section className="flex flex-col items-center bg-color3 h-screen w-screen">
@@ -25,7 +19,7 @@ const index = () => {
         Correo:
       </label>
       <div className="relative flex items-center ">
-        <EnvelopeIcon class="text-color4 w-5 h-5 absolute ml-2" />
+        <EnvelopeIcon className="text-color4 w-5 h-5 absolute ml-2" />
         <input
           type="text"
           name="user"
@@ -41,7 +35,7 @@ const index = () => {
           Contraseña:
         </label>
         <div className="relative flex items-center ">
-          <LockClosedIcon class="text-color4 w-5 h-5 absolute ml-2" />
+          <LockClosedIcon className="text-color4 w-5 h-5 absolute ml-2" />
           <input
             type="password"
             name="password"
@@ -51,7 +45,7 @@ const index = () => {
         </div>
       </div>
       <Link href='home'>
-      <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+      <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
         Entrar
       </button>
       </Link>

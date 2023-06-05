@@ -7,11 +7,10 @@ import style from './Cards.module.css';
 const Cards = ({ foods }) => {
 
   return (
-    <div className={style.cardsContainer}>
+    <div>
       { foods?.map((food, i) =>
-      <div className={style.Card}>
+      <div className='flex mb-5 mt-3'>
         <Card key={i} food={food}/>
-
       </div>
       )}
     </div>
