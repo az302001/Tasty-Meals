@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from "next/image";
-import style from './Card.module.css';
+import style from './card.module.css';
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import Carrito from "@/assets/carro-de-la-carretilla.png";
 
