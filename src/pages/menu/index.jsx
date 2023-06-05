@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import Cards from '@/components/Cards/Cards';
 // import { getFoods } from '@/redux/actions';
-import SearchBar from '@/components/SearchBar/SearchBar';
 import { allProducts } from '@/redux/reducer/productsSlice';
 
 import Layaout from '@/components/Layaout/Layaout';
@@ -35,7 +34,7 @@ const Menu = () => {
     getfoodtoshow = foodFilter;
     // foodtoshow = foodFilter
   } else {
-     getfoodtoshow = foods
+    getfoodtoshow = foods
     // foodtoshow = foods
   }
 
@@ -83,29 +82,30 @@ const Menu = () => {
     <div>
       <Layaout>
         <div>
-          <SearchBar />
-          <select onChange={handleSort} name="alphabetical" defaultValue={'DEFAULT'}>
-            <option disabled value="DEFAULT">Alphabetical</option>
-            <option value="atoz">A to Z</option>
-            <option value="ztoa">Z to A</option>
-          </select>
+          <div className='flex flex-col items-center justify-center '>
+            <div className='mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3'>
+              <select onChange={handleFilterCategories} defaultValue={'DEFAULT'} className='bg-color3 w-52'>
+                <option disabled value="DEFAULT">Categories</option>
+                <option value="all">All categories</option>
+                {uniqueCategories.map((category) => (
+                  <option key={category} value={category}>{category}</option>
+                ))}
+              </select>
+            </div>
+            <div className='mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3'>
+              <select onChange={handleSort} name="alphabetical" defaultValue={'DEFAULT'} className='bg-color3 w-52'>
+                <option disabled value="DEFAULT">Alphabetical</option>
+                <option value="atoz">A to Z</option>
+                <option value="ztoa">Z to A</option>
+              </select>
+            </div>
+          </div>
 
-          <select onChange={handleFilterCategories} defaultValue={'DEFAULT'}>
-            <option disabled value="DEFAULT">Categories</option>
-            <option value="all">All categories</option>
-            {uniqueCategories.map((category) => (
-              <option key={category} value={category}>{category}</option>
-            ))}
-          </select>
-
-          <select onChange={e => handleFilterScore(e)} name="numerical" defaultValue={'DEFAULT'} >
+          {/* <select onChange={e => handleFilterScore(e)} name="numerical" defaultValue={'DEFAULT'} >
             <option disabled value="DEFAULT">Score</option>
             <option value="MenorMayor">From Min to Max</option>
             <option value="MayorMenor">From Max to Min</option>
-          </select>
-
-        </div>
-        <div style={{ marginTop: '2rem' }}>
+          </select> */}
           <Cards foods={alimentosPaginados} />
 
           {/* import { getFoods, orderByCategory, orderByName, orderByRating } from '@/redux/actions';
@@ -180,13 +180,14 @@ import { allProducts } from '@/redux/reducer/productsSlice';
                     <Cards foods={foodFilter} />
                 </div>
             </Layaout> */}
-
         </div>
         <ControlPaginado
           paginaActual={paginaActual}
           totalPaginas={totalPaginas}
           cambiarPagina={cambiarPagina}
         />
+        <div>
+        </div>
       </Layaout>
     </div>
   );

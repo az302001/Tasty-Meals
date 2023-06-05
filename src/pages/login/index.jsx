@@ -8,12 +8,6 @@ import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
 import GoogleLogin from '@/components/GoogleLogin/GoogleLogin';
 
 
-
-
-
-
-
-
 const index = () => {
   return (
     <section className="flex flex-col items-center bg-color3 h-screen w-screen">
