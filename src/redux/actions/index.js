@@ -1,5 +1,7 @@
 import axios from "axios";
 
+
+export const RANGE_FOR_PRICE = 'RANGE_FOR_PRICE'
 export const GET_FOODS = "GET_FOODS";
 export const GET_FOOD_BY_NAME = "GET_FOOD_BY_NAME";
 export const GET_FOOD_BY_ID = "GET_FOOD_BY_ID";
@@ -71,14 +73,23 @@ export const getFoodById = (id) => {
 
 
 export const orderByRating = (payload) => {
-  return {
-    type: ORDER_BY_RATING,
-    payload,
-  };
-};
+    return {
+        type: ORDER_BY_RATING,
+        payload
+    }
+}
+
+export const rangeForPrice =({minPrice, maxPrice})=>{
+    return {
+        type: RANGE_FOR_PRICE,
+        payload:{minPrice, maxPrice}
+    }
+}
+
 
 export const cleanDetail = () => {
   return {
     type: CLEAN_DETAIL,
   };
 };
+
