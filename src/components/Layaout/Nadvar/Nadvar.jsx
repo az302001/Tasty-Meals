@@ -62,14 +62,20 @@ import Link from "next/link";
 import { useRouter } from 'next/router';
 import { Bars3Icon } from "@heroicons/react/20/solid";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { signOut, useSession } from 'next-auth/react';
 import Logo from '../../../assets/logo-tasty.png';
+import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
+import { signOut, useSession } from 'next-auth/react';
+import SearchBar from '@/components/SearchBar/SearchBar';
 
 const Navbar = () => {
   const [estadoBoton, setEstadoBoton] = useState(false);
+  const [estadoSearch, setEstadoSearch] = useState(false);
   const router = useRouter();
   const { data: session } = useSession();
 
+  const cambiarEstadoSearch = () => {
+    setEstadoSearch(!estadoSearch);
+  };
   const cambiarEstadoBoton = () => {
     setEstadoBoton(!estadoBoton);
   };
@@ -87,14 +93,25 @@ const Navbar = () => {
             <Image src={Logo} />
           </div>
         </Link>
-        <div className='flex flex-col justify-center gap-10 font text-1xl'>
-          <button onClick={cambiarEstadoBoton}>
-            {!estadoBoton ? (
-              <Bars3Icon className="h-14 w-14 text-color1" />
-            ) :
-              <XMarkIcon className="h-14 w-14 text-color2" />
-            }
-          </button>
+
+        <div className='flex flex-row justify-center items-center gap-1'>
+          
+          <button onClick={cambiarEstadoSearch}>
+              {!estadoSearch ? (
+                <MagnifyingGlassIcon className="h-12 w-12 text-color1" />
+              ) :
+                <XMarkIcon className="h-14 w-14 text-color2" />
+              }
+            </button>
+          <div className='flex flex-col justify-center gap-10 font text-1xl'>
+            <button onClick={cambiarEstadoBoton}>
+              {!estadoBoton ? (
+                <Bars3Icon className="h-14 w-14 text-color1" />
+              ) :
+                <XMarkIcon className="h-14 w-14 text-color2" />
+              }
+            </button>
+          </div>
         </div>
       </div>
       {estadoBoton && (
@@ -121,6 +138,11 @@ const Navbar = () => {
               <button type='button' className="border-b pb-1 text-color2 w-40 text-left">Login</button>
             </Link>
           )}
+        </div>
+      )}
+      {estadoSearch && (
+        <div className='bg-color3 border-b-2 border-color1'>
+          <SearchBar />
         </div>
       )}
     </div>

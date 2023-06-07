@@ -9,14 +9,17 @@ export const ORDER_BY_RATING = "ORDER_BY_RATING";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
 
 export const getFoods = () => {
-  return async (dispatch) => {
-    const response = (await axios.get("http://localhost:3000/api/Products"))
-      .data;
-    return dispatch({
-      type: "GET_FOODS",
-      payload: response,
-    });
-  };
+
+
+
+    return async (dispatch) => {
+        const response = (await axios.get('/api/Products')).data;
+        return dispatch({
+            type: 'GET_FOODS',
+            payload: response,
+        });
+    };
+
 };
 
 export const orderByName = (payload) => {
@@ -37,35 +40,35 @@ export const orderByCategory = (payload) => {
 
 // Este seria para el input de search
 export const getFoodByName = (name) => {
-  return async (dispatch) => {
-    try {
-      const response = (
-        await axios.get(`http://localhost:3000/api/Products?name=${name}`)
-      ).data.GetproductByName;
-      return dispatch({
-        type: "GET_FOOD_BY_NAME",
-        payload: response,
-      });
-    } catch (error) {
-      {
-        console.error("Ocurrió un error en la solicitud:", error);
-      }
-    }
-  };
-};
+
+
+
+   return async (dispatch) => {
+        try {
+        const response = (await axios.get(`/api/Products?name=${name}`)).data.GetproductByName;
+        return dispatch({
+                    type: 'GET_FOOD_BY_NAME',
+                    payload: response,
+                });
+        } catch (error) {{
+            console.error('Ocurrió un error en la solicitud:', error);
+        }
+        }
+    };
+}
 
 // Este seria para el detail food
 export const getFoodById = (id) => {
-  return async (dispatch) => {
-    const response = (
-      await axios.get(`http://localhost:3000/api/Products/${id}`)
-    ).data.product; //agrego .product ya que así viene de la peticion al back.
-    return dispatch({
-      type: "GET_FOOD_BY_ID",
-      payload: response,
-    });
-  };
-};
+    return async (dispatch) => {
+        const response = (await axios.get(`/api/Products/${id}`)).data.product;//agrego .product ya que así viene de la peticion al back.
+        return dispatch({
+            type: 'GET_FOOD_BY_ID',
+            payload: response,
+        });
+    };
+}
+
+
 
 export const orderByRating = (payload) => {
   return {
