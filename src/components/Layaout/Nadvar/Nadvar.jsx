@@ -64,6 +64,7 @@ import { Bars3Icon } from "@heroicons/react/20/solid";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { signOut, useSession } from 'next-auth/react';
 import Logo from '../../../assets/logo-tasty.png';
+import ShoppingCart from '@/components/ShoppingCart/ShoppingCart';
 
 const Navbar = () => {
   const [estadoBoton, setEstadoBoton] = useState(false);
@@ -83,10 +84,13 @@ const Navbar = () => {
     <div>
       <div className='flex flex-row bg-color3 justify-between pl-3 pr-5 border-b-2 border-color1'>
         <Link href="/home">
-          <div className='w-28 h-28' >
+          <div className='w-28 h-28 cursor-pointer'>
             <Image src={Logo} />
           </div>
         </Link>
+        <div className='ml-20 mt-[32px]'>
+          <ShoppingCart />
+        </div>
         <div className='flex flex-col justify-center gap-10 font text-1xl'>
           <button onClick={cambiarEstadoBoton}>
             {!estadoBoton ? (
