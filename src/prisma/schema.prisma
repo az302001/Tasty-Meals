@@ -57,6 +57,7 @@ model Food {
     discount    Float
     categoryId  Int
     rating      Float
+    quantity    Int
     Favorite    Favorite[]
     Category    Category      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
     Review      Review[]
