@@ -20,7 +20,7 @@ const Menu = () => {
 
 
   const [filtroAplicado, setFiltroAplicado] = useState(false);
-  
+
 
 
   const categoriesSet = new Set(categories);
@@ -82,8 +82,8 @@ const Menu = () => {
     paginaActual * elementosPorPagina
   );
 
- 
- 
+
+
 
   return (
     <div>
@@ -107,7 +107,7 @@ const Menu = () => {
             </div>
             <div className='mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3'>
               <select onChange={handleFilterCategories} defaultValue={'DEFAULT'} className='bg-color3 w-52'>
-              <option disabled value="DEFAULT">Categorias</option>
+                <option disabled value="DEFAULT">Categorias</option>
                 <option value="all">Todas las categorias</option>
                 {uniqueCategories.map((category) => (
                   <option key={category} value={category}>{category}</option>
@@ -121,12 +121,19 @@ const Menu = () => {
                 <option value="ztoa">Z hasta la A</option>
               </select>
             </div>
+
+
+            <div className='mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3'>
+              <select onChange={e => handleFilterScore(e)} name="numerical" defaultValue={'DEFAULT'} className='bg-color3 w-52' >
+                <option disabled value="DEFAULT">Puntuacion</option>
+                <option value="MenorMayor">De Min a Max</option>
+                <option value="MayorMenor">De Max a Min</option>
+              </select>
+            </div>
+
           </div>
-          <select onChange={e => handleFilterScore(e)} name="numerical" defaultValue={'DEFAULT'} >
-            <option disabled value="DEFAULT">Score</option>
-            <option value="MenorMayor">From Min to Max</option>
-            <option value="MayorMenor">From Max to Min</option>
-          </select>
+
+
           {getfoodtoshow.length === 0 && <p>No hay comidas con ese precio.</p>}
           <Cards foods={alimentosPaginados} />
         </div>

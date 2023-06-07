@@ -5,9 +5,9 @@ const Rating = () => {
   return (
     <div className='flex flex-row'>
         {
-            [...Array(5)].map(() => {
+            [...Array(5)].map((e,i) => {
                 return(
-                  <label className='mx-auto'>
+                  <label className='mx-auto' key={i}>
                       <StarIcon  className="h-6 w-6 text-yellow-500" />
                   </label>   
                 )      
