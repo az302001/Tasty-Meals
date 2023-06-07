@@ -35,11 +35,11 @@ const index = () => {
             <ArrowLeftIcon className="h-8 w-8 text-color1" />
           </Link>
         </div>
-        <h1 style={{ "marginBottom": "1rem", "textAlign": "center", "fontSize": "2rem" }}>Plato por nombre</h1>
+        <h1 className='flex mb-4  justify-center text-2xl text-color1'>Resultados para: {name}</h1>
         {foodByName.length > 0 ? (
           <Cards foods={foodByName} />
         ) : (
-          <p>No se encontraron resultados.</p>
+          <p className='flex mt-20  justify-center text-2xl text-color1'>No se encontraron resultados.</p>
         )}
       </div>
     </Layaout>

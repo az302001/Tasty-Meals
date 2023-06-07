@@ -1,43 +1,8 @@
-
-// import { signIn, signOut, useSession } from 'next-auth/react';
-// import React, { useEffect } from 'react';
-
-// const GoogleLogin = () => {
-//     const { data: session, status } = useSession();
-
-//     useEffect(() => {
-//         if (status === 'authenticated') {
-//             // Usuario autenticado
-//             console.log('Usuario autenticado:', session.user.name);
-//         } else if (status === 'unauthenticated') {
-//             // Usuario cerró sesión
-//             console.log('Usuario cerró sesión');
-//         }
-//     }, [status, session]);
-//     return (
-//         <>
-
-//             {status === 'authenticated' ?
-//                 <div>
-//                     Bienvenido/a {session.user.name}
-//                     <button type='button' onClick={() => signOut()}>Cerrar sesión</button>
-//                 </div> : <div>
-//                     <button type='button' onClick={async (e) => {
-//                         e.preventDefault();
-//                         await signIn("google")
-//                     }}>Google</button>
-
-//                 </div>
-//             }
-//         </>
-//     );
-// };
-// export default GoogleLogin;
-
-
 import { signIn, signOut, useSession } from 'next-auth/react';
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Image from "next/image";
+import Google from "@/assets/google.png";
 
 const GoogleLogin = () => {
   const { data: session, status } = useSession();
@@ -47,7 +12,9 @@ const GoogleLogin = () => {
     if (status === 'authenticated') {
       // Usuario autenticado
       console.log('Usuario autenticado:', session.user.name);
-      router.push('/home'); // Redirigir al home
+      // router.push('/home'); // Redirigir al home
+      const previousPage = sessionStorage.getItem('currentPage');
+      router.replace(previousPage);
     } else if (status === 'unauthenticated') {
       // Usuario cerró sesión
       console.log('Usuario cerró sesión');
@@ -65,15 +32,18 @@ const GoogleLogin = () => {
         </div>
       ) : (
         <div>
-          <button
-            type='button'
-            onClick={async (e) => {
-              e.preventDefault();
-              await signIn('google');
-            }}
-          >
-            Google
-          </button>
+          <div name="google-login-logo" className="w-14 h-14">
+            <button
+              type='button'
+              onClick={async (e) => {
+                e.preventDefault();
+                await signIn('google');
+              }}
+            >
+              <Image src={Google} alt={"google-login"}></Image>
+              {/* Google */}
+            </button>
+          </div>
         </div>
       )}
     </>

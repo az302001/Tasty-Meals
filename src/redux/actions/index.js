@@ -10,7 +10,7 @@ export const ORDER_BY_RATING = 'ORDER_BY_RATING';
 
 export const getFoods = () => {
     return async (dispatch) => {
-        const response = (await axios.get('http://localhost:3000/api/Products')).data;
+        const response = (await axios.get('/api/Products')).data;
         return dispatch({
             type: 'GET_FOODS',
             payload: response,
@@ -39,7 +39,7 @@ export const orderByCategory=(payload)=>{  // ordenar por categoria
 export const getFoodByName = (name) => {
    return async (dispatch) => {
         try {
-        const response = (await axios.get(`http://localhost:3000/api/Products?name=${name}`)).data.GetproductByName;
+        const response = (await axios.get(`/api/Products?name=${name}`)).data.GetproductByName;
         return dispatch({
                     type: 'GET_FOOD_BY_NAME',
                     payload: response,
@@ -54,7 +54,7 @@ export const getFoodByName = (name) => {
 // Este seria para el detail food
 export const getFoodById = (id) => {
     return async (dispatch) => {
-        const response = (await axios.get(`http://localhost:3000/api/Products/${id}`)).data.product;//agrego .product ya que así viene de la peticion al back.
+        const response = (await axios.get(`/api/Products/${id}`)).data.product;//agrego .product ya que así viene de la peticion al back.
         return dispatch({
             type: 'GET_FOOD_BY_ID',
             payload: response,

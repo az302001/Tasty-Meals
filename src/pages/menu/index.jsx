@@ -16,13 +16,13 @@ const Menu = () => {
   const dispatch = useDispatch();
   const foods = useSelector((state) => state.products.foods);
   const foodFilter = useSelector(allProducts);
-  console.log(foods);
+
   const [paginaActual, setPaginaActual] = useState(1);
   const elementosPorPagina = 18; // Número de platos que vamos a renderizar (se generan "X" cant de pag en base a la cant de platos)
 
   const categories = useSelector((state) => state.products.foods.map((food) => food.Category.name));
 
-  console.log(categories)
+
 
   const categoriesSet = new Set(categories);
   const uniqueCategories = Array.from(categoriesSet);
@@ -85,8 +85,8 @@ const Menu = () => {
           <div className='flex flex-col items-center justify-center '>
             <div className='mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3'>
               <select onChange={handleFilterCategories} defaultValue={'DEFAULT'} className='bg-color3 w-52'>
-                <option disabled value="DEFAULT">Categories</option>
-                <option value="all">All categories</option>
+              <option disabled value="DEFAULT">Categorias</option>
+                <option value="all">Todas las categorias</option>
                 {uniqueCategories.map((category) => (
                   <option key={category} value={category}>{category}</option>
                 ))}
@@ -94,9 +94,9 @@ const Menu = () => {
             </div>
             <div className='mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3'>
               <select onChange={handleSort} name="alphabetical" defaultValue={'DEFAULT'} className='bg-color3 w-52'>
-                <option disabled value="DEFAULT">Alphabetical</option>
-                <option value="atoz">A to Z</option>
-                <option value="ztoa">Z to A</option>
+                <option disabled value="DEFAULT">Alfabeticamente</option>
+                <option value="atoz">A hasta la Z</option>
+                <option value="ztoa">Z hasta la A</option>
               </select>
             </div>
           </div>

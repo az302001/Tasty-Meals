@@ -1,7 +1,7 @@
 import React from 'react'
-import Image from "next/image";
 import Logo from "@/assets/logo-tasty.png";
 import Link from 'next/link';
+import Image from "next/image";
 import Google from "@/assets/google.png";
 import Facebook from "@/assets/facebook.png";
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
@@ -50,7 +50,7 @@ const index = () => {
       </button>
       </Link>
 
-    <GoogleLogin/>
+    {/* <GoogleLogin/> */}
 
     </form>
     <div className="flex justify-around w-full mt-5">
@@ -68,12 +68,13 @@ const index = () => {
     </p>
     <h2 className="mt-10">O registrarme con:</h2>
     <section name="social-media-logos" className="flex mt-4">
-      <div name="facebook-login-logo" className="w-16 h-16">
+      {/* <div name="facebook-login-logo" className="w-16 h-16">
         <Image src={Facebook} alt={"facebook-login"}></Image>
-      </div>
-      <div name="google-login-logo" className="w-14 h-14">
+      </div> */}
+      <GoogleLogin/>
+      {/* <div name="google-login-logo" className="w-14 h-14">
         <Image src={Google} alt={"google-login"}></Image>
-      </div>
+      </div> */}
     </section>
   </section>
   );

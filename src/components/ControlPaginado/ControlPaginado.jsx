@@ -27,7 +27,7 @@ const ControlPaginado = ({ totalPaginas, cambiarPagina }) => {
     return paginas;
   };
 
-  return <div className="flex items-center justify-center mb-24 mt-5">{generarPaginas()}</div>;
+  return <div className="flex items-center justify-center my-5">{generarPaginas()}</div>;
 };
 
 export default ControlPaginado;
