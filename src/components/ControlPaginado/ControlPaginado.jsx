@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const ControlPaginado = ({ totalPaginas, cambiarPagina }) => {
-  const [paginaActual, setPaginaActual] = useState(1);
+const ControlPaginado = ({ totalPaginas, cambiarPagina, paginaActual, filtroAplicado}) => {
+  
 
   const handleClickPagina = (pagina) => {
-    setPaginaActual(pagina);
     cambiarPagina(pagina);
   };
 
@@ -27,7 +26,12 @@ const ControlPaginado = ({ totalPaginas, cambiarPagina }) => {
     return paginas;
   };
 
+
   return <div className="flex items-center justify-center my-5">{generarPaginas()}</div>;
+
+ 
+  
+
 };
 
 export default ControlPaginado;

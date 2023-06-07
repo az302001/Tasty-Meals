@@ -24,6 +24,11 @@ const Menu = () => {
 
 
 
+
+  const [filtroAplicado, setFiltroAplicado] = useState(false);
+  
+
+
   const categoriesSet = new Set(categories);
   const uniqueCategories = Array.from(categoriesSet);
   const [order, setOrder] = useState('');
@@ -42,10 +47,12 @@ const Menu = () => {
 
   useEffect(() => {
     dispatch(getFoods());
+    setFiltroAplicado(false);
   }, [dispatch]);
 
   const cambiarPagina = (pagina) => {
     setPaginaActual(pagina);
+    setFiltroAplicado(true);
     window.scrollTo(0, 0)
   };
 
@@ -61,6 +68,7 @@ const Menu = () => {
     const selectedCategory = e.target.value;
     setOrder(selectedCategory);
     dispatch(orderByCategory(selectedCategory));
+    setPaginaActual(1);
   };
 
 
@@ -70,13 +78,13 @@ const Menu = () => {
     dispatch(orderByRating(selectRating));
   }
 
-
-
-  const totalPaginas = Math.ceil(foods.length / elementosPorPagina);
-  const alimentosPaginados = getfoodtoshow.slice(
+ const alimentosPaginados = getfoodtoshow.slice(
     (paginaActual - 1) * elementosPorPagina,
     paginaActual * elementosPorPagina
   );
+
+  const totalPaginas = Math.ceil(getfoodtoshow.length / elementosPorPagina);
+ 
 
   return (
     <div>
@@ -185,6 +193,7 @@ import { allProducts } from '@/redux/reducer/productsSlice';
           paginaActual={paginaActual}
           totalPaginas={totalPaginas}
           cambiarPagina={cambiarPagina}
+          filtroAplicado={filtroAplicado}
         />
         <div>
         </div>

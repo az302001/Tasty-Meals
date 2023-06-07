@@ -34,7 +34,7 @@ const index = () => {
           </Link>
         </div>
       </div>
-      <h2 class="flex justify-center font-monrope text-4xl font-semibold tracking-tight text-gray-900 dark:text-black">
+      <h2 className="flex justify-center font-monrope text-4xl font-semibold tracking-tight text-gray-900 dark:text-black">
         {detailFoods.name}
       </h2>
       <div className="w-full max-w-2xl  mx-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -87,7 +87,7 @@ const index = () => {
       <div className=" mt-20 grid mb-8 border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 md:mb-12 md:grid-cols-2">
         <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-tl-lg md:border-r dark:bg-gray-800 dark:border-gray-700">
           <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               Very easy this was to integrate
             </h3>
             <p className="my-4">
@@ -191,7 +191,7 @@ const index = () => {
         </figure>
         <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-gray-200 rounded-b-lg md:rounded-br-lg dark:bg-gray-800 dark:border-gray-700">
           <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               Efficient Collaborating
             </h3>
             <p className="my-4">
