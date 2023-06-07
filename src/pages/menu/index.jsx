@@ -21,7 +21,7 @@ const Menu = () => {
   const elementosPorPagina = 18; // Número de platos que vamos a renderizar (se generan "X" cant de pag en base a la cant de platos)
 
   const categories = useSelector((state) => state.products.foods.map((food) => food.Category.name));
-
+  const [filtroAplicado, setFiltroAplicado] = useState(false);
   console.log(categories)
 
   const categoriesSet = new Set(categories);
@@ -42,10 +42,12 @@ const Menu = () => {
 
   useEffect(() => {
     dispatch(getFoods());
+    setFiltroAplicado(false);
   }, [dispatch]);
 
   const cambiarPagina = (pagina) => {
     setPaginaActual(pagina);
+    setFiltroAplicado(true);
     window.scrollTo(0, 0)
   };
 
@@ -61,6 +63,7 @@ const Menu = () => {
     const selectedCategory = e.target.value;
     setOrder(selectedCategory);
     dispatch(orderByCategory(selectedCategory));
+    setPaginaActual(1);
   };
 
 
@@ -70,13 +73,13 @@ const Menu = () => {
     dispatch(orderByRating(selectRating));
   }
 
-
-
-  const totalPaginas = Math.ceil(foods.length / elementosPorPagina);
-  const alimentosPaginados = getfoodtoshow.slice(
+ const alimentosPaginados = getfoodtoshow.slice(
     (paginaActual - 1) * elementosPorPagina,
     paginaActual * elementosPorPagina
   );
+
+  const totalPaginas = Math.ceil(getfoodtoshow.length / elementosPorPagina);
+ 
 
   return (
     <div>
@@ -185,6 +188,7 @@ import { allProducts } from '@/redux/reducer/productsSlice';
           paginaActual={paginaActual}
           totalPaginas={totalPaginas}
           cambiarPagina={cambiarPagina}
+          filtroAplicado={filtroAplicado}
         />
         <div>
         </div>

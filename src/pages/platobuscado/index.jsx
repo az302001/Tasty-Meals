@@ -35,7 +35,7 @@ const index = () => {
             <ArrowLeftIcon className="h-8 w-8 text-color1" />
           </Link>
         </div>
-        <h1 style={{ "marginBottom": "1rem", "textAlign": "center", "fontSize": "2rem" }}>Plato por nombre</h1>
+        <h1 style={{ "marginBottom": "1rem", "textAlign": "center", "fontSize": "2rem" }}>Resultados para: {name}</h1>
         {foodByName.length > 0 ? (
           <Cards foods={foodByName} />
         ) : (
