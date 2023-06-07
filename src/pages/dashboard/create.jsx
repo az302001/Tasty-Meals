@@ -100,6 +100,7 @@ export default function create() {
       axios
         .post(`http://localhost:3000/api/Products/addFood`, data)
         .then((response) => {
+          console.log(data);
           setSubmitSuccess(response.data);
           setSubmitError(null);
           setFormData({
