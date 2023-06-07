@@ -1,9 +1,31 @@
-import React from 'react'
-
+import React from "react";
+import Layaout from "@/components/Layaout/Layaout";
+import Link from "next/link";
 const dashboard = () => {
   return (
-    <div>dashboard</div>
-  )
-}
+    <Layaout>
+      <div className="flex flex-col items-center">
+        <h2 className="font-sans font-bold text-2xl text-color1 m-10">
+          Panel de Administrador
+        </h2>
+        <Link href="/dashboard/products">
+          <button className="bg-color1 w-3/6 h-16 drop-shadow-2xl mb-10 text-color3 text-lg">
+            VER Y MODIFICAR PRODUCTOS
+          </button>
+        </Link>
+        <Link href="/dashboard/create">
+          <button className="bg-color1 w-3/6 h-16 drop-shadow-2xl mb-10 text-color3 text-lg">
+            AGREGAR NUEVOS PRODUCTOS
+          </button>
+        </Link>
+        <Link href="/dashboard/create">
+          <button className="bg-color1 w-3/6 h-16 drop-shadow-2xl mb-10 text-color3 text-lg">
+            GESTION DE DESCUENTOS
+          </button>
+        </Link>
+      </div>
+    </Layaout>
+  );
+};
 
-export default dashboard
+export default dashboard;

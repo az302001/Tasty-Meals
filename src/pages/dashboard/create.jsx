@@ -98,8 +98,9 @@ export default function create() {
       data.append("discount", formData.discount);
 
       axios
-        .post(`http://localhost:3000/api/Products/addFood`, data)
+        .post(`/api/Products/addFood`, data)
         .then((response) => {
+          console.log(data);
           setSubmitSuccess(response.data);
           setSubmitError(null);
           setFormData({
@@ -164,7 +165,7 @@ export default function create() {
   };
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/Products/AllCategories")
+      .get("/api/Products/AllCategories")
       .then((response) => {
         const existingCategories = response.data;
         setExistingCategories(existingCategories);

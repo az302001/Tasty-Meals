@@ -11,9 +11,18 @@ const Menu = () => {
   const dispatch = useDispatch();
   const foods = useSelector((state) => state.products.foods);
   const foodFilter = useSelector(allProducts);
+  console.log(foods);
   const [paginaActual, setPaginaActual] = useState(1);
   const elementosPorPagina = 18;
   const categories = useSelector((state) => state.products.foods.map((food) => food.Category.name));
+
+
+
+
+  const [filtroAplicado, setFiltroAplicado] = useState(false);
+  
+
+
   const categoriesSet = new Set(categories);
   const uniqueCategories = Array.from(categoriesSet);
   const [order, setOrder] = useState('');
@@ -24,10 +33,12 @@ const Menu = () => {
 
   useEffect(() => {
     dispatch(getFoods());
+    setFiltroAplicado(false);
   }, [dispatch]);
 
   const cambiarPagina = (pagina) => {
     setPaginaActual(pagina);
+    setFiltroAplicado(true);
     window.scrollTo(0, 0)
   };
 
@@ -41,6 +52,7 @@ const Menu = () => {
     const selectedCategory = e.target.value;
     setOrder(selectedCategory);
     dispatch(orderByCategory(selectedCategory));
+    setPaginaActual(1);
   };
 
   const handleFilterScore = (e) => {
@@ -64,11 +76,14 @@ const Menu = () => {
     }
   }
 
-  const totalPaginas = Math.ceil(foods.length / elementosPorPagina);
+  const totalPaginas = Math.ceil(getfoodtoshow.length / elementosPorPagina);
   const alimentosPaginados = getfoodtoshow.slice(
     (paginaActual - 1) * elementosPorPagina,
     paginaActual * elementosPorPagina
   );
+
+ 
+ 
 
   return (
     <div>
@@ -92,8 +107,8 @@ const Menu = () => {
             </div>
             <div className='mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3'>
               <select onChange={handleFilterCategories} defaultValue={'DEFAULT'} className='bg-color3 w-52'>
-                <option disabled value="DEFAULT">Categories</option>
-                <option value="all">All categories</option>
+              <option disabled value="DEFAULT">Categorias</option>
+                <option value="all">Todas las categorias</option>
                 {uniqueCategories.map((category) => (
                   <option key={category} value={category}>{category}</option>
                 ))}
@@ -101,9 +116,9 @@ const Menu = () => {
             </div>
             <div className='mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3'>
               <select onChange={handleSort} name="alphabetical" defaultValue={'DEFAULT'} className='bg-color3 w-52'>
-                <option disabled value="DEFAULT">Alphabetical</option>
-                <option value="atoz">A to Z</option>
-                <option value="ztoa">Z to A</option>
+                <option disabled value="DEFAULT">Alfabeticamente</option>
+                <option value="atoz">A hasta la Z</option>
+                <option value="ztoa">Z hasta la A</option>
               </select>
             </div>
           </div>
@@ -119,6 +134,7 @@ const Menu = () => {
           paginaActual={paginaActual}
           totalPaginas={totalPaginas}
           cambiarPagina={cambiarPagina}
+          filtroAplicado={filtroAplicado}
         />
         <div>
         </div>
