@@ -62,15 +62,24 @@ import Link from "next/link";
 import { useRouter } from 'next/router';
 import { Bars3Icon } from "@heroicons/react/20/solid";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { signOut, useSession } from 'next-auth/react';
 import Logo from '../../../assets/logo-tasty.png';
+
 import ShoppingCart from '@/components/ShoppingCart/ShoppingCart';
+
+import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
+import { signOut, useSession } from 'next-auth/react';
+import SearchBar from '@/components/SearchBar/SearchBar';
+
 
 const Navbar = () => {
   const [estadoBoton, setEstadoBoton] = useState(false);
+  const [estadoSearch, setEstadoSearch] = useState(false);
   const router = useRouter();
   const { data: session } = useSession();
 
+  const cambiarEstadoSearch = () => {
+    setEstadoSearch(!estadoSearch);
+  };
   const cambiarEstadoBoton = () => {
     setEstadoBoton(!estadoBoton);
   };
@@ -88,6 +97,7 @@ const Navbar = () => {
             <Image src={Logo} />
           </div>
         </Link>
+
         <div className='ml-20 mt-[32px]'>
           <ShoppingCart />
         </div>
@@ -99,6 +109,7 @@ const Navbar = () => {
               <XMarkIcon className="h-14 w-14 text-color2" />
             }
           </button>
+
         </div>
       </div>
       {estadoBoton && (
@@ -125,6 +136,11 @@ const Navbar = () => {
               <button type='button' className="border-b pb-1 text-color2 w-40 text-left">Login</button>
             </Link>
           )}
+        </div>
+      )}
+      {estadoSearch && (
+        <div className='bg-color3 border-b-2 border-color1'>
+          <SearchBar />
         </div>
       )}
     </div>

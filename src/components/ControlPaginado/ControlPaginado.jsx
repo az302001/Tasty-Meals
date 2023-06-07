@@ -15,7 +15,7 @@ const ControlPaginado = ({ totalPaginas, cambiarPagina }) => {
         <button
           key={i}
           onClick={() => handleClickPagina(i)}
-          className={`bg-purple-700 hover:bg-purple-900 text-white font-bold py-2 px-4 mx-2 ${
+          className={`bg-color1 hover:bg-purple-900 text-color3 font-manrope p-1.5 mx-2 rounded-md ${
             paginaActual === i ? 'bg-opacity-50' : ''
           }`}
           disabled={paginaActual === i}
@@ -27,7 +27,7 @@ const ControlPaginado = ({ totalPaginas, cambiarPagina }) => {
     return paginas;
   };
 
-  return <div className="flex items-center justify-center">{generarPaginas()}</div>;
+  return <div className="flex items-center justify-center mb-24 mt-5">{generarPaginas()}</div>;
 };
 
 export default ControlPaginado;
