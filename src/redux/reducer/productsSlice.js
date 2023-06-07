@@ -5,7 +5,8 @@ import {
     GET_FOOD_BY_ID,
     ORDER_BY_NAME,
     ORDER_BY_CATEGORY,
-    ORDER_BY_RATING
+    ORDER_BY_RATING,
+    RANGE_FOR_PRICE
 } from '../actions';
 
 const initialState = {
@@ -77,6 +78,20 @@ const productsSlice = (state = initialState, action) => {
                 ...state,
                 foodFilter: recipesByScore
             };
+
+
+
+
+        case RANGE_FOR_PRICE:
+            const { minPrice, maxPrice } = action.payload;
+            const filteredByPrice = state.foods.filter(
+                food => food.price >= minPrice && food.price <= maxPrice
+            );
+            return {
+                ...state,
+                foodFilter: filteredByPrice,
+            };
+
 
         default:
             return state;

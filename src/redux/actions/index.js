@@ -7,6 +7,7 @@ export const GET_FOOD_BY_ID = 'GET_FOOD_BY_ID';
 export const ORDER_BY_NAME = 'ORDER_BY_NAME';
 export const ORDER_BY_CATEGORY = 'ORDER_BY_CATEGORY';
 export const ORDER_BY_RATING = 'ORDER_BY_RATING';
+export const RANGE_FOR_PRICE = 'RANGE_FOR_PRICE'
 
 export const getFoods = () => {
     return async (dispatch) => {
@@ -67,5 +68,12 @@ export const orderByRating = (payload) => {
     return {
         type: ORDER_BY_RATING,
         payload
+    }
+}
+
+export const rangeForPrice =({minPrice, maxPrice})=>{
+    return {
+        type: RANGE_FOR_PRICE,
+        payload:{minPrice, maxPrice}
     }
 }
