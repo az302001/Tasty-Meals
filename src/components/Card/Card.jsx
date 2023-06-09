@@ -69,6 +69,7 @@ const Card = ({ food }) => {
             <button
               onClick={handleDecrement}
               className='px-2 py-1 rounded-l-md border text-color2 border-color2 focus:outline-none'
+              disabled={quantity < 1}
             >
               -
             </button>
@@ -81,6 +82,7 @@ const Card = ({ food }) => {
             <button
               onClick={handleIncrement}
               className='px-2 py-1 rounded-r-md border text-color2 border-color2 focus:outline-none'
+              disabled={quantity >= 5}
             >
               +
             </button>
@@ -88,7 +90,7 @@ const Card = ({ food }) => {
           <div onClick={addItemToCart} className='cursor-pointer'>
             <PlusCircleIcon className="h-10 w-10 bg-#E96479 inset-13 top-13 left-89.92 right-4.9 bottom-68 text-color2" />
           </div>
-          <p className="text-pacifico text-2xl text-color1">${totalPrice}</p>
+          <p className="text-pacifico text-2xl text-color1">${parseInt(totalPrice)}</p>
         </div>
       </div>
 

@@ -37,6 +37,7 @@ const CartList = ({ food, handleQuantityChange, removeItem }) => {
               <button
                 onClick={handleDecrement}
                 className='px-2 py-1 rounded-l-md border text-color2 border-color2 focus:outline-none mr-2'
+                disabled={quantity < 1}
               >
                 -
               </button>
@@ -49,13 +50,14 @@ const CartList = ({ food, handleQuantityChange, removeItem }) => {
               <button
                 onClick={handleIncrement}
                 className='px-2 py-1 rounded-r-md border text-color2 border-color2 focus:outline-none ml-2'
+                disabled={quantity >= 5}
               >
                 +
               </button>
             </div>
           </div>
         </div>
-        <div className='text-2xl font-bold font-manrope mr-2'>${price * quantity}</div>
+        <div className='text-2xl font-bold font-manrope mr-2'>${Math.ceil(price * quantity)}</div>
       </div>
     </div>
   );
