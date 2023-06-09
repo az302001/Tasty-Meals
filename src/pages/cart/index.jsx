@@ -55,7 +55,7 @@ const Cart = () => {
 //       (item) => (total += Math.ceil(item.price) * item.quantity)
 //     );
 //     return total;
-//   };
+  // };
 
 
   return (
@@ -83,27 +83,27 @@ const Cart = () => {
                   Total a pagar: ${total}
                 </h2>
                <MercadoPagoBttn
-                product={{ name: "Compra en TastyMeals", price: totalPrice() }}
+                product={{ name: "Compra en TastyMeals", price: calculateTotalPrice() }}
               />
               </div>
 
-//         <div className="container mx-auto">
-//           {cartItem.length <= 0 ? (
-//             <h1 className="text-center text-4xl mt-32">
-//               Tu carrito esta vacio
-//             </h1>
-//           ) : (
-//             cartItem.map((item) => <CartList key={item.id} data={item} />)
-//           )}
+         {/* <div className="container mx-auto">
+          {cartItem.length <= 0 ? (
+            <h1 className="text-center text-4xl mt-32">
+               Tu carrito esta vacio
+            </h1>
+           ) : (
+             cartItem.map((item) => <CartList key={item.id} data={item} />)
+          )}
 
-//           {cartItem.length > 0 && (
-//             <div className="max-w-[800px] mx-auto mt-4">
-//               <h2 className="text-right text-3xl font-bold">
-//                 Total a pagar: ${totalPrice()}
-//               </h2>
-//               <MercadoPagoBttn
-//                 product={{ name: "Compra en TastyMeals", price: totalPrice() }}
-//               />
+           {cartItem.length > 0 && (
+            <div className="max-w-[800px] mx-auto mt-4">
+              <h2 className="text-right text-3xl font-bold">
+                Total a pagar: ${totalPrice()}
+             </h2>
+              <MercadoPagoBttn
+                product={{ name: "Compra en TastyMeals", price: totalPrice() }}
+             /> */}
 
             </div>
           )}
