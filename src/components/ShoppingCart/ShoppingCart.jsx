@@ -13,7 +13,7 @@ const ShoppingCart = () => {
     <div className='relative cursor-pointer'>
         <Link href='/cart'>
             <div className='w-[42px]'>
-                <ShoppingCartIcon className='text-color1'/>
+                <ShoppingCartIcon className='text-color1 focus:text-color2 hover:text-color2'/>
                 
                 <span className='absolute -top-2 -rigth-2 text-[13px] bg-color2 h-[23px] w-[18px] rounded-full grid place-items-center text-white'>{cartItem.length}</span>
             </div>
