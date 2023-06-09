@@ -9,6 +9,9 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    screens: {
+      lg: "1024px",
+    },
     extend: {
       colors: {
         transparent: "transparent",
@@ -26,5 +29,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
-
+};
