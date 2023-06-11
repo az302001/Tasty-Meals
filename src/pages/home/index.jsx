@@ -45,7 +45,8 @@ const index = () => {
   );
 };
 
+export default index;
 
-export default PageProtection(index);
+// export default PageProtection(index);
 
 
