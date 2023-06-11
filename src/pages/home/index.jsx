@@ -2,6 +2,7 @@ import React from 'react';
 import Layaout from '@/components/Layaout/Layaout';
 import Link from 'next/link';
 import Destacados from '@/components/Destacados/Destacados';
+import { PageProtection } from '@/Hocs/sesionVerify';
 
 
 
@@ -21,4 +22,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default PageProtection(index);

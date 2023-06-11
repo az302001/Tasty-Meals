@@ -6,7 +6,8 @@ import {
     ORDER_BY_NAME,
     ORDER_BY_CATEGORY,
     ORDER_BY_RATING,
-    RANGE_FOR_PRICE
+    RANGE_FOR_PRICE,
+    GET_USER_DATA
 } from '../actions';
 
 const initialState = {
@@ -14,7 +15,8 @@ const initialState = {
     detailFoods: [],
     addFoods: [],
     foodByName: [],
-    foodFilter: []
+    foodFilter: [],
+    userData: {},
 };
 
 const productsSlice = (state = initialState, action) => {
@@ -91,6 +93,13 @@ const productsSlice = (state = initialState, action) => {
                 ...state,
                 foodFilter: filteredByPrice,
             };
+
+
+        case GET_USER_DATA: 
+        return {
+            ...state,
+            userData: {...action.payload} 
+        };
 
 
         default:

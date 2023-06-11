@@ -22,7 +22,7 @@
 //   const handleSubmit = (e) => {
 //     e.preventDefault();
 
-    
+
 //     fetch("/api/Products/login", {
 //       method: "POST",
 //       body: JSON.stringify({ email, password }),
@@ -32,17 +32,17 @@
 //     })
 //       .then((response) => response.json())
 //       .then((data) => {
-      
+
 //         if (data.error) {
-        
+
 //           toast.error(data.error);
 //         } else {
-          
+
 //           router.push("/home");
 //         }
 //       })
 //       .catch((error) => {
-       
+
 //         console.error("Error en la solicitud:", error);
 //       });
 //   };
@@ -70,7 +70,7 @@
 
 //       </div>
 //       <Link href='home'>
-//       <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+//       <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
 //         Entrar
 //       </button>
 //       </Link>
@@ -123,7 +123,7 @@
 //         <button type="submit" className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
 //             Entrar
 //           </button>
-        
+
 
 //         <GoogleLogin />
 //       </form>
@@ -159,6 +159,7 @@
 
 
 import React, { useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import Image from "next/image";
 import Logo from "@/assets/logo-tasty.png";
 import Link from "next/link";
@@ -175,11 +176,14 @@ const index = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const dispatch = useDispatch();
+  // const foods = useSelector((state) => state.products.foods);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // Realizar una solicitud al backend para verificar las credenciales del usuario
-    fetch("/api/Products/login", {
+    fetch("/api/auth/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
       headers: {
@@ -194,7 +198,14 @@ const index = () => {
           toast.error(data.error);
         } else {
           // Redirigir al usuario a la página de inicio después de iniciar sesión correctamente
-          router.push("/home");
+          if (data.dashboardUrl) {
+            // Redirigir al usuario al dashboard
+            window.location.href = data.dashboardUrl;
+            localStorage.setItem("userToken", data.token)
+          } else {
+            localStorage.setItem("userToken", data.token)
+            router.push("/home");
+          }
         }
       })
       .catch((error) => {
@@ -243,11 +254,9 @@ const index = () => {
           </div>
         </div>
         <button type="submit" className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-            Entrar
-          </button>
-        
+          Entrar
+        </button>
 
-        <GoogleLogin />
       </form>
       <div className="flex justify-around w-full mt-5">
         <div className="inline-flex">
@@ -259,18 +268,24 @@ const index = () => {
         </div>
       </div>
       <hr className="w-48 h-1 mt-4 bg-color1"></hr>
-      <p className="mt-5">
-        No tengo usuario. <strong>Registrarme</strong>
-      </p>
+      <div className="flex flex-row mt-5 gap-1">
+        <p>
+          No tengo usuario.
+        </p>
+        <Link href="/registro">
+          <p className="cursor-pointer"><strong>Registrarme</strong></p>
+        </Link>
+      </div>
       <h2 className="mt-10">O registrarme con:</h2>
-      <section name="social-media-logos" className="flex mt-4">
+      <GoogleLogin />
+      {/* <section name="social-media-logos" className="flex mt-4">
         <div name="facebook-login-logo" className="w-16 h-16">
           <Image src={Facebook} alt={"facebook-login"}></Image>
         </div>
         <div name="google-login-logo" className="w-14 h-14">
           <Image src={Google} alt={"google-login"}></Image>
         </div>
-      </section>
+      </section> */}
     </section>
   );
 };

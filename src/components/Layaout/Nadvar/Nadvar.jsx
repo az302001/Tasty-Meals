@@ -56,7 +56,7 @@
 //           </div>
 //         </Link>
 
-      
+
 
 
 //         <div className='ml-20 mt-[32px]'>
@@ -117,6 +117,7 @@
 // export default Navbar;
 
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Image from 'next/image';
 import Link from "next/link";
 import { useRouter } from 'next/router';
@@ -136,6 +137,11 @@ const Navbar = () => {
   const router = useRouter();
   const { data: session } = useSession();
 
+  const token = typeof window !== 'undefined' ? localStorage.getItem("userToken") : null;
+
+  const userData = useSelector((state) => state.products.userData);
+  // console.log("SOY USERDATA", userData.data.username);
+
   const [estadoMenu, setEstadoMenu] = useState(false);
   const [estadoSearch, setEstadoSearch] = useState(false);
 
@@ -150,7 +156,9 @@ const Navbar = () => {
 
   const handleSignOut = async () => {
     await signOut({ redirect: false });
-    router.replace('/home');
+    localStorage.setItem("userToken", null);
+    // router.replace('/home');
+    router.reload();
   };
 
   const handleSignInState = () => {
@@ -175,9 +183,9 @@ const Navbar = () => {
           </div>
         </Link>
         <div className='flex flex-row justify-center items-center gap-3'>
-            
-        <ShoppingCart className="h-8 w-8 text-color1 " />
-            
+
+          <ShoppingCart className="h-8 w-8 text-color1 " />
+
           <button onClick={cambiarEstadoSearch}>
             {!estadoSearch ? (
               <MagnifyingGlassIcon className="h-8 w-8 text-color1" />
@@ -199,14 +207,20 @@ const Navbar = () => {
       {
         estadoMenu && (
           <div className='flex flex-col bg-color1 pl-5 pt-6 pb-8 text-2xl text-color3 font-manrope absolute z-10 left-0 right-0'>
+
             {session && (
-              <>
-                <div className='flex flex-row items-center mb-4 gap-2 text-white'>
-                  <img src={session.user.image} alt='user-image' className='w-16 h-16 rounded-full bg-gray-500' />
-                  {session.user.name}
-                </div>
-              </>
+              <div className='flex flex-row items-center mb-4 gap-2 text-white'>
+                <img src={session.user.image} alt='user-image' className='w-16 h-16 rounded-full bg-gray-500' />
+                {session.user.name}
+              </div>
             )}
+
+            {userData?.data?.username && (
+              <div className='flex flex-row items-center mb-4 gap-2 text-white'>
+                {userData?.data?.username}
+              </div>
+            )}
+
 
             {Object.entries(rutas).map(([rut, nombre]) => (
               <Link href={rut} key={rut}>
@@ -214,14 +228,13 @@ const Navbar = () => {
               </Link>
             ))}
 
-            {session ? (
+            {session || userData?.data?.username ? (
               <button type='button' className="border-b pb-1 text-color2 w-40 text-left" onClick={handleSignOut}>Cerrar sesión</button>
             ) : <>
               <Link href="/login">
                 <button type='button' className="border-b pb-1 text-color2 w-40 text-left" onClick={handleSignInState}>Iniciar sesión</button>
               </Link>
             </>}
-
           </div>
         )
       }
