@@ -7,7 +7,14 @@ import {
     ORDER_BY_CATEGORY,
     ORDER_BY_RATING,
     RANGE_FOR_PRICE,
+
     GET_USER_DATA
+
+    DELETE_FOOD,
+    GET_ALL_CATEGORIES,
+    UPDATE_FOOD,
+    ORDER_BY_PRICE
+
 } from '../actions';
 
 const initialState = {
@@ -16,7 +23,11 @@ const initialState = {
     addFoods: [],
     foodByName: [],
     foodFilter: [],
+
     userData: {},
+
+    categories: [],
+
 };
 
 const productsSlice = (state = initialState, action) => {
@@ -93,6 +104,44 @@ const productsSlice = (state = initialState, action) => {
                 ...state,
                 foodFilter: filteredByPrice,
             };
+
+        
+        case DELETE_FOOD:
+            return {
+                ...state,
+                foods: state.foods.filter(food => food.id !== action.payload),
+                //? Porque me querra actualizar el filtro tambien si no lo toco
+                // foodFilter: state.foodFilter.filter(food => food.id !== action.payload),
+            };
+
+        case GET_ALL_CATEGORIES:
+            return {
+                ...state,
+                categories: action.payload,
+            };
+
+        case UPDATE_FOOD:
+            return {
+                ...state,
+                foods: action.payload,
+                //? Porque me querra actualizar el filtro tambien si no lo toco
+                // foodFilter: [...action.payload] 
+            };
+
+        // * Preguntar en donde tiene que funcionar el ordenamiento por precio, dedusco que seria en el menu
+        case ORDER_BY_PRICE:
+            const foodbyprice = action.payload === 'menor' ? state.foodFilter.sort((a, b) => {
+                if (a.price > b.price) return 1;
+                else return -1;
+            }) : state.foodFilter.sort((a, b) => {
+                if (a.price < b.price) return 1;
+                else return -1;
+            });
+
+            return {
+                ...state,
+                foodFilter: foodbyprice
+            }
 
 
         case GET_USER_DATA: 

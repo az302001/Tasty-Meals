@@ -9,7 +9,16 @@ export const ORDER_BY_NAME = "ORDER_BY_NAME";
 export const ORDER_BY_CATEGORY = "ORDER_BY_CATEGORY";
 export const ORDER_BY_RATING = "ORDER_BY_RATING";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
+
 export const GET_USER_DATA = "GET_USER_DATA";
+
+export const DELETE_FOOD = "DELETE_FOOD";
+export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
+export const UPDATE_FOOD = "UPDATE_FOOD";
+export const ORDER_BY_PRICE = "ORDER_BY_PRICE"; // TODO: ordenar el precio de menor a mayor y viceversa
+
+
+
 
 export const getFoods = () => {
 
@@ -96,6 +105,7 @@ export const cleanDetail = () => {
 };
 
 
+
 // Este seria para buscar al usuario por su email
 export const getUserData = (token) => {
     return async (dispatch) => {
@@ -110,6 +120,51 @@ export const getUserData = (token) => {
                 console.error('Ocurrió un error en la solicitud:', error);
             }
         }
+    };
+}
+
+
+
+
+
+export const deleteFood = (id) => {
+    return async (dispatch) => {
+        const response = (await axios.delete(`/api/Products/${id}`)).data.product;
+        return dispatch({
+            type: 'DELETE_FOOD',
+            payload: response,
+        });
+    };
+}
+
+
+export const getAllCategories = () => {
+    return async (dispatch) => {
+        const response = (await axios.get('/api/Products/AllCategories')).data;
+        console.log(response);
+        return dispatch({
+            type: 'GET_ALL_CATEGORIES',
+            payload: response,
+        });
+    };
+};
+
+
+export const updateFood = (id, payload) => {
+    return async (dispatch) => {
+        const response = (await axios.put(`/api/Products/${id}`, payload)).data.product;
+        return dispatch({
+            type: 'UPDATE_FOOD',
+            payload: response,
+        });
+    };
+}
+
+
+export const orderByPrice = (payload) => {
+    return {
+        type: 'ORDER_BY_PRICE',
+        payload: payload,
     };
 }
 

@@ -12,7 +12,7 @@ export default function create() {
     const fieldErrors = {};
 
     if (!state.name) {
-      fieldErrors.name = "Debe ingresar un nombre";
+      fieldErrors.name = "Debe ingresar";
     }
 
     if (!state.price) {
@@ -20,7 +20,7 @@ export default function create() {
     }
 
     if (!state.description) {
-      fieldErrors.description = "Debe ingresar una descripción";
+      fieldErrors.description = "Debe ingresar";
     }
 
     if (!state.image) {
@@ -193,9 +193,13 @@ export default function create() {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow lg:w-5/6 text-center appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
-          {errors.name ? <p className="text-red-600">{errors.name}</p> : ""}{" "}
+          {errors.name ? (
+            <p className="text-red-600">{errors.name} un nombre</p>
+          ) : (
+            ""
+          )}{" "}
           <label htmlFor="price" className="text-xl p-3 text-color1">
             {" "}
             Ingrese un precio:
@@ -205,7 +209,7 @@ export default function create() {
             type="number"
             value={formData.price}
             onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none lg:w-5/6 text-center border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
           {errors.price ? <p className="text-red-600">{errors.price}</p> : ""}{" "}
           <label htmlFor="description" className="text-xl p-3 text-color1">
@@ -215,7 +219,7 @@ export default function create() {
             name="description"
             value={formData.description}
             onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none lg:w-5/6 text-center border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           ></textarea>
           {errors.description ? (
             <p className="text-red-600">{errors.description} una descripcion</p>
@@ -241,9 +245,15 @@ export default function create() {
             value={formData.Category.connect.id || ""}
             onChange={handleChange}
           >
-            <option value="">Seleccione una opción</option>
+            <option value="" className="hidden">
+              Seleccione una opción
+            </option>
             {existingCategories.map((category) => (
-              <option key={category.id} value={category.id}>
+              <option
+                key={category.id}
+                value={category.id}
+                className="text-center"
+              >
                 {category.name}
               </option>
             ))}

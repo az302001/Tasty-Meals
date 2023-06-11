@@ -6,6 +6,10 @@ import { getFoodById, cleanDetail } from "@/redux/actions";
 import Image from "next/image";
 import axios from "axios";
 import Layaout from "@/components/Layaout/Layaout";
+import { ToastContainer, toast } from "react-toastify";
+import ReactLoading from "react-loading";
+const Swal = require("sweetalert2");
+import "react-toastify/dist/ReactToastify.css";
 export default function Update() {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -67,39 +71,93 @@ export default function Update() {
   }, [id, clearErrors]);
 
   const [serverResponse, setServerResponse] = useState("");
+  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
 
-  const onSubmit = (data) => {
-    const requestData = {
-      id: food?.id || "",
-      name: data.name,
-      price: data.price,
-      description: data.description,
-      image: data.image,
-      Category: { connect: { id: parseInt(data.categoryId) } },
-    };
+  const [isLoading, setIsLoading] = useState(false);
 
-    axios
-      .put(`http://localhost:3000/api/Products/${id}`, requestData)
-      .then((response) => {
-        const serverMessage = response.data.mensaje;
-        setServerResponse(serverMessage);
-      })
-      .catch((error) => {
-        console.error("Error al realizar la solicitud:", error);
-      });
-    console.log(requestData);
+  const uploadImage = async (file) => {
+    setIsLoading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await axios.post(
+        "http://localhost:3000/api/Products/uploadImage",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      const imageUrl = response.data.imageUrl;
+      setUploadedImageUrl(imageUrl);
+    } catch (error) {
+      console.error("Error al cargar la imagen:", error);
+      throw new Error("Error al cargar la imagen");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const onSubmit = async (data) => {
+    try {
+      const requestData = {
+        id: food?.id || "",
+        name: data.name,
+        price: parseInt(data.price),
+        description: data.description,
+        image: uploadedImageUrl || food?.image || "",
+        Category: { connect: { id: parseInt(data.categoryId) } },
+      };
+
+      const formHasChanges =
+        requestData.name !== food?.name ||
+        requestData.price !== food?.price ||
+        requestData.description !== food?.description ||
+        requestData.image !== food?.image ||
+        requestData.Category?.connect?.id !== food?.categoryId;
+
+      if (!formHasChanges) {
+        return;
+      }
+
+      const response = await axios.put(
+        `http://localhost:3000/api/Products/${id}`,
+        requestData
+      );
+
+      const serverMessage = response.data.mensaje;
+      Swal.fire(serverMessage, "", "success");
+      setServerResponse(serverMessage);
+      setTimeout(() => {
+        router.push("/dashboard/products");
+      }, 2000);
+    } catch (error) {
+      console.error("Error al realizar la solicitud:", error);
+    }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    uploadImage(file);
   };
 
   return (
     <Layaout>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col items-center"
+        className="flex flex-col items-center "
       >
-        <label htmlFor="name">Nombre:</label>
+        <label htmlFor="name" className="text-xl p-3 text-color1 ">
+          Nombre:
+        </label>
         <input
           type="text"
           id="name"
+          className="shadow text-center lg:w-1/6 appearance-none border rounded w-4/6 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           placeholder="Nombre"
           {...register("name", { required: true, maxLength: 40 })}
           onChange={() => {
@@ -117,11 +175,14 @@ export default function Update() {
           </p>
         )}
 
-        <label htmlFor="price">Precio:</label>
+        <label htmlFor="price" className="text-xl p-3 text-color1">
+          Precio:
+        </label>
         <input
           type="text"
           id="price"
           placeholder="Precio"
+          className="shadow appearance-none border rounded lg:w-1/6 text-center w-4/6 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           {...register("price", {
             required: true,
             pattern: /^[0-9]+([.,][0-9]{1,2})?$/,
@@ -137,9 +198,12 @@ export default function Update() {
           <p className="text-red-700">El precio debe ser un número válido</p>
         )}
 
-        <label htmlFor="description">Descripción:</label>
+        <label htmlFor="description" className="text-xl p-3 text-color1">
+          Descripción:
+        </label>
         <textarea
           id="description"
+          className="shadow appearance-none  text-center lg:w-1/6 h-24 border rounded w-4/6 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           {...register("description", { required: true, maxLength: 160 })}
           onChange={() => {
             trigger("description");
@@ -155,17 +219,11 @@ export default function Update() {
             La descripción debe tener menos de 160 caracteres
           </p>
         )}
-
-        <label htmlFor="image">Imagen:</label>
-        <Image
-          src={food?.image}
-          width={50}
-          height={50}
-          alt="Imagen de Comida"
-        />
-
-        <label htmlFor="categoryId">Categoría:</label>
+        <label htmlFor="categoryId" className="text-xl p-3 text-color1">
+          Categoría:
+        </label>
         <select
+          className="shadow appearance-none lg:w-1/6 text-center border rounded w-4/6 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="categoryId"
           {...register("categoryId", { required: true })}
           onChange={() => {
@@ -182,11 +240,62 @@ export default function Update() {
         {errors.categoryId && errors.categoryId.type === "required" && (
           <p className="text-red-700">Este campo es requerido</p>
         )}
+        <label htmlFor="image" className="text-xl p-3 text-color1">
+          Imagen:
+        </label>
 
-        <input type="file" accept="image/*" />
-
-        <input type="submit" value="Enviar" />
-
+        {uploadedImageUrl ? (
+          <Image
+            src={uploadedImageUrl}
+            width={100}
+            height={80}
+            alt="Imagen de Comida"
+          />
+        ) : (
+          <Image
+            src={food?.image}
+            width={140}
+            height={100}
+            alt="Imagen de Comida"
+          />
+        )}
+        <label htmlFor="image" className="text-xl p-3 text-color1">
+          Subir una imagen:
+        </label>
+        <input
+          type="file"
+          accept="image/*"
+          class="bg-transparent lg:w-1/6 hover:bg-blue-500 w-4/6 mt-5 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+          onChange={handleImageChange}
+        />
+        <div className="mb-10 mt-5">
+          {isLoading ? (
+            <ReactLoading
+              type={"spin"}
+              color={"black"}
+              height={50}
+              width={50}
+            />
+          ) : (
+            <div className="flex space-x-4 mt-5">
+              <input
+                type="submit"
+                value="Enviar"
+                className="bg-blue-500 text-white font-semibold py-2 px-4 border border-blue-500 rounded cursor-pointer"
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  dispatch(getFoodById(id));
+                  setUploadedImageUrl("");
+                }}
+                className="bg-gray-500 text-white font-semibold py-2 px-4 border border-gray-500 rounded cursor-pointer"
+              >
+                Revertir
+              </button>
+            </div>
+          )}
+        </div>
         {serverResponse && <p>{serverResponse}</p>}
       </form>
     </Layaout>
