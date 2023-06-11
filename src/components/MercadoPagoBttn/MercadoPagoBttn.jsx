@@ -2,17 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 
-export default function MercadoPagoBttn({ product }) {
+export default function MercadoPagoBttn({ product, allProducts }) {
   const [url, setUrl] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
     const generateLink = async () => {
       try {
+        const productIds = allProducts.map((item) => item.id);
         const { data: preference } = await axios.post(
           "/api/MercadoPago/checkout",
           {
-            product,
+            product, 
+            productIds,
           }
         );
         setUrl(preference.url);
