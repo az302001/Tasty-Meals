@@ -7,10 +7,14 @@ import {
     ORDER_BY_CATEGORY,
     ORDER_BY_RATING,
     RANGE_FOR_PRICE,
+
+    GET_USER_DATA
+
     DELETE_FOOD,
     GET_ALL_CATEGORIES,
     UPDATE_FOOD,
     ORDER_BY_PRICE
+
 } from '../actions';
 
 const initialState = {
@@ -19,7 +23,11 @@ const initialState = {
     addFoods: [],
     foodByName: [],
     foodFilter: [],
+
+    userData: {},
+
     categories: [],
+
 };
 
 const productsSlice = (state = initialState, action) => {
@@ -134,6 +142,13 @@ const productsSlice = (state = initialState, action) => {
                 ...state,
                 foodFilter: foodbyprice
             }
+
+
+        case GET_USER_DATA: 
+        return {
+            ...state,
+            userData: {...action.payload} 
+        };
 
 
         default:
