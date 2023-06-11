@@ -9,10 +9,14 @@ export const ORDER_BY_NAME = "ORDER_BY_NAME";
 export const ORDER_BY_CATEGORY = "ORDER_BY_CATEGORY";
 export const ORDER_BY_RATING = "ORDER_BY_RATING";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
+
+export const GET_USER_DATA = "GET_USER_DATA";
+
 export const DELETE_FOOD = "DELETE_FOOD";
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
 export const UPDATE_FOOD = "UPDATE_FOOD";
 export const ORDER_BY_PRICE = "ORDER_BY_PRICE"; // TODO: ordenar el precio de menor a mayor y viceversa
+
 
 
 
@@ -31,19 +35,19 @@ export const getFoods = () => {
 };
 
 export const orderByName = (payload) => {
-  // ordenar  de la A-Z Y DE LA Z-A
-  return {
-    type: ORDER_BY_NAME,
-    payload: payload,
-  };
+    // ordenar  de la A-Z Y DE LA Z-A
+    return {
+        type: ORDER_BY_NAME,
+        payload: payload,
+    };
 };
 
 export const orderByCategory = (payload) => {
-  // ordenar por categoria
-  return {
-    type: ORDER_BY_CATEGORY,
-    payload: payload,
-  };
+    // ordenar por categoria
+    return {
+        type: ORDER_BY_CATEGORY,
+        payload: payload,
+    };
 };
 
 // Este seria para el input de search
@@ -51,16 +55,17 @@ export const getFoodByName = (name) => {
 
 
 
-   return async (dispatch) => {
+    return async (dispatch) => {
         try {
-        const response = (await axios.get(`/api/Products?name=${name}`)).data.GetproductByName;
-        return dispatch({
-                    type: 'GET_FOOD_BY_NAME',
-                    payload: response,
-                });
-        } catch (error) {{
-            console.error('Ocurrió un error en la solicitud:', error);
-        }
+            const response = (await axios.get(`/api/Products?name=${name}`)).data.GetproductByName;
+            return dispatch({
+                type: 'GET_FOOD_BY_NAME',
+                payload: response,
+            });
+        } catch (error) {
+            {
+                console.error('Ocurrió un error en la solicitud:', error);
+            }
         }
     };
 }
@@ -85,19 +90,38 @@ export const orderByRating = (payload) => {
     }
 }
 
-export const rangeForPrice =({minPrice, maxPrice})=>{
+export const rangeForPrice = ({ minPrice, maxPrice }) => {
     return {
         type: RANGE_FOR_PRICE,
-        payload:{minPrice, maxPrice}
+        payload: { minPrice, maxPrice }
     }
 }
 
 
 export const cleanDetail = () => {
-  return {
-    type: CLEAN_DETAIL,
-  };
+    return {
+        type: CLEAN_DETAIL,
+    };
 };
+
+
+
+// Este seria para buscar al usuario por su email
+export const getUserData = (token) => {
+    return async (dispatch) => {
+        try {
+            const response = (await axios.post(`/api/auth/sesionVerify`, {token}));
+            return dispatch({
+                type: 'GET_USER_DATA',
+                payload: response,
+            });
+        } catch (error) {
+            {
+                console.error('Ocurrió un error en la solicitud:', error);
+            }
+        }
+    };
+}
 
 
 
@@ -143,3 +167,4 @@ export const orderByPrice = (payload) => {
         payload: payload,
     };
 }
+
