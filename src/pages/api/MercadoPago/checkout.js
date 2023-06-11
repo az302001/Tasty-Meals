@@ -10,7 +10,7 @@ const handler = async (req, res) => {
     //const userId = req.body.userId;
     const productIds = req.body.productIds;
 
-    const URL = "https://ea3b-45-224-188-181.ngrok-free.app"; //ESTA URL HAY QUE CAMBIAR POR LA DEL DEPLOY
+    const URL = "https://tasty-meals.vercel.app"; //ESTA URL HAY QUE CAMBIAR POR LA DEL DEPLOY
 
     try {
       const preference = {
