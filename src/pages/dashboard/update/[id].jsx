@@ -76,7 +76,7 @@ export default function Update() {
   const [isLoading, setIsLoading] = useState(false);
 
   const uploadImage = async (file) => {
-    setIsLoading(true); // Mostrar indicador de carga
+    setIsLoading(true);
 
     try {
       const formData = new FormData();
@@ -93,12 +93,12 @@ export default function Update() {
       );
 
       const imageUrl = response.data.imageUrl;
-      setUploadedImageUrl(imageUrl); // Guardar la URL de la imagen cargada
+      setUploadedImageUrl(imageUrl);
     } catch (error) {
       console.error("Error al cargar la imagen:", error);
       throw new Error("Error al cargar la imagen");
     } finally {
-      setIsLoading(false); // Ocultar indicador de carga
+      setIsLoading(false);
     }
   };
 
@@ -107,13 +107,12 @@ export default function Update() {
       const requestData = {
         id: food?.id || "",
         name: data.name,
-        price: data.price,
+        price: parseInt(data.price),
         description: data.description,
-        image: uploadedImageUrl || food?.image || "", // Utilizar la URL de la imagen cargada o la existente
+        image: uploadedImageUrl || food?.image || "",
         Category: { connect: { id: parseInt(data.categoryId) } },
       };
 
-      // Verificar si no ha habido cambios en los campos del formulario
       const formHasChanges =
         requestData.name !== food?.name ||
         requestData.price !== food?.price ||
@@ -134,7 +133,6 @@ export default function Update() {
       Swal.fire(serverMessage, "", "success");
       setServerResponse(serverMessage);
       setTimeout(() => {
-        // Redirigir al usuario a la página de inicio de sesión
         router.push("/dashboard/products");
       }, 2000);
     } catch (error) {
@@ -159,7 +157,7 @@ export default function Update() {
         <input
           type="text"
           id="name"
-          className="shadow text-center appearance-none border rounded w-4/6 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow text-center lg:w-1/6 appearance-none border rounded w-4/6 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           placeholder="Nombre"
           {...register("name", { required: true, maxLength: 40 })}
           onChange={() => {
@@ -184,7 +182,7 @@ export default function Update() {
           type="text"
           id="price"
           placeholder="Precio"
-          className="shadow appearance-none border rounded  text-center w-4/6 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border rounded lg:w-1/6 text-center w-4/6 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           {...register("price", {
             required: true,
             pattern: /^[0-9]+([.,][0-9]{1,2})?$/,
@@ -205,7 +203,7 @@ export default function Update() {
         </label>
         <textarea
           id="description"
-          className="shadow appearance-none  text-center h-24 border rounded w-4/6 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none  text-center lg:w-1/6 h-24 border rounded w-4/6 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           {...register("description", { required: true, maxLength: 160 })}
           onChange={() => {
             trigger("description");
@@ -225,7 +223,7 @@ export default function Update() {
           Categoría:
         </label>
         <select
-          className="shadow appearance-none  text-center border rounded w-4/6 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none lg:w-1/6 text-center border rounded w-4/6 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="categoryId"
           {...register("categoryId", { required: true })}
           onChange={() => {
@@ -267,7 +265,7 @@ export default function Update() {
         <input
           type="file"
           accept="image/*"
-          class="bg-transparent hover:bg-blue-500 w-4/6 mt-5 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+          class="bg-transparent lg:w-1/6 hover:bg-blue-500 w-4/6 mt-5 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
           onChange={handleImageChange}
         />
         <div className="mb-10 mt-5">
