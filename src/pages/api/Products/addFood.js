@@ -1,3 +1,4 @@
+
 import prisma from "@/prisma/prisma";
 import cloudinary from "cloudinary";
 import formidable from "formidable-serverless";
@@ -20,12 +21,14 @@ export default async function handler(req, res) {
     form.keepExtensions = true;
 
     form.parse(req, async (err, fields, files) => {
+      console.log(files);
       if (err) {
         console.error("Error al procesar la imagen:", err);
         res.status(500).json({ error: "Error al procesar la imagen" });
         return;
       }
       if (!files.image) {
+        console.log(files.image);
         res.status(400).json({ error: "No ha enviado una imagen" });
         return;
       }
@@ -47,9 +50,9 @@ export default async function handler(req, res) {
 
         const createdFood = await prisma.food.create({
           data: {
-            name,
+            name: name,
             price: parseInt(price),
-            description,
+            description: description,
             image: imageUrl,
             Category: {
               connect: {
@@ -58,6 +61,7 @@ export default async function handler(req, res) {
             },
             rating: parseInt(rating),
             discount: parseInt(discount),
+            quantity: 0,
           },
         });
 
