@@ -130,7 +130,6 @@ const Menu = () => {
               </select>
             </div>
 
-
             <div className='mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3'>
               <select onChange={e => handleFilterScore(e)} name="numerical" defaultValue={'DEFAULT'} className='bg-color3 w-52' >
                 <option disabled value="DEFAULT">Puntuacion</option>
