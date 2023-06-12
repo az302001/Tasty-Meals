@@ -167,10 +167,10 @@ const Navbar = () => {
   }
 
   const rutas = {
-    "/home": "Home",
+    "/home": "Inicio",
     "/menu": "Menú",
-    "/dashboard/create": "Crear",
-    "/ordenes": "Mis ordenes",
+    // "/dashboard/create": "Crear",
+    "/cart": "Mis ordenes",
   };
 
 

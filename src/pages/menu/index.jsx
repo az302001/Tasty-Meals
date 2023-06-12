@@ -5,7 +5,7 @@ import Cards from '@/components/Cards/Cards';
 import { allProducts } from '@/redux/reducer/productsSlice';
 import Layaout from '@/components/Layaout/Layaout';
 import ControlPaginado from '@/components/ControlPaginado/ControlPaginado';
-import { getFoods, orderByCategory, orderByName, orderByRating, rangeForPrice } from '@/redux/actions';
+import { getFoods, orderByCategory, orderByName, orderByPrice, orderByRating, rangeForPrice } from '@/redux/actions';
 
 const Menu = () => {
   const dispatch = useDispatch();
@@ -77,6 +77,12 @@ const Menu = () => {
     }
   };
 
+  const handleOrderByPrice = (e) => {
+    const selectPrice = e.target.value;
+    setOrder(selectPrice);
+    dispatch(orderByPrice(selectPrice));
+  }
+
   const totalPaginas = Math.ceil(getfoodtoshow.length / elementosPorPagina);
   const alimentosPaginados = getfoodtoshow.slice(
     (paginaActual - 1) * elementosPorPagina,
@@ -131,6 +137,15 @@ const Menu = () => {
                 <option value="MayorMenor">De Max a Min</option>
               </select>
             </div>
+
+            <div className='mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3'>
+              <select onChange={e => handleOrderByPrice(e)} name="numerical" defaultValue={'DEFAULT'} className='bg-color3 w-52' >
+                <option disabled value="DEFAULT">Precio</option>
+                <option value="menor">De Menor precio</option>
+                <option value="mayor">De Mayor precio</option>
+              </select>
+            </div>
+            
           </div>
           {alimentosPaginados.length === 0 && <p>No tenemos productos con ese rango de precio.</p>}
           <Cards foods={alimentosPaginados} />

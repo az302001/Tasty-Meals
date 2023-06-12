@@ -5,8 +5,9 @@ import { useRecoilState } from 'recoil';
 import { cartState } from '../../../atoms/cartState';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Image from "next/image";
-import Carrito from "@/assets/carro-de-la-carretilla.png";
+import { signOut, useSession } from 'next-auth/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from "next/router";
 
 const Card = ({ food }) => {
   const { id, name, image, price, description } = food;
@@ -36,8 +37,30 @@ const Card = ({ food }) => {
     }
   };
 
+  const { data: session } = useSession();
+  const userData = useSelector((state) => state.products.userData);
+  const router = useRouter();
+
   const addItemToCart = () => {
     const newItem = { ...food, quantity };
+    let google = session;
+    let local = userData?.data?.username;
+    if (google) {
+      google = true;
+      local = true;
+    } else {
+      google = false;
+    }
+    if (local) {
+      google = true;
+      local = true;
+    } else {
+      local = false;
+    }
+
+    if (!google || !local) {
+      return router.replace('/login');
+    }
     if (cartItem.findIndex((fo) => fo.id === food.id) === -1) {
       setCartItem((prevState) => [...prevState, newItem]);
     } else {
@@ -49,6 +72,27 @@ const Card = ({ food }) => {
     }
     handleClick();
   };
+
+  // const addItemToCart = () => {
+  //   const newItem = { ...food, quantity };
+
+  //   if (!session || !userData.data) {
+  //     alert('Debes iniciar sesión para poder comprar.');
+  //     return;
+  //   }
+
+  //   if (cartItem.findIndex((fo) => fo.id === food.id) === -1) {
+  //     setCartItem((prevState) => [...prevState, newItem]);
+  //   } else {
+  //     setCartItem((prevState) => {
+  //       return prevState.map((item) => {
+  //         return item.id === food.id ? { ...item, quantity: item.quantity + quantity } : item;
+  //       });
+  //     });
+  //   }
+
+  //   handleClick();
+  // };
 
   const totalPrice = price * quantity;
 
