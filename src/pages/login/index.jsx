@@ -182,6 +182,11 @@ const index = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (!email || !password) {
+      toast.error("Debes ingresar un correo electrónico y una contraseña");
+      return;
+    }
+
     // Realizar una solicitud al backend para verificar las credenciales del usuario
     fetch("/api/auth/login", {
       method: "POST",
@@ -215,7 +220,7 @@ const index = () => {
   };
   return (
     <section onSubmit={handleSubmit} className="flex flex-col items-center bg-color3 h-screen w-screen">
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <div className="flex flex-wrap mt-6 w-64 h-56 max-w-sm">
         <Image src={Logo} alt={"tasty-meals-logo"} />
       </div>
@@ -259,13 +264,13 @@ const index = () => {
 
       </form>
       <div className="flex justify-around w-full mt-5">
-        <div className="inline-flex">
+        {/* <div className="inline-flex">
           <input type="checkbox"></input>
           <p className="ml-1">Recordarme</p>
         </div>
         <div>
           <p>Olvide mi contraseña</p>
-        </div>
+        </div> */}
       </div>
       <hr className="w-48 h-1 mt-4 bg-color1"></hr>
       <div className="flex flex-row mt-5 gap-1">
