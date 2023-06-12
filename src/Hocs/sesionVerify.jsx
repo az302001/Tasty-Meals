@@ -1,35 +1,35 @@
-// import { getUserData } from '@/redux/actions';
-// import { useDispatch, useSelector } from 'react-redux';
+import { getUserData } from '@/redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 
-// export const PageProtection = (WrappedComponent) => {
-//     const PageProtectionWrapper = (props) => {
-//         const token = typeof window !== 'undefined' ? localStorage.getItem("userToken") : null;
+export const PageProtection = (WrappedComponent) => {
+    const PageProtectionWrapper = (props) => {
+        const token = typeof window !== 'undefined' ? localStorage.getItem("userToken") : null;
 
-//         const dispatch = useDispatch(); 
+        const dispatch = useDispatch(); 
 
-//         if (!token) {
-//             return (
-//                 <div>
-//                     <p>Cargando...</p>
-//                 </div>
-//             );
-//         }
+        // if (!token) {
+        //     return (
+        //         <div>
+        //             <p>Cargando...</p>
+        //         </div>
+        //     );
+        // }
 
-//         if (token) {
-//             dispatch(getUserData(token));
-//         }
+        if (token) {
+            dispatch(getUserData(token));
+        }
 
-//         return <WrappedComponent {...props} />;
-//     };
+        return <WrappedComponent {...props} />;
+    };
 
-//     PageProtectionWrapper.displayName = `PageProtection(${getDisplayName(
-//         WrappedComponent
-//     )})`;
+    PageProtectionWrapper.displayName = `PageProtection(${getDisplayName(
+        WrappedComponent
+    )})`;
 
-//     return PageProtectionWrapper;
-// };
+    return PageProtectionWrapper;
+};
 
-// function getDisplayName(WrappedComponent) {
-//     return WrappedComponent.displayName || WrappedComponent.name || 'Component';
-// }
+function getDisplayName(WrappedComponent) {
+    return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+}

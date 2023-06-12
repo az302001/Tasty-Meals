@@ -5,13 +5,6 @@ import Link from 'next/link';
 import Destacados from '@/components/Destacados/Destacados';
 import { PageProtection } from '@/Hocs/sesionVerify';
 
-
-
-
-
-
-
-
 const index = () => {
   return (
     <Layaout>
@@ -45,8 +38,8 @@ const index = () => {
   );
 };
 
-export default index;
+// export default index;
 
-// export default PageProtection(index);
+export default PageProtection(index);
 
 

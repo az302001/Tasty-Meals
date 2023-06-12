@@ -10,36 +10,34 @@ import { getFoods, orderByCategory, orderByName, orderByPrice, orderByRating, ra
 const Menu = () => {
   const dispatch = useDispatch();
   const foods = useSelector((state) => state.products.foods);
+  // const foods = useSelector(allProducts);
   const foodFilter = useSelector(allProducts);
-  console.log(foods);
   const [paginaActual, setPaginaActual] = useState(1);
   const elementosPorPagina = 18;
   const categories = useSelector((state) => state.products.foods.map((food) => food.Category.name));
 
 
-
-
   const [filtroAplicado, setFiltroAplicado] = useState(false);
-
-
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
   const categoriesSet = new Set(categories);
   const uniqueCategories = Array.from(categoriesSet);
   const [order, setOrder] = useState('');
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState('');
+  const [minPrice, setMinPrice] = useState(2);
+  const [maxPrice, setMaxPrice] = useState(3);
 
-  let getfoodtoshow = foodFilter || foods;
+  const getfoodtoshow = foodFilter || foods;
 
   useEffect(() => {
     dispatch(getFoods());
     setFiltroAplicado(false);
+    setSelectedCategory('all');
   }, [dispatch]);
 
   const cambiarPagina = (pagina) => {
     setPaginaActual(pagina);
     setFiltroAplicado(true);
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   };
 
   const handleSort = (e) => {
@@ -50,7 +48,7 @@ const Menu = () => {
 
   const handleFilterCategories = (e) => {
     const selectedCategory = e.target.value;
-    setOrder(selectedCategory);
+    setSelectedCategory(selectedCategory);
     dispatch(orderByCategory(selectedCategory));
     setPaginaActual(1);
   };
@@ -59,22 +57,25 @@ const Menu = () => {
     const selectRating = e.target.value;
     setOrder(selectRating);
     dispatch(orderByRating(selectRating));
-  }
+  };
 
   const handleFilterPrice = () => {
-    if (minPrice < 0) {
-      setMinPrice(0);
-      alert("El rango mínimo de precio no puede ser negativo. Se estableció en cero.");
+    if (minPrice < 1) {
+      alert("El rango mínimo de precio no puede ser menor que 1.");
     } else if (minPrice > maxPrice) {
       alert("El rango mínimo de precio no puede ser mayor que el rango máximo.");
     } else {
-      if (minPrice === 0 && maxPrice === 0) {
-        dispatch(getFoods()); // Obtener todos los productos si ambos inputs son 0
+      if (minPrice === 1 && maxPrice === 2) {
+        if (selectedCategory === 'all') {
+          dispatch(getFoods()); // Obtener todos los productos si ambos inputs son 3 y no hay categoría seleccionada
+        } else {
+          dispatch(orderByCategory(selectedCategory));
+        }
       } else {
         dispatch(rangeForPrice({ minPrice, maxPrice }));
       }
     }
-  }
+  };
 
   const handleOrderByPrice = (e) => {
     const selectPrice = e.target.value;
@@ -82,16 +83,11 @@ const Menu = () => {
     dispatch(orderByPrice(selectPrice));
   }
 
-
-
   const totalPaginas = Math.ceil(getfoodtoshow.length / elementosPorPagina);
   const alimentosPaginados = getfoodtoshow.slice(
     (paginaActual - 1) * elementosPorPagina,
     paginaActual * elementosPorPagina
   );
-
-
-
 
   return (
     <div>
@@ -101,21 +97,26 @@ const Menu = () => {
             <div className='mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3'>
               <input
                 type="number"
-                placeholder="Precio Minimo"
+                placeholder={`Precio Minimo (${Math.min(...foods.map((food) => food.price))})`}
                 value={minPrice}
-                onChange={(e) => setMinPrice(parseInt(e.target.value))}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value);
+                  setMinPrice(value >= 1 ? value : 1)
+                }}
               />
               <input
                 type="number"
-                placeholder="Precio Maximo"
+                placeholder="Precio Máximo"
                 value={maxPrice}
-                onChange={(e) => setMaxPrice(parseInt(e.target.value))}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value);
+                  setMaxPrice(value >= 2 ? value : 2);
+                }}
               />
-              <button onClick={handleFilterPrice}>Filtrar</button>
+              <button onClick={handleFilterPrice}>Filtrar por precio</button>
             </div>
             <div className='mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3'>
-              <select onChange={handleFilterCategories} defaultValue={'DEFAULT'} className='bg-color3 w-52'>
-                <option disabled value="DEFAULT">Categorias</option>
+              <select onChange={handleFilterCategories} value={selectedCategory} className='bg-color3 w-52'>
                 <option value="all">Todas las categorias</option>
                 {uniqueCategories.map((category) => (
                   <option key={category} value={category}>{category}</option>
@@ -131,7 +132,7 @@ const Menu = () => {
             </div>
 
             <div className='mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3'>
-              <select onChange={e => handleFilterScore(e)} name="numerical" defaultValue={'DEFAULT'} className='bg-color3 w-52' >
+              <select onChange={handleFilterScore} name="numerical" defaultValue={'DEFAULT'} className='bg-color3 w-52'>
                 <option disabled value="DEFAULT">Puntuacion</option>
                 <option value="MenorMayor">De Min a Max</option>
                 <option value="MayorMenor">De Max a Min</option>
@@ -146,9 +147,7 @@ const Menu = () => {
               </select>
             </div>
           </div>
-
-
-          {getfoodtoshow.length === 0 && <p>No hay comidas con ese precio.</p>}
+          {alimentosPaginados.length === 0 && <p>No tenemos productos con ese rango de precio.</p>}
           <Cards foods={alimentosPaginados} />
         </div>
         <ControlPaginado
@@ -157,8 +156,7 @@ const Menu = () => {
           cambiarPagina={cambiarPagina}
           filtroAplicado={filtroAplicado}
         />
-        <div>
-        </div>
+        <div></div>
       </Layaout>
     </div>
   );

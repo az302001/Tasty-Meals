@@ -9,6 +9,16 @@ export default async function handler(req, res) {
         case 'POST':
             const { email, password } = body;
 
+            // Validar si los campos están vacíos
+            if (!email || !password) {
+                res
+                    .status(400)
+                    .json({
+                        error: "Debes ingresar un correo electrónico y una contraseña",
+                    });
+                return;
+            }
+
             try {
                 // Verificar si el usuario ya existe en la base de datos
                 const existingUser = await prisma.user.findUnique({
@@ -25,7 +35,7 @@ export default async function handler(req, res) {
                     if (match) {
                         // Las credenciales son válidas, redirigir al dashboard si el correo electrónico es "admin@gmail.com"
                         if (email === 'admin@gmail.com') {
-                            res.status(200).json({ dashboardUrl: '/dashboard' , token, email });
+                            res.status(200).json({ dashboardUrl: '/dashboard', token, email });
                             return;
                         }
 
