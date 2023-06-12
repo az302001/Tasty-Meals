@@ -6,7 +6,7 @@ export default function FilterByCategory({ onChange, value }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/Products/AllCategories")
+      .get("/api/Products/AllCategories")
       .then((response) => {
         const existingCategories = response.data;
         setExistingCategories(existingCategories);
