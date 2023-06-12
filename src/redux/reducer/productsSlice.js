@@ -23,7 +23,7 @@ const initialState = {
     addFoods: [],
     foodByName: [],
     foodFilter: [],
-
+    filters: [],
     userData: {},
 
     categories: [],
@@ -70,9 +70,12 @@ const productsSlice = (state = initialState, action) => {
                 ? foods_all_categories
                 : foods_all_categories.filter(food => food.Category.name === action.payload);
 
+            const filterCategory = action.payload === 'all' ? null : action.payload;
+
             return {
                 ...state,
                 foodFilter: filterByCategories,
+                filters: filterCategory ? [{ categories: filterCategory }] : []
             };
 
         case ORDER_BY_RATING:
@@ -94,18 +97,33 @@ const productsSlice = (state = initialState, action) => {
 
 
 
-
         case RANGE_FOR_PRICE:
             const { minPrice, maxPrice } = action.payload;
+            const categoryFilter = state.filters.find(obj => obj.hasOwnProperty('categories'));
+            const filterPrice = { price: { minPrice, maxPrice } };
+
+            if (categoryFilter) {
+                const filteredByPrice = state.foods.filter(
+                    food => food.price >= minPrice && food.price <= maxPrice && food.Category.name === categoryFilter.categories
+                );
+                return {
+                    ...state,
+                    foodFilter: filteredByPrice,
+                    filters: [filterPrice, categoryFilter]
+                };
+            }
+
             const filteredByPrice = state.foods.filter(
                 food => food.price >= minPrice && food.price <= maxPrice
             );
+
             return {
                 ...state,
                 foodFilter: filteredByPrice,
+                filters: [filterPrice]
             };
 
-        
+
         case DELETE_FOOD:
             return {
                 ...state,
@@ -144,11 +162,11 @@ const productsSlice = (state = initialState, action) => {
             }
 
 
-        case GET_USER_DATA: 
-        return {
-            ...state,
-            userData: {...action.payload} 
-        };
+        case GET_USER_DATA:
+            return {
+                ...state,
+                userData: { ...action.payload }
+            };
 
 
         default:
