@@ -13,7 +13,8 @@ import {
     DELETE_FOOD,
     GET_ALL_CATEGORIES,
     UPDATE_FOOD,
-    ORDER_BY_PRICE
+    ORDER_BY_PRICE,
+    GET_FOODS_AVIALABLES
 
 } from '../actions';
 
@@ -166,6 +167,13 @@ const productsSlice = (state = initialState, action) => {
             return {
                 ...state,
                 userData: { ...action.payload }
+            };
+        
+       case GET_FOODS_AVIALABLES:
+          const showFoods = state.foodFilter.filter(food => food.disabled === false);
+          return {
+              ...state,
+              foodFilter: showFoods
             };
 
 

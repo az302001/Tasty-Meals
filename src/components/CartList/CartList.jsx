@@ -1,11 +1,48 @@
 import React from 'react';
 import { MinusCircleIcon } from "@heroicons/react/24/outline";
+import Swal from 'sweetalert2';
 
 const CartList = ({ food, handleQuantityChange, removeItem }) => {
   const { id, name, image, price, quantity } = food;
 
   const handleRemoveItem = () => {
-    removeItem(id);
+   
+    const swalWithButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: true
+    })
+      
+    swalWithButtons.fire({
+      title: `¿Sacar ${name} del carrito?`,
+      text: "¡Esta acción no se puede revertir!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: `Sí, eliminar ${name}de mi carrito`,
+      cancelButtonText: 'No, mejor lo dejo',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        swalWithButtons.fire(
+          removeItem(id),
+          `¡${name} eliminado!`,
+          `¡${name} ha sido eliminado!`,
+          'exito'
+        )
+      } else if (
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithButtons.fire(
+          'Cancelar',
+          `${name} sigue estando en tu compra`,
+          'error'
+        )
+      }
+    })
+  
+    
   };
 
   const handleIncrement = () => {
