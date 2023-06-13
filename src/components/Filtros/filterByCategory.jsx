@@ -17,10 +17,25 @@ export default function FilterByCategory({ onChange, value }) {
   }, []);
 
   return (
-    <select name="Category" onChange={onChange}>
-      <option value={value ? value : ""}>Seleccione una opción</option>
+    <select
+      name="Category"
+      onChange={onChange}
+      className="text-center font-semibold text-color1"
+    >
+      <option
+        value={value ? value : ""}
+        className="hidden text-center font-semibold"
+      >
+        Categorias
+      </option>
+      <option
+        value="todos"
+        className="text-color1 font-semibold text-center bg-color3"
+      >
+        Todos
+      </option>
       {existingCategories?.map((category) => (
-        <option key={category.id} value={category.name}>
+        <option key={category.id} value={category.name} className="text-center">
           {category.name}
         </option>
       ))}
