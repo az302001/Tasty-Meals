@@ -178,7 +178,7 @@ const Navbar = () => {
     <div>
       <div className='flex flex-row w-full bg-color3 justify-between pl-3 pr-5 border-b-2 border-color1'>
         <Link href="/home">
-          <div className='w-28 h-28' >
+          <div className='w-28 h-28 cursor-pointer' >
             <Image src={Logo} />
           </div>
         </Link>
@@ -206,7 +206,7 @@ const Navbar = () => {
       </div>
       {
         estadoMenu && (
-          <div className='flex flex-col bg-color1 pl-5 pt-6 pb-8 text-2xl text-color3 font-manrope absolute z-10 left-0 right-0'>
+          <div className='flex flex-col bg-color1 pl-5 pt-6 pb-8 text-2xl text-color3 font-manrope absolute z-10 left-0 right-0 rounded-b-lg'>
 
             {session && (
               <div className='flex flex-row items-center mb-4 gap-2 text-white'>
@@ -240,7 +240,7 @@ const Navbar = () => {
       }
       {
         estadoSearch && (
-          <div className='bg-color3 border-b-2 border-color1'>
+          <div className='bg-color1 border-b-2 border-color1 rounded-b-lg absolute z-10 w-full'>
             <SearchBar />
           </div>
         )

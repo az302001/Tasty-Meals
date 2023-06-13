@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { signOut, useSession } from 'next-auth/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from "next/router";
+import Swal from 'sweetalert2';
 
 const Card = ({ food }) => {
   const { id, name, image, price, description } = food;
@@ -59,7 +60,13 @@ const Card = ({ food }) => {
     }
 
     if (!google || !local) {
-      return router.replace('/login');
+      return Swal.fire({
+        icon: 'warning',
+        title: 'Oops...',
+        text: 'Tienes que registrarte para comprar!',
+        footer: '<a href="/login" style="text-decoration: underline; color: blue;">Ir al registro</a>'
+      })
+      
     }
     if (cartItem.findIndex((fo) => fo.id === food.id) === -1) {
       setCartItem((prevState) => [...prevState, newItem]);
@@ -72,7 +79,7 @@ const Card = ({ food }) => {
     }
     handleClick();
   };
-
+// localstorege.setitem(newitem)
   // const addItemToCart = () => {
   //   const newItem = { ...food, quantity };
 
@@ -100,13 +107,15 @@ const Card = ({ food }) => {
     <div className="bg-color3 flex flex-col w-full items-center rounded-3xl">
       <div>
         <Link href={`/detail?id=${id}`}>
-          <h1 className="font-pacifico text-3xl text-color1 p-1">{name}</h1>
+          <h1 className="font-pacifico text-3xl text-color1 p-1 cursor-pointer">{name}</h1>
         </Link>
       </div>
 
       <div className='flex flex-row w-full rounded-3x1 px-4 justify-around'>
-        <div className="w-60 h-32">
-          <img src={image} alt={name} className="w-full h-full object-cover rounded-3xl" />
+        <div className="w-60 h-32 cursor-pointer">
+          <Link href={`/detail?id=${id}`}>
+            <img src={image} alt={name} className="w-full h-full object-cover rounded-3xl" />
+          </Link>
         </div>
         <div className='flex flex-col items-center justify-around'>
           <div className='flex items-center'>
@@ -145,4 +154,4 @@ const Card = ({ food }) => {
   );
 };
 
-export default Card;
+export default Card;      

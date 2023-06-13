@@ -4,17 +4,14 @@ import Footer from './Footer/Footer'
 
 const Layaout = ({ children }) => {
 
-  // const token = JSON.parse(localStorage.getItem("userToken") || "false") 
-  // const token = typeof window !== 'undefined' ? localStorage.getItem("userToken") : null;
-
-  // console.log("SOY EL TOKEN", token);
-
   return (
-    <div>
-      <Nadvar />
-      {/* aqui tu logica para que vallan el body ejemplo: {childer} o algo asi toca investigar */}
-      {children}
-      <Footer />
+    <div className="flex flex-col min-h-screen">
+      {/* Contenido de tu página */}
+      <div className="sticky top-0 absolute z-10">
+        <Nadvar/>
+      </div>
+      <div className="flex-grow ">{children}</div>
+      <Footer className="mt-auto" />
     </div>
   )
 }
