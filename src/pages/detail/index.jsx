@@ -7,6 +7,10 @@ import Link from "next/link";
 import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 import Layaout from "@/components/Layaout/Layaout";
 import { Rating, Stack } from "@mui/material";
+import { cartState } from "../../../atoms/cartState";
+import { useRecoilState } from "recoil";
+import { useSession } from "next-auth/react";
+import Swal from "sweetalert2";
 
 const index = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -14,8 +18,56 @@ const index = () => {
   const [userVote, setUserVote] = useState(false);
   const detailFoods = useSelector((state) => state.products.detailFoods);
   const rating = parseFloat(detailFoods.rating);
+  const [quantity, setQuantity] = useState(1);
+  const [cartItem, setCartItem] = useRecoilState(cartState);
 
+  const handleClick = () => {
+    Swal.fire(`${detailFoods.name} añadido al carrito!`);
+  };
+
+  const { data: session } = useSession();
+  const userData = useSelector((state) => state.products.userData);
   const router = useRouter();
+
+  const addItemToCart = () => {
+    const newItem = { ...detailFoods, quantity };
+    let google = session;
+    let local = userData?.data?.username;
+    if (google) {
+      google = true;
+      local = true;
+    } else {
+      google = false;
+    }
+    if (local) {
+      google = true;
+      local = true;
+    } else {
+      local = false;
+    }
+
+    if (!google || !local) {
+      return Swal.fire({
+        icon: 'warning',
+        title: 'Oops...',
+        text: 'Tienes que registrarte para comprar!',
+        footer: '<a href="/login" style="text-decoration: underline; color: blue;">Ir al registro</a>'
+      })
+      
+    }
+    if (cartItem.findIndex((fo) => fo.id === detailFoods.id) === -1) {
+      setCartItem((prevState) => [...prevState, newItem]);
+    } else {
+      setCartItem((prevState) => {
+        return prevState.map((item) => {
+          return item.id === food.id ? { ...item, quantity: item.quantity + quantity } : item;
+        });
+      });
+    }
+    handleClick();
+  };
+
+  // const router = useRouter();
   const { id } = router.query;
   const dispatch = useDispatch();
 
@@ -72,6 +124,7 @@ const index = () => {
                 </div>
                 <a
                   href="#"
+                  onClick={addItemToCart}
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   Add to cart

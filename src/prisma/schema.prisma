@@ -58,6 +58,7 @@ model Food {
     categoryId  Int
     rating      Float
     quantity    Int
+    disabled    Boolean       @default(false)
     Favorite    Favorite[]
     Category    Category      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
     Review      Review[]
