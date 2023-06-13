@@ -173,7 +173,7 @@ export const orderByPrice = (payload) => {
 
 export const getFoodsAvailables = (id, disabled) => {
     return async (dispatch) => {
-        const response = (await axios.patch(/api/Admin/disabled, id, disabled)).data.product;
+        const response = (await axios.patch(`/api/Admin/disabled`, id, disabled)).data.product;
         return dispatch({
             type: 'GET_FOODS_AVIALABLES',
             payload: response,
