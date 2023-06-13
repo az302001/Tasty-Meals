@@ -92,7 +92,7 @@ export default function create() {
       data.append("name", formData.name);
       data.append("price", formData.price);
       data.append("description", formData.description);
-      data.append("image", selectedImage);
+      data.append("image", formData.image);
       data.append("Category", JSON.stringify(formData.Category));
       data.append("rating", formData.rating);
       data.append("discount", formData.discount);

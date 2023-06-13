@@ -16,6 +16,7 @@ export const DELETE_FOOD = "DELETE_FOOD";
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
 export const UPDATE_FOOD = "UPDATE_FOOD";
 export const ORDER_BY_PRICE = "ORDER_BY_PRICE"; // TODO: ordenar el precio de menor a mayor y viceversa
+export const GET_FOODS_AVIALABLES = 'GET_FOODS_AVIALABLES';
 
 
 
@@ -165,6 +166,18 @@ export const orderByPrice = (payload) => {
     return {
         type: 'ORDER_BY_PRICE',
         payload: payload,
+    };
+}
+
+
+
+export const getFoodsAvailables = (id, disabled) => {
+    return async (dispatch) => {
+        const response = (await axios.patch(/api/Admin/disabled, id, disabled)).data.product;
+        return dispatch({
+            type: 'GET_FOODS_AVIALABLES',
+            payload: response,
+        });
     };
 }
 

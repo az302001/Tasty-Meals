@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { signOut, useSession } from 'next-auth/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from "next/router";
+import Swal from 'sweetalert2';
 
 const Card = ({ food }) => {
   const { id, name, image, price, description } = food;
@@ -59,7 +60,13 @@ const Card = ({ food }) => {
     }
 
     if (!google || !local) {
-      return router.replace('/login');
+      return Swal.fire({
+        icon: 'warning',
+        title: 'Oops...',
+        text: 'Tienes que registrarte para comprar!',
+        footer: '<a href="/login" style="text-decoration: underline; color: blue;">Ir al registro</a>'
+      })
+      
     }
     if (cartItem.findIndex((fo) => fo.id === food.id) === -1) {
       setCartItem((prevState) => [...prevState, newItem]);
@@ -72,7 +79,7 @@ const Card = ({ food }) => {
     }
     handleClick();
   };
-
+// localstorege.setitem(newitem)
   // const addItemToCart = () => {
   //   const newItem = { ...food, quantity };
 
@@ -147,4 +154,4 @@ const Card = ({ food }) => {
   );
 };
 
-export default Card;
+export default Card;      
