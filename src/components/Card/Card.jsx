@@ -107,13 +107,15 @@ const Card = ({ food }) => {
     <div className="bg-color3 flex flex-col w-full items-center rounded-3xl">
       <div>
         <Link href={`/detail?id=${id}`}>
-          <h1 className="font-pacifico text-3xl text-color1 p-1">{name}</h1>
+          <h1 className="font-pacifico text-3xl text-color1 p-1 cursor-pointer">{name}</h1>
         </Link>
       </div>
 
       <div className='flex flex-row w-full rounded-3x1 px-4 justify-around'>
-        <div className="w-60 h-32">
-          <img src={image} alt={name} className="w-full h-full object-cover rounded-3xl" />
+        <div className="w-60 h-32 cursor-pointer">
+          <Link href={`/detail?id=${id}`}>
+            <img src={image} alt={name} className="w-full h-full object-cover rounded-3xl" />
+          </Link>
         </div>
         <div className='flex flex-col items-center justify-around'>
           <div className='flex items-center'>

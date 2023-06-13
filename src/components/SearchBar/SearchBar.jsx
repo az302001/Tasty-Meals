@@ -31,9 +31,9 @@ const SearchBar = () => {
           placeholder="Buscar..."
           value={valorInput}
           onChange={handleInputChange}
-          className="border-2 border-color1 inline-block rounded-md p-0.5 pl-2" />
+          className="border-2 border-color1 inline-block rounded-md p-1 pl-2" />
           <button type="submit">
-            <MagnifyingGlassIcon className="h-8 w-8 text-color1" />
+            <MagnifyingGlassIcon className="h-8 w-8 text-color3" />
           </button>
       </div>
     </form>
@@ -41,14 +41,3 @@ const SearchBar = () => {
 };
 
 export default SearchBar;
-
-
-{/* <h2 className='font-manrope text-color1'>Buscar plato</h2>
-        <div className="border-2 border-color1 inline-block rounded-md p-0.5">
-          <input
-            className="input"
-            placeholder="Buscar..."
-            autocomplete="off"
-          />
-        </div>
-        <div></div> */}

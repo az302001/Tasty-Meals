@@ -117,7 +117,7 @@ const Menu = () => {
             </div>
             <div className='mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3'>
               <select onChange={handleFilterCategories} value={selectedCategory} className='bg-color3 w-52'>
-                <option value="all">Todas las categorias</option>
+                <option hidden value="all">Todas las categorias</option>
                 {uniqueCategories.map((category) => (
                   <option key={category} value={category}>{category}</option>
                 ))}
@@ -125,7 +125,7 @@ const Menu = () => {
             </div>
             <div className='mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3'>
               <select onChange={handleSort} name="alphabetical" defaultValue={'DEFAULT'} className='bg-color3 w-52'>
-                <option disabled value="DEFAULT">Alfabeticamente</option>
+                <option hidden value="DEFAULT">Alfabeticamente</option>
                 <option value="atoz">A hasta la Z</option>
                 <option value="ztoa">Z hasta la A</option>
               </select>
@@ -133,7 +133,7 @@ const Menu = () => {
 
             <div className='mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3'>
               <select onChange={handleFilterScore} name="numerical" defaultValue={'DEFAULT'} className='bg-color3 w-52'>
-                <option disabled value="DEFAULT">Puntuacion</option>
+                <option hidden value="DEFAULT">Puntuacion</option>
                 <option value="MenorMayor">De Min a Max</option>
                 <option value="MayorMenor">De Max a Min</option>
               </select>
@@ -141,7 +141,7 @@ const Menu = () => {
 
             <div className='mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3'>
               <select onChange={e => handleOrderByPrice(e)} name="numerical" defaultValue={'DEFAULT'} className='bg-color3 w-52' >
-                <option disabled value="DEFAULT">Precio</option>
+                <option hidden value="DEFAULT">Precio</option>
                 <option value="menor">De Menor precio</option>
                 <option value="mayor">De Mayor precio</option>
               </select>
