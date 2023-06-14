@@ -7,13 +7,17 @@ export default async function handler({body}, res) {
     const { token } = body;
     const sesionVerify = verifyToken(token)
 
+
     if (!sesionVerify) {
         res.status(401).json({ message: "Sesión caducada", token: null });
     }
     const email = await decodeToken(token)
+
+   
+
     const user = await prisma.user.findUnique({
         where: {
-            email,
+            email:email
         }
     })
     //La data que le llega al response
