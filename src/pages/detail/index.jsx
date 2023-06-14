@@ -48,12 +48,16 @@ const index = () => {
 
     if (!google || !local) {
       return Swal.fire({
+
         icon: "warning",
         title: "Oops...",
         text: "Tienes que registrarte para comprar!",
         footer:
           '<a href="/login" style="text-decoration: underline; color: blue;">Ir al registro</a>',
       });
+
+   
+
     }
     if (cartItem.findIndex((fo) => fo.id === detailFoods.id) === -1) {
       setCartItem((prevState) => [...prevState, newItem]);
@@ -81,14 +85,15 @@ const index = () => {
       console.log(detailFoods);
     }
   }, [dispatch, id]);
+  
 
   return (
     <Layaout>
       <div>
         <div className="m-3">
-          <Link href="/menu">
+          <button onClick={() => router.back()}>
             <ArrowLeftIcon className="h-8 w-8 text-color1" />
-          </Link>
+          </button>
         </div>
       </div>
       <h2 className="flex justify-center font-monrope text-4xl font-semibold tracking-tight text-gray-900 dark:text-black">

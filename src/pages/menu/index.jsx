@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Cards from "@/components/Cards/Cards";
-import { allProducts } from "@/redux/reducer/productsSlice";
-import Layaout from "@/components/Layaout/Layaout";
-import ControlPaginado from "@/components/ControlPaginado/ControlPaginado";
-import {
-  getFoods,
-  orderByCategory,
-  orderByName,
-  orderByPrice,
-  orderByRating,
-  rangeForPrice,
-} from "@/redux/actions";
+
+
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Cards from '@/components/Cards/Cards';
+import { allProducts } from '@/redux/reducer/productsSlice';
+import Layaout from '@/components/Layaout/Layaout';
+import ControlPaginado from '@/components/ControlPaginado/ControlPaginado';
+import { getFoods, orderByCategory, orderByName, orderByPrice, orderByRating, rangeForPrice } from '@/redux/actions';
+import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+// import { signIn, signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+
 
 const Menu = () => {
   const dispatch = useDispatch();
@@ -20,18 +19,28 @@ const Menu = () => {
   const foodFilter = useSelector(allProducts);
   const [paginaActual, setPaginaActual] = useState(1);
   const elementosPorPagina = 18;
-  const categories = useSelector((state) =>
-    state.products.foods.map((food) => food.Category.name)
-  );
+
+
+
+  const categories = useSelector((state) => state.products.foods.map((food) => food.Category.name));
+
+  // const [previousRoutes, setPreviousRoutes] = useState([]);
+  // const { data: session, status } = useSession();
+  const router = useRouter();
+
+
 
   const [filtroAplicado, setFiltroAplicado] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   const categoriesSet = new Set(categories);
   const uniqueCategories = Array.from(categoriesSet);
-  const [order, setOrder] = useState("");
-  const [minPrice, setMinPrice] = useState(2);
-  const [maxPrice, setMaxPrice] = useState(3);
+
+
+  const [order, setOrder] = useState('');
+  const [minPrice, setMinPrice] = useState(1);
+  const [maxPrice, setMaxPrice] = useState(2);
+
 
   const getfoodtoshow = foodFilter;
 
@@ -98,13 +107,26 @@ const Menu = () => {
     paginaActual * elementosPorPagina
   );
 
+
+
   return (
     <div>
       <Layaout>
         <div>
-          <div className="flex flex-col items-center justify-center ">
-            <div className="mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3">
+
+      
+
+          <div className="m-3">
+            <button onClick={() => router.back()}>
+              <ArrowLeftIcon className="h-8 w-8 text-color1" />
+            </button>
+          </div>
+          <div className='flex flex-col items-center justify-center '>
+            <div className='mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3 w-[20%]'>
+              <label >Min</label>
+
               <input
+                className=' w-[15%] text-center'
                 type="number"
                 placeholder={`Precio Minimo (${Math.min(
                   ...foodFilter.map((food) => food.price)
@@ -115,7 +137,9 @@ const Menu = () => {
                   setMinPrice(value >= 1 ? value : 1);
                 }}
               />
+              <label >Max</label>
               <input
+                className=' w-[15%] text-center'
                 type="number"
                 placeholder="Precio Máximo"
                 value={maxPrice}

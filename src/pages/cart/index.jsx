@@ -6,6 +6,12 @@ import Layaout from "@/components/Layaout/Layaout";
 import ShoppingCart from "@/components/ShoppingCart/ShoppingCart";
 import MercadoPagoBttn from "@/components/MercadoPagoBttn/MercadoPagoBttn";
 
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/router";
+
+import Descuentos from "@/components/Descuentos/Descuentos";
+
+
 const Cart = () => {
   const [cartItem, setCartItem] = useRecoilState(cartState);
   const [total, setTotal] = useState(0);
@@ -17,6 +23,7 @@ const Cart = () => {
     );
     return newTotal;
   };
+  const router = useRouter();
 
   const updateTotalPrice = () => {
     const newTotal = calculateTotalPrice();
@@ -59,6 +66,11 @@ const Cart = () => {
   return (
     <Layaout>
       <div>
+        <div className="m-3">
+          <button onClick={() => router.back()}>
+            <ArrowLeftIcon className="h-8 w-8 text-color1" />
+          </button>
+        </div>
         <div className="container mx-auto">
           {cartItem.length <= 0 ? (
             <h1 className="text-center text-4xl mt-32">
@@ -74,6 +86,7 @@ const Cart = () => {
               />
             ))
           )}
+          <Descuentos/>
 
           {cartItem.length > 0 && (
             <div className="max-w-[800px] mx-auto mt-4">

@@ -12,9 +12,9 @@ const GoogleLogin = () => {
     if (status === 'authenticated') {
       // Usuario autenticado
       console.log('Usuario autenticado:', session.user.name);
-      // router.push('/home'); // Redirigir al home
+   
       const previousPage = sessionStorage.getItem('currentPage');
-      router.replace(previousPage);
+      router.push(previousPage);
     } else if (status === 'unauthenticated') {
       // Usuario cerró sesión
       console.log('Usuario cerró sesión');

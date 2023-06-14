@@ -16,8 +16,16 @@ export const DELETE_FOOD = "DELETE_FOOD";
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
 export const UPDATE_FOOD = "UPDATE_FOOD";
 export const ORDER_BY_PRICE = "ORDER_BY_PRICE"; // TODO: ordenar el precio de menor a mayor y viceversa
-export const GET_FOODS_AVIALABLES = "GET_FOODS_AVIALABLES";
+
+
 export const GET_USERS = "GET_USERS";
+
+export const GET_FOODS_AVIALABLES = 'GET_FOODS_AVIALABLES';
+export const CREATE_DISCOUNT = 'CREATE_DISCOUNT';
+export const GET_DISCOUNTS = 'GET_DISCOUNTS';
+
+
+
 export const getFoods = () => {
   return async (dispatch) => {
     const response = (await axios.get("/api/Products")).data;
@@ -166,6 +174,7 @@ export const getFoodsAvailables = (id, disabled) => {
   };
 };
 
+
 export const getUsers = () => {
   return async (dispatch) => {
     const response = await axios.get(`/api/Users`);
@@ -175,3 +184,25 @@ export const getUsers = () => {
     });
   };
 };
+
+
+
+export const createDiscount = (categoryId, discount) => {
+    console.log(categoryId, discount)
+    return async (dispatch) => {
+        const response = (await axios.patch('/api/Admin/createDiscount', categoryId, discount)).data;
+        return dispatch({
+            type: 'CREATE_DISCOUNT',
+            payload: response,
+        });
+    };
+};
+
+
+export const getDiscounts = () => {
+    return dispatch({
+        type: 'GET_DISCOUNTS',
+    });
+};
+
+

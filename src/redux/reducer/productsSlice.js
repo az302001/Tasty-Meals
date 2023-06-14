@@ -1,4 +1,5 @@
 import {
+
   GET_FOODS,
   GET_FOOD_BY_NAME,
   GET_FOOD_BY_ID,
@@ -186,26 +187,20 @@ const productsSlice = (state = initialState, action) => {
               else return -1;
             });
 
-      return {
-        ...state,
-        foodFilter: foodbyprice,
-      };
 
-    case GET_USER_DATA:
-      return {
-        ...state,
-        userData: { ...action.payload },
-      };
+            return {
+                ...state,
+                foodFilter: foodbyprice
+            }
 
-    case GET_FOODS_AVIALABLES:
-      const showFoods = state.foodFilter.filter(
-        (food) => food.disabled === false
-      );
-      return {
-        ...state,
-        foodFilter: showFoods,
-      };
-    case GET_USERS:
+
+        case GET_USER_DATA:
+            return {
+                ...state,
+                userData: { ...action.payload }
+            };
+  
+   case GET_USERS:
       return {
         ...state,
         users: action.payload,
@@ -213,6 +208,24 @@ const productsSlice = (state = initialState, action) => {
     default:
       return state;
   }
+        
+       case GET_FOODS_AVIALABLES:
+          const showFoods = state.foodFilter.filter(food => food.disabled === false);
+          return {
+              ...state,
+              foodFilter: showFoods
+            };
+
+        case CREATE_DISCOUNT:
+            return {
+                ...state,
+                discounts: action.payload,
+            };
+
+        default:
+            return state;
+    }
+
 };
 
 export default productsSlice;
