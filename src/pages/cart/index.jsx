@@ -5,6 +5,7 @@ import CartList from "@/components/CartList/CartList";
 import Layaout from "@/components/Layaout/Layaout";
 import ShoppingCart from "@/components/ShoppingCart/ShoppingCart";
 import MercadoPagoBttn from "@/components/MercadoPagoBttn/MercadoPagoBttn";
+import Descuentos from "@/components/Descuentos/Descuentos";
 
 const Cart = () => {
   const [cartItem, setCartItem] = useRecoilState(cartState);
@@ -74,6 +75,7 @@ const Cart = () => {
               />
             ))
           )}
+          <Descuentos/>
 
           {cartItem.length > 0 && (
             <div className="max-w-[800px] mx-auto mt-4">

@@ -157,6 +157,7 @@ const Navbar = () => {
   const handleSignOut = async () => {
     await signOut({ redirect: false });
     localStorage.setItem("userToken", null);
+    localStorage.setItem("cartItem", []);
     // router.replace('/home');
     router.reload();
   };
