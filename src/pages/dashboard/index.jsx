@@ -18,6 +18,11 @@ const dashboard = () => {
             AGREGAR NUEVOS PRODUCTOS
           </button>
         </Link>
+        <Link href="/dashboard/users">
+          <button className="bg-color1 w-3/6 h-16 drop-shadow-2xl mb-10 text-color3 text-lg lg:w-2/6">
+            GESTION DE USUARIOS
+          </button>
+        </Link>
         <Link href="/dashboard/create">
           <button className="bg-color1 w-3/6 h-16 drop-shadow-2xl mb-10 text-color3 text-lg lg:w-2/6">
             GESTION DE DESCUENTOS

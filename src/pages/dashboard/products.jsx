@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getFoods, orderByCategory, orderByPrice } from "@/redux/actions";
+import { getFoods, orderByCategoryAdmin, orderByPrice } from "@/redux/actions";
 import Link from "next/link";
 import Layaout from "@/components/Layaout/Layaout";
 import FilterByCategory from "@/components/Filtros/filterByCategory";
@@ -34,7 +34,6 @@ const columnsToExclude = [
 export default function Products() {
   const dispatch = useDispatch();
   const foods = useSelector((state) => state.products.foods);
-  const foodsFiltered = useSelector((state) => state.products.foodFilter);
   const [paginaActual, setPaginaActual] = useState(0);
   const [searchInput, setSearchInput] = useState("");
   const [ordenPrecio, setOrdenPrecio] = useState("mayor");
@@ -53,7 +52,7 @@ export default function Products() {
   }, [foods]);
 
   useEffect(() => {
-    const alimentosFiltrados = foodsFiltered || foods;
+    const alimentosFiltrados = foods;
 
     const alimentosFiltradosPorBusqueda = alimentosFiltrados.filter((food) =>
       removeDiacritics(food.name.toLowerCase()).includes(
@@ -63,15 +62,14 @@ export default function Products() {
 
     setAlimentosPaginados(alimentosFiltradosPorBusqueda);
     setPaginaActual(0);
-  }, [foods, foodsFiltered, searchInput, ordenPrecio]);
+  }, [foods, searchInput, ordenPrecio]);
 
   const [columns, setColumns] = useState([]);
   const [alimentosPaginados, setAlimentosPaginados] = useState([]);
 
   const handleChange = (e) => {
     const { value } = e.target;
-    dispatch(orderByCategory(value));
-    if (value === "" || value === "todos") dispatch(getFoods());
+    dispatch(orderByCategoryAdmin(value));
   };
 
   const handleSearchChange = (value) => {
@@ -128,26 +126,6 @@ export default function Products() {
                     ) : column === "price" ? (
                       <div className="flex items-center justify-center">
                         Precio
-                        <div className="flex flex-col ml-2">
-                          {ordenPrecio === "mayor" ? (
-                            <button
-                              name="order"
-                              value="menor"
-                              onClick={handleClick}
-                              className="font-bold"
-                            >
-                              <ArrowUpIcon className="h-5 w-5 text-color3" />
-                            </button>
-                          ) : (
-                            <button
-                              name="order"
-                              value="mayor"
-                              onClick={handleClick}
-                            >
-                              <ArrowDownIcon className="h-5 w-5 text-color3" />
-                            </button>
-                          )}
-                        </div>
                       </div>
                     ) : column === "Category" ? (
                       "Categoría"
@@ -207,10 +185,10 @@ export default function Products() {
                                         id: food.id,
                                         disabled: !food.disabled,
                                       };
-
+                                      console.log(updatedFood);
                                       axios
                                         .patch(
-                                          `/api/Products/${food.id}`,
+                                          `/api/Admin/disabled/`,
                                           updatedFood
                                         )
                                         .then((response) => {
@@ -219,6 +197,7 @@ export default function Products() {
                                             `El plato ${food.name} ha cambiado su estado`,
                                             "success"
                                           );
+                                          console.log(updatedFood);
                                           dispatch(getFoods());
                                         })
                                         .catch((error) => {
