@@ -48,11 +48,15 @@ const index = () => {
 
     if (!google || !local) {
       return Swal.fire({
-        icon: 'warning',
-        title: 'Oops...',
-        text: 'Tienes que registrarte para comprar!',
-        footer: '<a href="/login" style="text-decoration: underline; color: blue;">Ir al registro</a>'
-      })
+
+        icon: "warning",
+        title: "Oops...",
+        text: "Tienes que registrarte para comprar!",
+        footer:
+          '<a href="/login" style="text-decoration: underline; color: blue;">Ir al registro</a>',
+      });
+
+   
 
     }
     if (cartItem.findIndex((fo) => fo.id === detailFoods.id) === -1) {
@@ -60,7 +64,9 @@ const index = () => {
     } else {
       setCartItem((prevState) => {
         return prevState.map((item) => {
-          return item.id === food.id ? { ...item, quantity: item.quantity + quantity } : item;
+          return item.id === food.id
+            ? { ...item, quantity: item.quantity + quantity }
+            : item;
         });
       });
     }
@@ -74,6 +80,9 @@ const index = () => {
   useEffect(() => {
     if (id) {
       dispatch(getFoodById(id));
+    }
+    if (detailFoods) {
+      console.log(detailFoods);
     }
   }, [dispatch, id]);
   
@@ -90,6 +99,7 @@ const index = () => {
       <h2 className="flex justify-center font-monrope text-4xl font-semibold tracking-tight text-gray-900 dark:text-black">
         {detailFoods.name}
       </h2>
+
       <div className="w-full max-w-2xl  mx-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <img src={detailFoods.image} alt={detailFoods.name} />
         <div className="px-5 pb-5">
@@ -123,13 +133,19 @@ const index = () => {
                     readOnly
                   />
                 </div>
-                <a
-                  href="#"
-                  onClick={addItemToCart}
-                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
-                  Add to cart
-                </a>
+                {detailFoods.disabled ? (
+                  <h2 className="font-bold text-xl">
+                    El plato no se encuentra disponible
+                  </h2>
+                ) : (
+                  <a
+                    href="#"
+                    onClick={addItemToCart}
+                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  >
+                    Add to cart
+                  </a>
+                )}
                 <br />
               </Stack>
             </div>

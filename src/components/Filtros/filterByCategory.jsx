@@ -29,7 +29,7 @@ export default function FilterByCategory({ onChange, value }) {
         Categorias
       </option>
       <option
-        value="todos"
+        value="all"
         className="text-color1 font-semibold text-center bg-color3"
       >
         Todos

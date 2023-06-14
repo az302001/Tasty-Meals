@@ -17,7 +17,6 @@ export default async function handler(req, res) {
             },
           },
         });
-
         if (!product) {
           return res.status(404).json({ error: "producto no encontrado" });
         }
