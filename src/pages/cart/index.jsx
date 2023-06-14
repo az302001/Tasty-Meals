@@ -9,7 +9,7 @@ import MercadoPagoBttn from "@/components/MercadoPagoBttn/MercadoPagoBttn";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 
-import Descuentos from "@/components/Descuentos/Descuentos";
+// import Descuentos from "@/components/Descuentos/Descuentos";
 
 
 const Cart = () => {
@@ -46,22 +46,7 @@ const Cart = () => {
     updateTotalPrice();
   }, [cartItem]);
 
-  // import React from "react";
-  // import { useRecoilState } from "recoil";
-  // import { cartState } from "../../../atoms/cartState";
-  // import CartList from "@/components/CartList/CartList";
-  // import Layaout from "@/components/Layaout/Layaout";
-
-  // const Cart = () => {
-  //   const [cartItem, setCartItem] = useRecoilState(cartState);
-
-  //   const totalPrice = () => {
-  //     let total = 0;
-  //     cartItem.forEach(
-  //       (item) => (total += Math.ceil(item.price) * item.quantity)
-  //     );
-  //     return total;
-  // };
+ 
 
   return (
     <Layaout>
@@ -86,7 +71,7 @@ const Cart = () => {
               />
             ))
           )}
-          <Descuentos/>
+          {/* <Descuentos/> */}
 
           {cartItem.length > 0 && (
             <div className="max-w-[800px] mx-auto mt-4">

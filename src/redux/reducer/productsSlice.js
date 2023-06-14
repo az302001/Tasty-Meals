@@ -15,6 +15,7 @@ import {
   ORDER_BY_PRICE,
   GET_FOODS_AVIALABLES,
   GET_USERS,
+  CREATE_DISCOUNT,
 } from "../actions";
 
 const initialState = {
@@ -44,13 +45,13 @@ const productsSlice = (state = initialState, action) => {
       const foodbyorder =
         action.payload === "atoz"
           ? state.foodFilter.sort((a, b) => {
-              if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
-              else return -1;
-            })
+            if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+            else return -1;
+          })
           : state.foodFilter.sort((a, b) => {
-              if (a.name.toLowerCase() < b.name.toLowerCase()) return 1;
-              else return -1;
-            });
+            if (a.name.toLowerCase() < b.name.toLowerCase()) return 1;
+            else return -1;
+          });
       return {
         ...state,
         foodFilter: foodbyorder,
@@ -74,9 +75,9 @@ const productsSlice = (state = initialState, action) => {
         action.payload === "all"
           ? foods_all_categories
           : foods_all_categories.filter(
-              (food) =>
-                food.Category.name === action.payload && food.disabled === false
-            );
+            (food) =>
+              food.Category.name === action.payload && food.disabled === false
+          );
 
       const filterCategory = action.payload === "all" ? null : action.payload;
 
@@ -107,15 +108,15 @@ const productsSlice = (state = initialState, action) => {
       let recipesByScore =
         action.payload === "MenorMayor"
           ? state.foodFilter.sort((a, b) => {
-              if (a.rating > b.rating) return 1;
-              if (b.rating > a.rating) return -1;
-              return 0;
-            })
+            if (a.rating > b.rating) return 1;
+            if (b.rating > a.rating) return -1;
+            return 0;
+          })
           : state.foodFilter.sort((a, b) => {
-              if (a.rating > b.rating) return -1;
-              if (b.rating > a.rating) return 1;
-              return 0;
-            });
+            if (a.rating > b.rating) return -1;
+            if (b.rating > a.rating) return 1;
+            return 0;
+          });
       return {
         ...state,
         foodFilter: recipesByScore,
@@ -179,52 +180,49 @@ const productsSlice = (state = initialState, action) => {
       const foodbyprice =
         action.payload === "menor"
           ? state.foodFilter.sort((a, b) => {
-              if (a.price > b.price) return 1;
-              else return -1;
-            })
+            if (a.price > b.price) return 1;
+            else return -1;
+          })
           : state.foodFilter.sort((a, b) => {
-              if (a.price < b.price) return 1;
-              else return -1;
-            });
+            if (a.price < b.price) return 1;
+            else return -1;
+          });
 
 
-            return {
-                ...state,
-                foodFilter: foodbyprice
-            }
+      return {
+        ...state,
+        foodFilter: foodbyprice
+      }
 
 
-        case GET_USER_DATA:
-            return {
-                ...state,
-                userData: { ...action.payload }
-            };
-  
-   case GET_USERS:
+    case GET_USER_DATA:
+      return {
+        ...state,
+        userData: { ...action.payload }
+      };
+
+    case GET_USERS:
       return {
         ...state,
         users: action.payload,
       };
+
+    case GET_FOODS_AVIALABLES:
+      const showFoods = state.foodFilter.filter(food => food.disabled === false);
+      return {
+        ...state,
+        foodFilter: showFoods
+      };
+
+    case CREATE_DISCOUNT:
+      return {
+        ...state,
+        discounts: action.payload,
+      };
+
     default:
       return state;
   }
-        
-       case GET_FOODS_AVIALABLES:
-          const showFoods = state.foodFilter.filter(food => food.disabled === false);
-          return {
-              ...state,
-              foodFilter: showFoods
-            };
-
-        case CREATE_DISCOUNT:
-            return {
-                ...state,
-                discounts: action.payload,
-            };
-
-        default:
-            return state;
-    }
 
 };
 

@@ -24,7 +24,7 @@ const dashboard = () => {
             GESTION DE USUARIOS
           </button>
         </Link>
-        <Link href="/dashboard/create">
+        {/* <Link href="/dashboard/create"> */}
 
         <Link href="/dashboard/discount">
 
