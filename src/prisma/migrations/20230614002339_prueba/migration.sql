@@ -35,7 +35,7 @@ CREATE TABLE "User" (
     "name" TEXT,
     "email" TEXT NOT NULL,
     "emailVerified" TIMESTAMP(3),
-    "password" TEXT NOT NULL,
+    "password" TEXT,
     "image" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -51,6 +51,8 @@ CREATE TABLE "Food" (
     "discount" DOUBLE PRECISION NOT NULL,
     "categoryId" INTEGER NOT NULL,
     "rating" DOUBLE PRECISION NOT NULL,
+    "quantity" INTEGER NOT NULL,
+    "disabled" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "Food_pkey" PRIMARY KEY ("id")
 );
