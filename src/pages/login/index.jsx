@@ -170,8 +170,7 @@ import GoogleLogin from "@/components/GoogleLogin/GoogleLogin";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getSession } from "next-auth/react";
-import Cookies from 'js-cookie';
+
 
 const index = () => {
   const router = useRouter();
