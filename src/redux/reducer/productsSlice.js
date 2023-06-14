@@ -14,7 +14,9 @@ import {
     GET_ALL_CATEGORIES,
     UPDATE_FOOD,
     ORDER_BY_PRICE,
-    GET_FOODS_AVIALABLES
+    GET_FOODS_AVIALABLES,
+    CREATE_DISCOUNT,
+    GET_DISCOUNTS
 
 } from '../actions';
 
@@ -28,6 +30,7 @@ const initialState = {
     userData: {},
 
     categories: [],
+    discounts: [],
 
 };
 
@@ -176,6 +179,11 @@ const productsSlice = (state = initialState, action) => {
               foodFilter: showFoods
             };
 
+        case CREATE_DISCOUNT:
+            return {
+                ...state,
+                discounts: action.payload,
+            };
 
         default:
             return state;
