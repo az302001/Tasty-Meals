@@ -53,7 +53,7 @@ const index = () => {
         text: 'Tienes que registrarte para comprar!',
         footer: '<a href="/login" style="text-decoration: underline; color: blue;">Ir al registro</a>'
       })
-      
+
     }
     if (cartItem.findIndex((fo) => fo.id === detailFoods.id) === -1) {
       setCartItem((prevState) => [...prevState, newItem]);
@@ -76,14 +76,15 @@ const index = () => {
       dispatch(getFoodById(id));
     }
   }, [dispatch, id]);
+  
 
   return (
     <Layaout>
       <div>
         <div className="m-3">
-          <Link href="/menu">
+          <button onClick={() => router.back()}>
             <ArrowLeftIcon className="h-8 w-8 text-color1" />
-          </Link>
+          </button>
         </div>
       </div>
       <h2 className="flex justify-center font-monrope text-4xl font-semibold tracking-tight text-gray-900 dark:text-black">
@@ -135,7 +136,7 @@ const index = () => {
           </div>
         </div>
       </div>
-      {/* Aqui empieza la seccion de comentarios sobre el plato  este seccion es un maqueta de lo que se rquiere*/ }
+      {/* Aqui empieza la seccion de comentarios sobre el plato  este seccion es un maqueta de lo que se rquiere*/}
 
       <div className=" mt-20 grid mb-8 border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 md:mb-12 md:grid-cols-2">
         <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-tl-lg md:border-r dark:bg-gray-800 dark:border-gray-700">
