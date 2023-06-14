@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { PrismaClient } from '@prisma/client';
-
+import enviarEmail from '../Correos/enviarEmail';
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
@@ -33,6 +33,11 @@ export default async function handler(req, res) {
         password: hashedPassword,
       },
     });
+
+    const destinatario = email;
+    const contenido = `Gracias ${name} por registrarte en nuestra aplicación. Desde el staff de Tasty Meals, esperamos que disfrutes tu recorrido por la página.`;
+
+    await enviarEmail(destinatario, contenido);
 
     res.status(200).json({ message: 'Registro exitoso' });
   } catch (error) {
