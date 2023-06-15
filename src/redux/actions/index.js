@@ -248,11 +248,6 @@ export const getDiscounts = (payload) => {
 
 };
 
-export const getDiscounts = () => {
-  return dispatch({
-    type: "GET_DISCOUNTS",
-  });
-};
 
 export const createTransaction = (foodsIds, costo, userId, approved) => {
   return async (dispatch) => {

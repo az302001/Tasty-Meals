@@ -2,7 +2,7 @@ import transporter from './mailConfig';
 
 const enviarEmailPassword = async (email, token) => {
     try {
-    const restablecerURL = `http://localhost:3000/restablecer?token=${token}`;
+    const restablecerURL = `https://tasty-meals.vercel.app/restablecer?token=${token}`;
     const mailOptions = {
         from: 'tastymeals2023@gmail.com',
         to: email,
