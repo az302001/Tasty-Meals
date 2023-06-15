@@ -8,15 +8,7 @@ export const PageProtection = (WrappedComponent) => {
 
         const dispatch = useDispatch(); 
 
-        // if (!token) {
-        //     return (
-        //         <div>
-        //             <p>Cargando...</p>
-        //         </div>
-        //     );
-        // }
-
-        if (token) {
+        if (token !=="null") {
             dispatch(getUserData(token));
         }
 

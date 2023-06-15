@@ -12,12 +12,8 @@ import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
-
-
 // import { getSession } from "next-auth/react";
 // import Cookies from 'js-cookie';
-
 
 
 const index = () => {
@@ -138,11 +134,17 @@ const index = () => {
       </div>
       <h2 className="mt-10">O registrarme con:</h2>
       <GoogleLogin />
-
+      {/* <section name="social-media-logos" className="flex mt-4">
+        <div name="facebook-login-logo" className="w-16 h-16">
+          <Image src={Facebook} alt={"facebook-login"}></Image>
+        </div>
+        <div name="google-login-logo" className="w-14 h-14">
+          <Image src={Google} alt={"google-login"}></Image>
+        </div>
+      </section> */}
     </section>
   );
 };
-
 
 export default index;
 
