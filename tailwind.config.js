@@ -10,9 +10,14 @@ module.exports = {
   ],
   theme: {
     screens: {
+      sm: "640px",
+      md: "768px",
       lg: "1024px",
     },
     extend: {
+      backgroundImage: {
+        tasty: "url('/assets/background.jpg')", // Corregir la ruta de la imagen aquí
+      },
       colors: {
         transparent: "transparent",
         current: "currentColor",

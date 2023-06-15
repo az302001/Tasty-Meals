@@ -1,10 +1,11 @@
-import { Provider } from 'react-redux';
-import { SafeHydrate } from '@/Hocs/Hydrate';
-import { SessionProvider } from 'next-auth/react';
-import { store } from '@/redux/store';
-import { RecoilRoot } from 'recoil';
-import { ToastContainer } from 'react-toastify';
-import 'tailwindcss/tailwind.css';
+import { Provider } from "react-redux";
+import { SafeHydrate } from "@/Hocs/Hydrate";
+import { SessionProvider } from "next-auth/react";
+import { store } from "@/redux/store";
+import { RecoilRoot } from "recoil";
+import { ToastContainer } from "react-toastify";
+import "tailwindcss/tailwind.css";
+import Head from "next/head";
 
 function MyApp({ Component, pageProps, session }) {
   return (
@@ -24,6 +25,16 @@ function MyApp({ Component, pageProps, session }) {
               pauseOnHover
               theme="light"
             />
+            <Head>
+              <meta charSet="UTF-8" />
+              <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1.0"
+              />
+              <link rel="icon" href="/src/assets/favicon.ico" />
+
+              <title>Tasty Meals</title>
+            </Head>
             <Component {...pageProps} />
           </RecoilRoot>
         </SessionProvider>
@@ -32,4 +43,4 @@ function MyApp({ Component, pageProps, session }) {
   );
 }
 
-export default MyApp
+export default MyApp;
