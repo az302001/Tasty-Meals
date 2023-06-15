@@ -65,11 +65,14 @@ export default function AboutUs() {
             );
           })}
         </ul>
+
         <secion className="flex flex-col items-center m-10">
+          <hr className="w-4/6 lg:w-2/6 border-2 mb-4 border-color1 border-opacity-50 text-center"></hr>
+
           <h2 className="font-semibold text-xl text-color1">
             Sobre el proyecto
           </h2>
-          <h3 className="w-3/6 text-center font-light text-color1 p-4">
+          <h3 className="w-3/6 text-center font-semibold text-color1 p-4">
             ¡Hola! Somos un grupo de 8 desarrolladores graduados del bootcamp
             SoyHenry y hemos creado un emocionante proyecto: 🌟 una carta
             virtual de restaurante. Utilizamos tecnologías como Next.js,

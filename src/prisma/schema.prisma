@@ -92,7 +92,7 @@ model Review {
 model Transaction {
     id     Int    @id @default(autoincrement())
     userId Int
-    foodId Int
+    approved  Boolean  @default(false)
     cost   Float
     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
     food   Food[]

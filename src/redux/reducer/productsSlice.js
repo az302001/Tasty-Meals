@@ -1,3 +1,4 @@
+import categories from "@/Data/categories";
 import {
   
   GET_FOODS,
@@ -16,7 +17,12 @@ import {
   GET_FOODS_AVIALABLES,
   GET_USERS,
   CREATE_DISCOUNT,
+
   RECUPERAR_PASS,
+
+  DELETE_DISCOUNT,
+  GET_DISCOUNTS,
+
 } from "../actions";
 
 const initialState = {
@@ -73,6 +79,43 @@ const productsSlice = (state = initialState, action) => {
 
     case ORDER_BY_CATEGORY:
       const foods_all_categories = state.foods;
+
+
+      const filterCategory = action.payload === "all" ? null : { categories: action.payload };
+      const priceFilter = state.filters.find((obj) =>
+        obj.hasOwnProperty("price")
+      );
+
+      const updatedFilters = state.filters.filter(filter => {
+        // Comprobamos si el objeto filter no contiene la clave que queremos eliminar
+        if (!filter.hasOwnProperty('categories')) {
+          return true; // Mantenemos el objeto en el nuevo array
+        }
+        return false; // Excluimos el objeto del nuevo array
+      });
+      
+      // console.log(updatedFilters);
+    
+
+      if (priceFilter) {
+        const filterByCategories =
+          action.payload === "all"
+            ? foods_all_categories
+              .filter(
+                (food) =>
+                 food.disabled === false && food.price >= priceFilter.price.minPrice && food.price <= priceFilter.price.maxPrice
+              )
+            : foods_all_categories.filter(
+              (food) =>
+                food.Category.name === action.payload && food.disabled === false && food.price >= priceFilter.price.minPrice && food.price <= priceFilter.price.maxPrice
+            );
+        return {
+          ...state,
+          foodFilter: filterByCategories,
+          filters: updatedFilters
+        };
+
+      }
       const filterByCategories =
         action.payload === "all"
           ? foods_all_categories
@@ -80,13 +123,10 @@ const productsSlice = (state = initialState, action) => {
             (food) =>
               food.Category.name === action.payload && food.disabled === false
           );
-
-      const filterCategory = action.payload === "all" ? null : action.payload;
-
       return {
         ...state,
         foodFilter: filterByCategories,
-        filters: filterCategory ? [{ categories: filterCategory }] : [],
+        filters: updatedFilters
       };
 
     case ORDER_BY_CATEGORY_ADMIN:
@@ -138,6 +178,8 @@ const productsSlice = (state = initialState, action) => {
             food.price <= maxPrice &&
             food.Category.name === categoryFilter.categories
         );
+        console.log(state.filters)
+        console.log(categoryFilter.categories)
         return {
           ...state,
           foodFilter: filteredByPrice,
@@ -222,11 +264,27 @@ const productsSlice = (state = initialState, action) => {
         discounts: action.payload,
       };
 
+
       case RECUPERAR_PASS:
       return {
         ...state,
         newPass: action.payload
       };
+
+
+    case DELETE_DISCOUNT:
+      return {
+        ...state,
+        discounts: action.payload,
+      };  
+    
+    case GET_DISCOUNTS:
+      const showDiscounts = state.foodFilter.filter((food) => food.discount > 0);
+      console.log(showDiscounts);
+      return {
+        ...state,
+        discounts: showDiscounts,
+      };      
 
 
     default:

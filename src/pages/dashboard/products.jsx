@@ -7,6 +7,7 @@ import FilterByCategory from "@/components/Filtros/filterByCategory";
 import ReactSearchInput from "react-search-input";
 import AboutUs from "@/pages/about";
 import axios from "axios";
+
 import {
   PencilSquareIcon,
   ArrowSmallRightIcon,
@@ -216,9 +217,9 @@ export default function Products() {
                                 }}
                               >
                                 {food.disabled ? (
-                                  <EyeIcon className="h-6 w-6 text-gray-500 text-center" />
+                                  <EyeIcon className="h-6 w-6 text-color1 text-center" />
                                 ) : (
-                                  <EyeSlashIcon class="h-6 w-6 text-gray-500" />
+                                  <EyeSlashIcon class="h-6 w-6 text-red-900" />
                                 )}
                               </a>
                             </div>
