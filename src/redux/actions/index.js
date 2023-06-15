@@ -19,10 +19,15 @@ export const ORDER_BY_PRICE = "ORDER_BY_PRICE"; // TODO: ordenar el precio de me
 
 export const GET_USERS = "GET_USERS";
 
-export const GET_FOODS_AVIALABLES = "GET_FOODS_AVIALABLES";
-export const CREATE_DISCOUNT = "CREATE_DISCOUNT";
-export const GET_DISCOUNTS = "GET_DISCOUNTS";
+
+export const GET_FOODS_AVIALABLES = 'GET_FOODS_AVIALABLES';
+export const CREATE_DISCOUNT = 'CREATE_DISCOUNT';
+export const DELETE_DISCOUNT = 'DELETE_DISCOUNT';
+export const GET_DISCOUNTS = 'GET_DISCOUNTS';
 export const CREATE_TRANSACTION = "CREATE_TRANSACTION";
+
+
+
 export const getFoods = () => {
   return async (dispatch) => {
     const response = (await axios.get("/api/Products")).data;
@@ -134,7 +139,6 @@ export const deleteFood = (id) => {
 export const getAllCategories = () => {
   return async (dispatch) => {
     const response = (await axios.get("/api/Products/AllCategories")).data;
-    console.log(response);
     return dispatch({
       type: "GET_ALL_CATEGORIES",
       payload: response,
@@ -181,17 +185,47 @@ export const getUsers = () => {
   };
 };
 
+
+
+
+
 export const createDiscount = (categoryId, discount) => {
   console.log(categoryId, discount);
   return async (dispatch) => {
-    const response = (
-      await axios.patch("/api/Admin/createDiscount", categoryId, discount)
-    ).data;
+    const response = (await axios.patch('/api/Admin/createDiscount', {
+      categoryId: categoryId,
+      discount: discount,
+    })).data;
     return dispatch({
-      type: "CREATE_DISCOUNT",
+      type: 'CREATE_DISCOUNT',
       payload: response,
     });
   };
+};
+
+
+export const deleteDiscount = (categoryId) => {
+  console.log(categoryId);
+  return async (dispatch) => {
+    const response = (await axios.patch('/api/Admin/deleteDiscount', {
+      categoryId: categoryId,
+    })).data;
+    return dispatch({
+      type: 'DELETE_DISCOUNT',
+      payload: response,
+    });
+  };
+};
+
+
+
+
+export const getDiscounts = (payload) => {
+    return{
+        type: 'GET_DISCOUNTS',
+        payload
+    };
+
 };
 
 export const getDiscounts = () => {
