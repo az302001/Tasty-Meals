@@ -14,8 +14,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 
 
+
 // import { getSession } from "next-auth/react";
 // import Cookies from 'js-cookie';
+
 
 
 const index = () => {
@@ -114,10 +116,16 @@ const index = () => {
         {/* <div className="inline-flex">
           <input type="checkbox"></input>
           <p className="ml-1">Recordarme</p>
-        </div>
+        </div>*/}
         <div>
-          <p>Olvide mi contraseña</p>
-        </div> */}
+        <p className="text-color1">
+        <Link href="/recuperar">
+            <a className="text-blue-600 hover:underline">
+              Olvidé mi contraseña
+            </a>
+          </Link>
+        </p>
+        </div>
       </div>
       <hr className="w-48 h-1 mt-4 bg-color1"></hr>
       <div className="flex flex-row mt-5 gap-1">

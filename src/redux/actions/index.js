@@ -219,6 +219,26 @@ export const deleteDiscount = (categoryId) => {
 
 
 
+export const recuperarPasswordRequest = (email) => {
+  return async (dispatch) => {
+      const response = await axios.post('/api/Recuperar/recuperarPass', { email });
+    return dispatch({
+      type: 'RECUPERAR_PASS',
+      payload: response,
+    })
+  };
+};
+
+export const actualizarPassword = (password, token) => {
+  return async (dispatch) => {
+    const response = await axios.post('/api/Recuperar/modificar', { password, token });
+    return dispatch({
+      type: 'ACTUALIZAR_PASS',
+    });
+  };
+};
+
+
 
 export const getDiscounts = (payload) => {
     return{
@@ -242,3 +262,4 @@ export const createTransaction = (foodsIds, costo, userId, approved) => {
     })
   };
 };
+
