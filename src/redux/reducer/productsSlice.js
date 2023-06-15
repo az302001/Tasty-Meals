@@ -1,5 +1,5 @@
 import {
-
+  
   GET_FOODS,
   GET_FOOD_BY_NAME,
   GET_FOOD_BY_ID,
@@ -16,6 +16,7 @@ import {
   GET_FOODS_AVIALABLES,
   GET_USERS,
   CREATE_DISCOUNT,
+  RECUPERAR_PASS,
 } from "../actions";
 
 const initialState = {
@@ -29,6 +30,7 @@ const initialState = {
   userData: {},
   users: [],
   categories: [],
+  newPass:[],
 };
 
 const productsSlice = (state = initialState, action) => {
@@ -219,6 +221,13 @@ const productsSlice = (state = initialState, action) => {
         ...state,
         discounts: action.payload,
       };
+
+      case RECUPERAR_PASS:
+      return {
+        ...state,
+        newPass: action.payload
+      };
+
 
     default:
       return state;
