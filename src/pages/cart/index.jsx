@@ -84,7 +84,6 @@ const Cart = () => {
                     name: "Compra en TastyMeals",
                     price: calculateTotalPrice(),
                   }}
-                  allProducts={cartItem}
                 />
               </div>
             </div>
