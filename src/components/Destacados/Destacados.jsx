@@ -25,11 +25,11 @@ const Destacados = () => {
   const shuffledFoods = foods.sort(() => Math.random() - 0.5).slice(0, 5);
   return (
     <div>
-      <h1 className="text-gray text-center text-xl mt-3">
+      <h1 className="text-color1 font-semibold text-center text-xl lg:text-2xl mt-3">
         Nuestros platos destacados de hoy
       </h1>
       <Swiper
-        className="relative w-1/4 h-1/2 min-w-[300px] md:min-w-[500px] mt-20 border-28px "
+        className="relative w-2/6 h-1/6 min-w-[300px] md:min-w-[500px] mt-6 border-28px "
         effect={"cube"}
         grabCursor={true}
         cubeEffect={{

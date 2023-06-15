@@ -7,11 +7,7 @@ mercadopago.configure({
 const handler = async (req, res) => {
   if (req.method === "POST") {
     const product = req.body.product;
-    //const userId = req.body.userId;
-    const productIds = req.body.productIds;
-
-    const URL = "https://tasty-meals.vercel.app"; //ESTA URL HAY QUE CAMBIAR POR LA DEL DEPLOY
-
+    const URL = "localhost:3000"; //ESTA URL HAY QUE CAMBIAR POR LA DEL DEPLOY
     try {
       const preference = {
         items: [
@@ -24,12 +20,9 @@ const handler = async (req, res) => {
         auto_return: "approved",
         back_urls: {
           success: `${URL}/pagoexitoso`, //acá se puede redirigir al cliente a dónde se quiera una vez que el pago sea exitoso
-          failure: `${URL}/menu`,
+          failure: `${URL}/pagoexitoso`,
         },
         notification_url: `${URL}/api/MercadoPago/notify`,
-        //userId,
-        productIds,
-        cost: product.price
       };
       const response = await mercadopago.preferences.create(preference);
       res.status(200).send({ url: response.body.init_point });

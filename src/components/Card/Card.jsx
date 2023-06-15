@@ -9,23 +9,22 @@ import { signOut, useSession } from 'next-auth/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from "next/router";
 import Swal from 'sweetalert2';
+import Discounts from '../../assets/Discounts.png';
+import Image from 'next/image';
 
-const Card = ({ food }) => {
+const Card = ({ food, discount }) => {
   const { id, name, image, price, description } = food;
   const [quantity, setQuantity] = useState(1);
   const [cartItem, setCartItem] = useRecoilState(cartState);
 
   const handleClick = () => {
-    toast.success('Añadido al carrito!', {
-      position: "bottom-center",
-      autoClose: 350,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+    Swal.fire({
+      position: 'bottom-center',
+      icon: 'success',
+      title: `${name} añadido al carrito`,
+      showConfirmButton: false,
+      timer: 1500
+    })
   };
 
   const handleIncrement = () => {
@@ -101,7 +100,7 @@ const Card = ({ food }) => {
   //   handleClick();
   // };
 
-  const totalPrice = price * quantity;
+  const totalPrice = food.discount ? parseInt(price - food.discount * price / 100 * quantity ) : price * quantity;
 
   return (
     <div className=" w-[100%] h-[100%] bg-gradient-to-r bg-color3   shadow-lg rounded-lg text-white p-4 transition duration-300 hover:-translate-y-2 ">
@@ -143,7 +142,16 @@ const Card = ({ food }) => {
           <div onClick={addItemToCart} className='cursor-pointer'>
             <PlusCircleIcon className="h-10 w-10 bg-#E96479 inset-13 top-13 left-89.92 right-4.9 bottom-68 text-color2" />
           </div>
-          <p className="text-pacifico text-2xl text-color1">${parseInt(totalPrice)}</p>
+          {
+            food.discount > 0 ? 
+            <div className='flex flfex-row'>
+              <h2 className="text-pacifico text-2xl text-color1 mr-5 ml-2">Antes: ${parseInt(food.price)}</h2>
+              <h2 className="text-pacifico text-2xl text-color1">Ahora: ${parseInt(totalPrice)}</h2>
+              <div className="h-[5vh] w-[5vw] mb-10"><Image src={Discounts} /></div>
+            </div>
+            :  <div className="text-pacifico text-2xl text-color1">${parseInt(totalPrice)}</div>
+          }
+          {/* <div className="text-pacifico text-2xl text-color1">${parseInt(totalPrice)}</div> */}
         </div>
       </div>
 

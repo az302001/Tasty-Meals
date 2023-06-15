@@ -13,6 +13,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
+
+// import { getSession } from "next-auth/react";
+// import Cookies from 'js-cookie';
+
+
 const index = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");

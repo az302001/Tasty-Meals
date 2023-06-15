@@ -127,7 +127,7 @@ import Logo from '../../../assets/logo-tasty.png';
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { signOut, useSession } from 'next-auth/react';
 import SearchBar from '@/components/SearchBar/SearchBar';
-
+import Discounts from '../../../assets/Discounts.png';
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import ShoppingCart from '@/components/ShoppingCart/ShoppingCart';
 
@@ -185,7 +185,14 @@ const Navbar = () => {
         </Link>
         <div className='flex flex-row justify-center items-center gap-3'>
 
-          <ShoppingCart className="h-8 w-8 text-color1 " />
+          <div className="h-[5vh] w-[5vw] mb-10 cursor-pointer">
+            <Link href='/discounts'>
+              <Image src={Discounts}/>
+            </Link>
+          </div>
+          <ShoppingCart className="h-[10vh] w-[10vw] text-color1 " />
+
+          
 
           <button onClick={cambiarEstadoSearch}>
             {!estadoSearch ? (
