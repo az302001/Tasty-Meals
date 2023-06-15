@@ -104,7 +104,7 @@ const Card = ({ food }) => {
   const totalPrice = price * quantity;
 
   return (
-    <div className="bg-color3 flex flex-col w-full items-center rounded-3xl">
+    <div className=" w-[100%] h-[100%] bg-gradient-to-r bg-color3   shadow-lg rounded-lg text-white p-4 transition duration-300 hover:-translate-y-2 ">
       <div>
         <Link href={`/detail?id=${id}`}>
           <h1 className="font-pacifico text-3xl text-color1 p-1 cursor-pointer">{name}</h1>

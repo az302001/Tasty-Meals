@@ -18,7 +18,7 @@ const Menu = () => {
   // const foods = useSelector(allProducts)
   const foodFilter = useSelector(allProducts);
   const [paginaActual, setPaginaActual] = useState(1);
-  const elementosPorPagina = 18;
+  const elementosPorPagina = 16;
 
 
 
@@ -113,54 +113,24 @@ const Menu = () => {
     <div>
       <Layaout>
         <div>
-
-      
-
           <div className="m-3">
             <button onClick={() => router.back()}>
               <ArrowLeftIcon className="h-8 w-8 text-color1" />
             </button>
           </div>
-          <div className='flex flex-col items-center justify-center '>
-            <div className='mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3 w-[20%]'>
-              <label >Min</label>
+          <div className='flex flex-col   lg:flex-row items-center justify-center gap-[1%]'>
 
-              <input
-                className=' w-[15%] text-center'
-                type="number"
-                placeholder={`Precio Minimo (${Math.min(
-                  ...foodFilter.map((food) => food.price)
-                )})`}
-                value={minPrice}
-                onChange={(e) => {
-                  const value = parseInt(e.target.value);
-                  setMinPrice(value >= 1 ? value : 1);
-                }}
-              />
-              <label >Max</label>
-              <input
-                className=' w-[15%] text-center'
-                type="number"
-                placeholder="Precio Máximo"
-                value={maxPrice}
-                onChange={(e) => {
-                  const value = parseInt(e.target.value);
-                  setMaxPrice(value >= 2 ? value : 2);
-                }}
-              />
-              <button onClick={handleFilterPrice}>Filtrar por precio</button>
-            </div>
-            <div className="mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3">
+            <div className="mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3 ">
               <select
                 onChange={handleFilterCategories}
                 value={selectedCategory}
-                className="bg-color3 w-52"
+                className="bg-color3 w-52 "
               >
-                <option hidden value="all">
+                <option value="all">
                   Todas las categorias
                 </option>
                 {uniqueCategories.map((category) => (
-                  <option key={category} value={category}>
+                  <option key={category} value={category} >
                     {category}
                   </option>
                 ))}
@@ -209,6 +179,37 @@ const Menu = () => {
                 <option value="menor">De Menor precio</option>
                 <option value="mayor">De Mayor precio</option>
               </select>
+            </div>
+
+            <div className='mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3 w-[76%]    md:w-[25%] lg:w-[25%]'>
+              <button onClick={handleFilterPrice} className='mr-[7%]  md:mr-[0] lg:mr-[0] '> Filtrar por precio </button>
+
+              <input
+                className='md:w-[20%] lg:w-[15%] w-[28%] text-center'
+                type="number"
+                placeholder={`Precio Minimo (${Math.min(
+                  ...foodFilter.map((food) => food.price)
+                )})`}
+                value={minPrice}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value);
+                  setMinPrice(value >= 1 ? value : 1);
+                }}
+              />
+              <label > :Min</label>
+
+              <input
+                className='md:w-[15%] lg:w-[15%] w-[28%] text-center'
+                type="number"
+                placeholder="Precio Máximo"
+                value={maxPrice}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value);
+                  setMaxPrice(value >= 2 ? value : 2);
+                }}
+              />
+              <label > :Max</label>
+
             </div>
           </div>
           {alimentosPaginados.length === 0 && (

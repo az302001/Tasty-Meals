@@ -19,7 +19,7 @@ export default function Update() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/Products/AllCategories")
+      .get("/api/Products/AllCategories")
       .then((response) => {
         const categories = response.data;
         setExistingCategories(categories);
@@ -83,7 +83,7 @@ export default function Update() {
       formData.append("file", file);
 
       const response = await axios.post(
-        "http://localhost:3000/api/Products/uploadImage",
+        "/api/Products/uploadImage",
         formData,
         {
           headers: {
@@ -125,7 +125,7 @@ export default function Update() {
       }
 
       const response = await axios.put(
-        `http://localhost:3000/api/Products/${id}`,
+        `/api/Products/${id}`,
         requestData
       );
 
