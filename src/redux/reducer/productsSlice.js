@@ -16,6 +16,8 @@ import {
   GET_FOODS_AVIALABLES,
   GET_USERS,
   CREATE_DISCOUNT,
+  DELETE_DISCOUNT,
+  GET_DISCOUNTS,
 } from "../actions";
 
 const initialState = {
@@ -219,6 +221,20 @@ const productsSlice = (state = initialState, action) => {
         ...state,
         discounts: action.payload,
       };
+
+    case DELETE_DISCOUNT:
+      return {
+        ...state,
+        discounts: action.payload,
+      };  
+    
+    case GET_DISCOUNTS:
+      const showDiscounts = state.foodFilter.filter((food) => food.discount > 0);
+      console.log(showDiscounts);
+      return {
+        ...state,
+        discounts: showDiscounts,
+      };      
 
     default:
       return state;
