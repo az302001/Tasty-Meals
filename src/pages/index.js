@@ -1,10 +1,9 @@
-import Head from 'next/head'
-import Image from 'next/image'
+import Head from "next/head";
+import Image from "next/image";
 import Link from "next/link";
 import Logo from "@/assets/logo-tasty.png";
 import React from "react";
-
-
+import BackgroundImage from "@/assets/background.jpg";
 export default function Home() {
   return (
     <div className="flex flex-col items-center content-center justify-center w-screen h-screen bg-color3">
@@ -16,6 +15,7 @@ export default function Home() {
           <p className="text-color3 text-3xl font-manrope">Entrar</p>
         </button>
       </Link>
+      <div className="absolute inset-0 z-[-1]"></div>
     </div>
   );
 }

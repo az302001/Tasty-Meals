@@ -25,6 +25,7 @@
     "dotenv": "^16.1.1",
     "formidable": "^2.1.1",
     "formidable-serverless": "^1.1.1",
+    "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.0",
     "mercadopago": "^1.5.16",
     "next": "^12.2.0",

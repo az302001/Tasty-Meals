@@ -1,21 +1,39 @@
-
-import React from 'react';
-import Layaout from '@/components/Layaout/Layaout';
-import Link from 'next/link';
-import Destacados from '@/components/Destacados/Destacados';
-import { PageProtection } from '@/Hocs/sesionVerify';
+import React from "react";
+import Layaout from "@/components/Layaout/Layaout";
+import Link from "next/link";
+import Destacados from "@/components/Destacados/Destacados";
+import { PageProtection } from "@/Hocs/sesionVerify";
 
 const index = () => {
   return (
     <Layaout>
       <div style={{ marginTop: "2rem" }}>
+        <div className="flex flex-col mt-4 items-center text-center">
+          <h2 className="font-semibold  text-color1 lg:text-2xl mb-2 text-xl">
+            Sobre nosotros
+          </h2>
+          <p className="lg:w-3/6 w-5/6 font-semibold text-gray-600">
+            ¡Hola! Somos un grupo de 8 desarrolladores graduados del bootcamp
+            SoyHenry y hemos creado un emocionante proyecto: 🌟 una carta
+            virtual de restaurante. Estamos orgullosos de compartir este
+            proyecto contigo y estamos disponibles para responder cualquier
+            pregunta que tengas. ¡Gracias por visitar nuestra página! 🚀🍽️🍽️
+          </p>
+          <Link href="/about">
+            <button class="text-white m-4 bg-color1 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              Conocé Más
+            </button>
+          </Link>
+          <hr className="w-4/6 lg:w-2/6 border-2 border-color1 border-opacity-50 text-center"></hr>
+        </div>
+
         <Destacados />
       </div>
       <Link href="/menu">
-        <div className="flex justify-center items-center mt-20 bottom-0 left-0 right-0 p-4 text-center">
+        <div className="flex flex-col justify-center items-center mt-8 bottom-0 left-0 right-0 p-4 text-center">
           <button
             type="button"
-            class="text-white bg-color1 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            class="text-white bg-color1 mb-6 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Ver Menu
             <svg
@@ -41,5 +59,3 @@ const index = () => {
 // export default index;
 
 export default PageProtection(index);
-
-
