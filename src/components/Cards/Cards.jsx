@@ -7,7 +7,7 @@ import style from './cards.module.css';
 const Cards = ({ foods }) => {
 
   return (
-    <div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-4 pr-[1%] pl-[1%] pt-[2%]">
       { foods?.map((food, i) =>
       <div className='flex mb-5 mt-3' key={food.id}>
         <Card key={i} food={food}/>

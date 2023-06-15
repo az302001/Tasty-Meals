@@ -48,16 +48,12 @@ const index = () => {
 
     if (!google || !local) {
       return Swal.fire({
-
         icon: "warning",
         title: "Oops...",
         text: "Tienes que registrarte para comprar!",
         footer:
           '<a href="/login" style="text-decoration: underline; color: blue;">Ir al registro</a>',
       });
-
-   
-
     }
     if (cartItem.findIndex((fo) => fo.id === detailFoods.id) === -1) {
       setCartItem((prevState) => [...prevState, newItem]);
@@ -85,7 +81,6 @@ const index = () => {
       console.log(detailFoods);
     }
   }, [dispatch, id]);
-  
 
   return (
     <Layaout>
@@ -96,19 +91,19 @@ const index = () => {
           </button>
         </div>
       </div>
-      <h2 className="flex justify-center font-monrope text-4xl font-semibold tracking-tight text-gray-900 dark:text-black">
+      <h2 className="flex font-pacifico justify-center font-monrope text-4xl font-semibold tracking-tight text-color1 pb-6 dark:text-black">
         {detailFoods.name}
       </h2>
 
-      <div className="w-full max-w-2xl  mx-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <div className="w-full max-w-2xl mx-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <img src={detailFoods.image} alt={detailFoods.name} />
         <div className="px-5 pb-5">
-          <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+          <h5 className="text-xl font-semibold tracking-tight text-color1 pt-2  dark:text-white">
             {detailFoods.description}
           </h5>
           <br />
           <div className="flex items-center justify-between">
-            <span className="text-3xl font-bold text-gray-900 dark:text-white">
+            <span className="text-3xl font-semibold text-color1 dark:text-white">
               ${detailFoods.price}
             </span>
             <div>
@@ -143,7 +138,7 @@ const index = () => {
                     onClick={addItemToCart}
                     className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   >
-                    Add to cart
+                    Añadir al carrito
                   </a>
                 )}
                 <br />

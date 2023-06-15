@@ -21,5 +21,5 @@ export default async function handler({body}, res) {
         }
     })
     //La data que le llega al response
-    res.status(200).json({token, username: user.name})
+    res.status(200).json({token, username: user.name, id:user.id})
 };
