@@ -16,7 +16,7 @@ export const PageProtection = (WrappedComponent) => {
         //     );
         // }
 
-        if (token) {
+        if (token !=="null") {
             dispatch(getUserData(token));
         }
 

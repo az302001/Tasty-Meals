@@ -13,7 +13,7 @@ export default async function handler({body}, res) {
     const email = await decodeToken(token)
     const user = await prisma.user.findUnique({
         where: {
-            email,
+            email:email
         }
     })
     //La data que le llega al response

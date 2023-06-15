@@ -1,7 +1,5 @@
 import bcrypt from 'bcrypt';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import prisma from '@/prisma/prisma';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -40,8 +38,6 @@ export default async function handler(req, res) {
     res.status(500).json({ message: 'Error en el servidor' });
   }
 }
-
-
 // import bcrypt from 'bcrypt';
 // import { PrismaClient } from '@prisma/client';
 
