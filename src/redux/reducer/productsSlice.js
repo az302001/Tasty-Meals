@@ -1,6 +1,5 @@
 import categories from "@/Data/categories";
 import {
-  
   GET_FOODS,
   GET_FOOD_BY_NAME,
   GET_FOOD_BY_ID,
@@ -17,12 +16,11 @@ import {
   GET_FOODS_AVIALABLES,
   GET_USERS,
   CREATE_DISCOUNT,
-
   RECUPERAR_PASS,
-
   DELETE_DISCOUNT,
   GET_DISCOUNTS,
-
+  CLEAN_STATE,
+  CLEAN_DETAIL,
 } from "../actions";
 
 const initialState = {
@@ -36,7 +34,8 @@ const initialState = {
   userData: {},
   users: [],
   categories: [],
-  newPass:[],
+  newPass: [],
+  isLoading: false,
 };
 
 const productsSlice = (state = initialState, action) => {
@@ -53,13 +52,13 @@ const productsSlice = (state = initialState, action) => {
       const foodbyorder =
         action.payload === "atoz"
           ? state.foodFilter.sort((a, b) => {
-            if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
-            else return -1;
-          })
+              if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+              else return -1;
+            })
           : state.foodFilter.sort((a, b) => {
-            if (a.name.toLowerCase() < b.name.toLowerCase()) return 1;
-            else return -1;
-          });
+              if (a.name.toLowerCase() < b.name.toLowerCase()) return 1;
+              else return -1;
+            });
       return {
         ...state,
         foodFilter: foodbyorder,
@@ -80,53 +79,55 @@ const productsSlice = (state = initialState, action) => {
     case ORDER_BY_CATEGORY:
       const foods_all_categories = state.foods;
 
-
-      const filterCategory = action.payload === "all" ? null : { categories: action.payload };
+      const filterCategory =
+        action.payload === "all" ? null : { categories: action.payload };
       const priceFilter = state.filters.find((obj) =>
         obj.hasOwnProperty("price")
       );
 
-      const updatedFilters = state.filters.filter(filter => {
+      const updatedFilters = state.filters.filter((filter) => {
         // Comprobamos si el objeto filter no contiene la clave que queremos eliminar
-        if (!filter.hasOwnProperty('categories')) {
+        if (!filter.hasOwnProperty("categories")) {
           return true; // Mantenemos el objeto en el nuevo array
         }
         return false; // Excluimos el objeto del nuevo array
       });
-      
+
       // console.log(updatedFilters);
-    
 
       if (priceFilter) {
         const filterByCategories =
           action.payload === "all"
-            ? foods_all_categories
-              .filter(
+            ? foods_all_categories.filter(
                 (food) =>
-                 food.disabled === false && food.price >= priceFilter.price.minPrice && food.price <= priceFilter.price.maxPrice
+                  food.disabled === false &&
+                  food.price >= priceFilter.price.minPrice &&
+                  food.price <= priceFilter.price.maxPrice
               )
             : foods_all_categories.filter(
-              (food) =>
-                food.Category.name === action.payload && food.disabled === false && food.price >= priceFilter.price.minPrice && food.price <= priceFilter.price.maxPrice
-            );
+                (food) =>
+                  food.Category.name === action.payload &&
+                  food.disabled === false &&
+                  food.price >= priceFilter.price.minPrice &&
+                  food.price <= priceFilter.price.maxPrice
+              );
         return {
           ...state,
           foodFilter: filterByCategories,
-          filters: updatedFilters
+          filters: updatedFilters,
         };
-
       }
       const filterByCategories =
         action.payload === "all"
           ? foods_all_categories
           : foods_all_categories.filter(
-            (food) =>
-              food.Category.name === action.payload && food.disabled === false
-          );
+              (food) =>
+                food.Category.name === action.payload && food.disabled === false
+            );
       return {
         ...state,
         foodFilter: filterByCategories,
-        filters: updatedFilters
+        filters: updatedFilters,
       };
 
     case ORDER_BY_CATEGORY_ADMIN:
@@ -150,15 +151,15 @@ const productsSlice = (state = initialState, action) => {
       let recipesByScore =
         action.payload === "MenorMayor"
           ? state.foodFilter.sort((a, b) => {
-            if (a.rating > b.rating) return 1;
-            if (b.rating > a.rating) return -1;
-            return 0;
-          })
+              if (a.rating > b.rating) return 1;
+              if (b.rating > a.rating) return -1;
+              return 0;
+            })
           : state.foodFilter.sort((a, b) => {
-            if (a.rating > b.rating) return -1;
-            if (b.rating > a.rating) return 1;
-            return 0;
-          });
+              if (a.rating > b.rating) return -1;
+              if (b.rating > a.rating) return 1;
+              return 0;
+            });
       return {
         ...state,
         foodFilter: recipesByScore,
@@ -178,8 +179,8 @@ const productsSlice = (state = initialState, action) => {
             food.price <= maxPrice &&
             food.Category.name === categoryFilter.categories
         );
-        console.log(state.filters)
-        console.log(categoryFilter.categories)
+        console.log(state.filters);
+        console.log(categoryFilter.categories);
         return {
           ...state,
           foodFilter: filteredByPrice,
@@ -224,25 +225,23 @@ const productsSlice = (state = initialState, action) => {
       const foodbyprice =
         action.payload === "menor"
           ? state.foodFilter.sort((a, b) => {
-            if (a.price > b.price) return 1;
-            else return -1;
-          })
+              if (a.price > b.price) return 1;
+              else return -1;
+            })
           : state.foodFilter.sort((a, b) => {
-            if (a.price < b.price) return 1;
-            else return -1;
-          });
-
+              if (a.price < b.price) return 1;
+              else return -1;
+            });
 
       return {
         ...state,
-        foodFilter: foodbyprice
-      }
-
+        foodFilter: foodbyprice,
+      };
 
     case GET_USER_DATA:
       return {
         ...state,
-        userData: { ...action.payload }
+        userData: { ...action.payload },
       };
 
     case GET_USERS:
@@ -252,10 +251,12 @@ const productsSlice = (state = initialState, action) => {
       };
 
     case GET_FOODS_AVIALABLES:
-      const showFoods = state.foodFilter.filter(food => food.disabled === false);
+      const showFoods = state.foodFilter.filter(
+        (food) => food.disabled === false
+      );
       return {
         ...state,
-        foodFilter: showFoods
+        foodFilter: showFoods,
       };
 
     case CREATE_DISCOUNT:
@@ -264,33 +265,38 @@ const productsSlice = (state = initialState, action) => {
         discounts: action.payload,
       };
 
-
-      case RECUPERAR_PASS:
+    case RECUPERAR_PASS:
       return {
         ...state,
-        newPass: action.payload
+        newPass: action.payload,
       };
-
 
     case DELETE_DISCOUNT:
       return {
         ...state,
         discounts: action.payload,
-      };  
-    
+      };
+
     case GET_DISCOUNTS:
-      const showDiscounts = state.foodFilter.filter((food) => food.discount > 0);
+      const showDiscounts = state.foodFilter.filter(
+        (food) => food.discount > 0
+      );
       console.log(showDiscounts);
       return {
         ...state,
         discounts: showDiscounts,
-      };      
-
+      };
+    case CLEAN_DETAIL:
+      return {
+        ...state,
+        detailFoods: [],
+      };
+    case CLEAN_STATE:
+      return initialState;
 
     default:
       return state;
   }
-
 };
 
 export default productsSlice;

@@ -9,6 +9,7 @@ export const ORDER_BY_CATEGORY = "ORDER_BY_CATEGORY";
 export const ORDER_BY_CATEGORY_ADMIN = "ORDER_BY_CATEGORY_ADMIN";
 export const ORDER_BY_RATING = "ORDER_BY_RATING";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
+export const CLEAN_STATE = "CLEAN_STATE";
 
 export const GET_USER_DATA = "GET_USER_DATA";
 
@@ -19,14 +20,11 @@ export const ORDER_BY_PRICE = "ORDER_BY_PRICE"; // TODO: ordenar el precio de me
 
 export const GET_USERS = "GET_USERS";
 
-
-export const GET_FOODS_AVIALABLES = 'GET_FOODS_AVIALABLES';
-export const CREATE_DISCOUNT = 'CREATE_DISCOUNT';
-export const DELETE_DISCOUNT = 'DELETE_DISCOUNT';
-export const GET_DISCOUNTS = 'GET_DISCOUNTS';
+export const GET_FOODS_AVIALABLES = "GET_FOODS_AVIALABLES";
+export const CREATE_DISCOUNT = "CREATE_DISCOUNT";
+export const DELETE_DISCOUNT = "DELETE_DISCOUNT";
+export const GET_DISCOUNTS = "GET_DISCOUNTS";
 export const CREATE_TRANSACTION = "CREATE_TRANSACTION";
-
-
 
 export const getFoods = () => {
   return async (dispatch) => {
@@ -185,76 +183,83 @@ export const getUsers = () => {
   };
 };
 
-
-
-
-
 export const createDiscount = (categoryId, discount) => {
   console.log(categoryId, discount);
   return async (dispatch) => {
-    const response = (await axios.patch('/api/Admin/createDiscount', {
-      categoryId: categoryId,
-      discount: discount,
-    })).data;
+    const response = (
+      await axios.patch("/api/Admin/createDiscount", {
+        categoryId: categoryId,
+        discount: discount,
+      })
+    ).data;
     return dispatch({
-      type: 'CREATE_DISCOUNT',
+      type: "CREATE_DISCOUNT",
       payload: response,
     });
   };
 };
-
 
 export const deleteDiscount = (categoryId) => {
   console.log(categoryId);
   return async (dispatch) => {
-    const response = (await axios.patch('/api/Admin/deleteDiscount', {
-      categoryId: categoryId,
-    })).data;
+    const response = (
+      await axios.patch("/api/Admin/deleteDiscount", {
+        categoryId: categoryId,
+      })
+    ).data;
     return dispatch({
-      type: 'DELETE_DISCOUNT',
+      type: "DELETE_DISCOUNT",
       payload: response,
     });
   };
 };
 
-
-
 export const recuperarPasswordRequest = (email) => {
   return async (dispatch) => {
-      const response = await axios.post('/api/Recuperar/recuperarPass', { email });
+    const response = await axios.post("/api/Recuperar/recuperarPass", {
+      email,
+    });
     return dispatch({
-      type: 'RECUPERAR_PASS',
+      type: "RECUPERAR_PASS",
       payload: response,
-    })
+    });
   };
 };
 
 export const actualizarPassword = (password, token) => {
   return async (dispatch) => {
-    const response = await axios.post('/api/Recuperar/modificar', { password, token });
+    const response = await axios.post("/api/Recuperar/modificar", {
+      password,
+      token,
+    });
     return dispatch({
-      type: 'ACTUALIZAR_PASS',
+      type: "ACTUALIZAR_PASS",
     });
   };
 };
 
-
-
 export const getDiscounts = (payload) => {
-    return{
-        type: 'GET_DISCOUNTS',
-        payload
-    };
-
-};
-
-
-export const createTransaction = (foodsIds, costo, userId, approved) => {
-  return async (dispatch) => {
-    await axios.post(`/api/Products/addTransaction`, { foodsIds, costo, userId, approved });
-    return dispatch({
-      type: CREATE_TRANSACTION
-    })
+  return {
+    type: "GET_DISCOUNTS",
+    payload,
   };
 };
 
+export const createTransaction = (foodsIds, costo, userId, approved) => {
+  return async (dispatch) => {
+    await axios.post(`/api/Products/addTransaction`, {
+      foodsIds,
+      costo,
+      userId,
+      approved,
+    });
+    return dispatch({
+      type: CREATE_TRANSACTION,
+    });
+  };
+};
+export const cleanState = () => {
+  return {
+    type: CLEAN_STATE,
+  };
+};

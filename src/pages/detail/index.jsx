@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getFoodById } from "@/redux/actions";
+import { cleanDetail, cleanState, getFoodById } from "@/redux/actions";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { ArrowLeftIcon } from "@heroicons/react/20/solid";
@@ -11,6 +11,7 @@ import { cartState } from "../../../atoms/cartState";
 import { useRecoilState } from "recoil";
 import { useSession } from "next-auth/react";
 import Swal from "sweetalert2";
+import Loader from "@/components/Loader/index";
 
 const index = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -20,6 +21,7 @@ const index = () => {
   const rating = parseFloat(detailFoods.rating);
   const [quantity, setQuantity] = useState(1);
   const [cartItem, setCartItem] = useRecoilState(cartState);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleClick = () => {
     Swal.fire(`${detailFoods.name} añadido al carrito!`);
@@ -74,16 +76,35 @@ const index = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    setIsLoading(true); // Establecer isLoading en true al iniciar la carga
     if (id) {
-      dispatch(getFoodById(id));
+      dispatch(getFoodById(id)).then(() => {
+        setIsLoading(false); // Marcar que los datos se han cargado completamente
+      });
     }
-    if (detailFoods) {
-      console.log(detailFoods);
-    }
-  }, [dispatch, id]);
+    // Cargar los datos del menú aquí (puedes usar la lógica existente)
 
+    setIsLoading(false); // Marcar que los datos se han cargado completamente
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      dispatch(cleanDetail());
+      dispatch(cleanState());
+
+      setIsLoading(true); // Establecer isLoading en true antes de iniciar la carga siguiente
+
+      setTimeout(() => {
+        setIsLoading(false); // Establecer isLoading en falso después de 3 segundos
+      }, 3000); // Retraso de 3 segundos (3000 milisegundos)
+    };
+  }, [dispatch]);
   return (
     <Layaout>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
       <div>
         <div className="m-3">
           <button onClick={() => router.back()}>
@@ -290,6 +311,8 @@ const index = () => {
           </div>
         </figure>
       </div>
+      </>
+      )}
     </Layaout>
   );
 };
