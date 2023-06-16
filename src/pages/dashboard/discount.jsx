@@ -94,13 +94,11 @@ const Discount = () => {
       <td className='ml-[5%]'>
         <div className="flex flex-col items-center">
           <button
-            className=''
             onClick={() => handleApplyDiscount(category.id, category.name)}
           >
             <CheckIcon className="h-6 w-6 text-green-500" />
           </button>
           <button
-            className=''
             onClick={() => handleRemoveDiscount(category.id)}
           >
             <XMarkIcon className="h-6 w-6 text-red-500" />
