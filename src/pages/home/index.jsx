@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layaout from "@/components/Layaout/Layaout";
 import Link from "next/link";
 import Destacados from "@/components/Destacados/Destacados";
 import { PageProtection } from "@/Hocs/sesionVerify";
+import Loader from "@/components/Loader/index";
 
 const index = () => {
+  const [isloading, setloading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setloading(false);
+    }, 3000);
+  }, []);
   return (
     <Layaout>
+      {isloading ? (
+        <Loader />
+      ) : (
+        <>
       <div style={{ marginTop: "2rem" }}>
         <div className="flex flex-col mt-4 items-center text-center">
           <h2 className="font-semibold  text-color1 lg:text-2xl mb-2 text-xl">
@@ -52,6 +63,8 @@ const index = () => {
           </button>
         </div>
       </Link>
+      </>
+      )}
     </Layaout>
   );
 };
