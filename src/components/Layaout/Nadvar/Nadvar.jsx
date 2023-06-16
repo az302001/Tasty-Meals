@@ -171,7 +171,7 @@ const Navbar = () => {
     "/home": "Inicio",
     "/menu": "Menú",
     // "/dashboard/create": "Crear",
-    "/cart": "Mis ordenes",
+    "/mispedidos": "Mis ordenes",
   };
 
 

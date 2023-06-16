@@ -25,7 +25,7 @@ const index = () => {
   useEffect(() => {
     const foodsIds = cartItem.map((item) => item.id);
     const costo = calculateTotalPrice();
-    let userId = session?.user?.id || userData?.data?.id;
+    const userId = session?.user?.id || userData?.data?.id;
   
     if (userId && costo && foodsIds) {
       let approved;
