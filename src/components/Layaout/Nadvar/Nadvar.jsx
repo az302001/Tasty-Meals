@@ -197,9 +197,14 @@ const Navbar = () => {
   const rutas = {
     "/home": "Inicio",
     "/menu": "Menú",
+
+    // "/dashboard/create": "Crear",
+    "/mispedidos": "Mis ordenes",
+
     "/discounts": "Promociones",
     "/cart": "Mis ordenes",
-  };
+
+ 
 
 
   return (
