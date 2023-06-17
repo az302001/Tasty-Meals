@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
+import { FaRegEyeSlash, FaEye } from "react-icons/fa";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -17,6 +18,9 @@ const RegisterForm = () => {
   const [fieldClicked, setFieldClicked] = useState(false);
   const router = useRouter();
   const Swal = require("sweetalert2");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState("");
 
   const handleBlur = () => {
     setFieldBlur(true);
@@ -42,6 +46,12 @@ const RegisterForm = () => {
     // Validar el formato del campo "name"
     if (!/^[A-Za-z\s]+$/.test(name)) {
       toast.error("El nombre solo debe contener letras y espacios");
+      return;
+    }
+    if (passwordStrength === "Débil") {
+      toast.error(
+        "La contraseña es débil. Por favor, elige una contraseña más segura."
+      );
       return;
     }
 
@@ -80,6 +90,21 @@ const RegisterForm = () => {
       });
     }
   };
+  const evaluatePasswordStrength = (password) => {
+    let strength = "";
+
+    if (password.length < 6) {
+      strength = "Débil";
+    } else if (/\d/.test(password) && /[a-zA-Z]/.test(password)) {
+      strength = "Fuerte";
+    } else if (/\d/.test(password) || /[a-zA-Z]/.test(password)) {
+      strength = "Medio";
+    } else {
+      strength = "Débil";
+    }
+
+    setPasswordStrength(strength);
+  };
 
   return (
     <Layaout>
@@ -99,7 +124,7 @@ const RegisterForm = () => {
               {error && <p className="text-red-500 mb-4">{error}</p>}
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Name
+                  Nombre
                 </label>
                 <input
                   className={`w-full px-3 py-2 border ${
@@ -114,7 +139,6 @@ const RegisterForm = () => {
                   onBlur={handleBlur}
                   onClick={handleClick}
                   placeholder="Ingrese su Nombre"
-                  required
                 />
               </div>
               <div className="mb-4">
@@ -122,7 +146,7 @@ const RegisterForm = () => {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   for="email"
                 >
-                  Email
+                  Correo Electronico
                 </label>
                 <input
                   className={`w-full px-3 py-2 border ${
@@ -140,44 +164,70 @@ const RegisterForm = () => {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   for="password"
                 >
-                  Password
+                  Contraseña
                 </label>
-                <input
-                  className={`w-full px-3 py-2 border ${
-                    fieldBlur && !password && "border-red-500"
-                  } rounded-md focus:outline-none focus:border-indigo-500`}
-                  type="password"
-                  id="password"
-                  name="password"
-                  placeholder="********"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+                <div className="relative">
+                  <input
+                    className={`w-full px-3 py-2 border ${
+                      fieldBlur && !password && "border-red-500"
+                    } rounded-md focus:outline-none focus:border-indigo-500`}
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    name="password"
+                    placeholder="********"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      evaluatePasswordStrength(e.target.value);
+                    }}
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-2 top-5 transform -translate-y-1/2"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <FaEye /> : <FaRegEyeSlash />}
+                  </button>
+                  {passwordStrength && (
+                    <p className="text-sm text-gray-500 mt-1">
+                      Nivel de seguridad: {passwordStrength}
+                    </p>
+                  )}
+                </div>
               </div>
               <div className="mb-4">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
                   for="confirm-password"
                 >
-                  Confirm Password
+                  Confirmar Contraseña
                 </label>
-                <input
-                  className={`w-full px-3 py-2 border ${
-                    fieldBlur && !confirmPassword && "border-red-500"
-                  } rounded-md focus:outline-none focus:border-indigo-500`}
-                  type="password"
-                  id="confirm-password"
-                  name="confirm-password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="********"
-                />
+                <div className="relative">
+                  <input
+                    className={`w-full px-3 py-2 border ${
+                      fieldBlur && !confirmPassword && "border-red-500"
+                    } rounded-md focus:outline-none focus:border-indigo-500`}
+                    type={showConfirmPassword ? "text" : "password"}
+                    id="confirm-password"
+                    name="confirm-password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="********"
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  >
+                    {showConfirmPassword ? <FaEye /> : <FaRegEyeSlash />}
+                  </button>
+                </div>
               </div>
               <button
                 className="w-full bg-indigo-500 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300"
                 type="submit"
               >
-                Register
+                Registrar
               </button>
             </form>
           </div>
