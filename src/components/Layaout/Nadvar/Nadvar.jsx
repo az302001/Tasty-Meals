@@ -203,29 +203,20 @@ const Navbar = () => {
 
     "/discounts": "Promociones",
     "/cart": "Mis ordenes",
+  }
 
- 
 
 
   return (
     <div>
 
-
-
-
-
-
       <div className='flex flex-row w-full bg-color3 justify-between pl-3 pr-5 border-b-2 border-color1'>
-
-
 
         <Link href="/home">
           <div className='w-28 h-28 cursor-pointer'>
             <Image src={Logo} />
           </div>
         </Link>
-
-
         <div className='flex lg:w-[50%]  sm:w-[90%]  justify-end'>
           <div className='flex items-center pr-[0.5%]'>
             <div className='hidden sm:block   bg-color1 md:h-[3vh] md:rounded-[10px]   lg:h-[6vh] lg:flex  lg:rounded-[10px] lg:mr-5 '>
@@ -235,14 +226,14 @@ const Navbar = () => {
                 </Link>
               ))}
 
-              {/* {userData?.data?.username && (
+              {userData?.data?.username && (
                 <div className='flex flex-row items-center mb-4 gap-2 text-white'>
                   {userData?.data?.username}
                 </div>
-              )} */}
+              )}
 
 
-              {/* {session || userData?.data?.username ? (
+              {session || userData?.data?.username ? (
                 <button type='button' className="border-b pb-1 text-color2 w-40 text-left" onClick={handleSignOut}>Cerrar sesión</button>
               ) : (
                 <>
@@ -250,12 +241,9 @@ const Navbar = () => {
                     <button type='button' className="border-b pb-1 text-color2 w-40 text-left" onClick={handleSignInState}>Iniciar sesión</button>
                   </Link>
                 </>
-              )} */}
+              )}
             </div>
           </div>
-
-
-
 
           <div className='flex flex-row justify-center items-center gap-3'>
 
