@@ -52,6 +52,7 @@ export default function Update() {
       description: "",
       image: "",
       categoryId: "",
+      discount: "",
     },
   });
 
@@ -62,6 +63,7 @@ export default function Update() {
       setValue("description", food?.description || "");
       setValue("image", food?.image || "");
       setValue("categoryId", food?.categoryId || "");
+      setValue("discount", food?.discount !== undefined ? food.discount : "");
       clearErrors();
     }
   }, [food, setValue, clearErrors]);
@@ -82,15 +84,11 @@ export default function Update() {
       const formData = new FormData();
       formData.append("file", file);
 
-      const response = await axios.post(
-        "/api/Products/uploadImage",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.post("/api/Products/uploadImage", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       const imageUrl = response.data.imageUrl;
       setUploadedImageUrl(imageUrl);
@@ -111,23 +109,22 @@ export default function Update() {
         description: data.description,
         image: uploadedImageUrl || food?.image || "",
         Category: { connect: { id: parseInt(data.categoryId) } },
+        discount: parseInt(data.discount),
       };
-
+      console.log(requestData);
       const formHasChanges =
         requestData.name !== food?.name ||
         requestData.price !== food?.price ||
         requestData.description !== food?.description ||
         requestData.image !== food?.image ||
-        requestData.Category?.connect?.id !== food?.categoryId;
-
+        requestData.Category?.connect?.id !== food?.categoryId ||
+        requestData.discount !== food?.discount;
+      console.log(formHasChanges);
       if (!formHasChanges) {
         return;
       }
 
-      const response = await axios.put(
-        `/api/Products/${id}`,
-        requestData
-      );
+      const response = await axios.put(`/api/Products/${id}`, requestData);
 
       const serverMessage = response.data.mensaje;
       Swal.fire(serverMessage, "", "success");
@@ -240,6 +237,37 @@ export default function Update() {
         {errors.categoryId && errors.categoryId.type === "required" && (
           <p className="text-red-700">Este campo es requerido</p>
         )}
+        <div className="w-full lg:w-1/2 px-2">
+          <label htmlFor="discount" className="text-xl p-3 text-color1">
+            Descuento:
+          </label>
+          <input
+            type="number"
+            id="discount"
+            placeholder="Descuento"
+            className="shadow appearance-none border rounded lg:w-3/4 w-4/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            {...register("discount", {
+              required: true,
+              min: 0,
+              max: 100,
+            })}
+          />
+          {errors.discount && errors.discount.type === "required" && (
+            <p className="text-red-500 text-sm mt-1">
+              Este campo es requerido.
+            </p>
+          )}
+          {errors.discount && errors.discount.type === "min" && (
+            <p className="text-red-500 text-sm mt-1">
+              El descuento no puede ser menor a 0.
+            </p>
+          )}
+          {errors.discount && errors.discount.type === "max" && (
+            <p className="text-red-500 text-sm mt-1">
+              El descuento no puede ser mayor a 100.
+            </p>
+          )}
+        </div>
         <label htmlFor="image" className="text-xl p-3 text-color1">
           Imagen:
         </label>
