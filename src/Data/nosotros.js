@@ -1,5 +1,6 @@
 import avatar from "../assets/Avatar-place-holder.jpg";
 import AvatarBruno from "../assets/bruno-santimaria-avatar.png";
+import AvatarRobert from "../assets/AvatarRobert.jpeg";
 const nosotros = [
   {
     nombre: "Julio Trillo",
@@ -29,7 +30,7 @@ const nosotros = [
     nombre: "Robert Henrry Leon Huaman",
     github: "https://github.com/",
     linkedin: "https://www.linkedin.com",
-    avatar: avatar,
+    avatar: AvatarRobert,
   },
   {
     nombre: "Erick Ricardo Inga Calle",

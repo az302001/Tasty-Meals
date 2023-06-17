@@ -30,6 +30,7 @@ const Card = ({ food, discount }) => {
   const handleIncrement = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
   };
+  
 
   const handleDecrement = () => {
     if (quantity > 1) {
@@ -37,9 +38,13 @@ const Card = ({ food, discount }) => {
     }
   };
 
+  const precio = Math.round(food.price)
+  // console.log (precio);
+  
+
   const { data: session } = useSession();
   const userData = useSelector((state) => state.products.userData);
-  const router = useRouter();
+ 
 
   const addItemToCart = () => {
     const newItem = { ...food, quantity };
@@ -78,29 +83,10 @@ const Card = ({ food, discount }) => {
     }
     handleClick();
   };
-// localstorege.setitem(newitem)
-  // const addItemToCart = () => {
-  //   const newItem = { ...food, quantity };
 
-  //   if (!session || !userData.data) {
-  //     alert('Debes iniciar sesión para poder comprar.');
-  //     return;
-  //   }
+  const totalPrice = food.discount ? parseInt(precio - food.discount * precio / 100 * quantity ) : precio * quantity;
 
-  //   if (cartItem.findIndex((fo) => fo.id === food.id) === -1) {
-  //     setCartItem((prevState) => [...prevState, newItem]);
-  //   } else {
-  //     setCartItem((prevState) => {
-  //       return prevState.map((item) => {
-  //         return item.id === food.id ? { ...item, quantity: item.quantity + quantity } : item;
-  //       });
-  //     });
-  //   }
-
-  //   handleClick();
-  // };
-
-  const totalPrice = food.discount ? parseInt(price - food.discount * price / 100 * quantity ) : price * quantity;
+  // console.log(totalPrice);
 
   return (
     <div className=" w-[100%] h-[100%] bg-gradient-to-r bg-color3   shadow-lg rounded-lg text-white p-4 transition duration-300 hover:-translate-y-2 ">
@@ -110,7 +96,7 @@ const Card = ({ food, discount }) => {
         </Link>
       </div>
 
-      <div className='flex flex-row w-full rounded-3x1 px-4 justify-around'>
+      <div className='flex flex-row w-full rounded-3x1  justify-around'>
         <div className="w-60 h-32 cursor-pointer">
           <Link href={`/detail?id=${id}`}>
             <img src={image} alt={name} className="w-full h-full object-cover rounded-3xl" />
@@ -144,10 +130,10 @@ const Card = ({ food, discount }) => {
           </div>
           {
             food.discount > 0 ? 
-            <div className='flex flfex-row'>
-              <h2 className="text-pacifico text-2xl text-color1 mr-5 ml-2">Antes: ${parseInt(food.price)}</h2>
-              <h2 className="text-pacifico text-2xl text-color1">Ahora: ${parseInt(totalPrice)}</h2>
-              <div className="h-[5vh] w-[5vw] mb-10"><Image src={Discounts} /></div>
+            <div className='flex flex-cols text-[18px]  md:text-[20px] font-pacifico font-bold'>
+              <h2 className="   text-color1  ml-2">Antes: ${parseInt(food.price)}</h2>
+              <h2 className=" text-color1">Ahora: ${parseInt(totalPrice)}</h2>
+              <div className="h-[5vh] w-[12vw] md:w-[10vw] lg:w-[8vw] mb-10"  ><Image src={Discounts} /></div>
             </div>
             :  <div className="text-pacifico text-2xl text-color1">${parseInt(totalPrice)}</div>
           }
