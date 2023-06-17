@@ -12,8 +12,6 @@ import {
   PencilSquareIcon,
   ArrowSmallRightIcon,
   ArrowSmallLeftIcon,
-  ArrowUpIcon,
-  ArrowDownIcon,
   EyeIcon,
   EyeSlashIcon,
 } from "@heroicons/react/24/outline";
@@ -38,12 +36,16 @@ export default function Products() {
   const [paginaActual, setPaginaActual] = useState(0);
   const [searchInput, setSearchInput] = useState("");
   const [ordenPrecio, setOrdenPrecio] = useState("mayor");
+  const [sortedFoods, setSortedFoods] = useState();
   const elementosPorPagina = 18;
 
   useEffect(() => {
     dispatch(getFoods());
   }, [dispatch]);
 
+  useEffect(() => {
+    console.log(foods);
+  }, [foods]);
   useEffect(() => {
     const filteredColumns =
       foods.length > 0
@@ -53,7 +55,7 @@ export default function Products() {
   }, [foods]);
 
   useEffect(() => {
-    const alimentosFiltrados = foods;
+    const alimentosFiltrados = foods.sort((a, b) => a.id - b.id);
 
     const alimentosFiltradosPorBusqueda = alimentosFiltrados.filter((food) =>
       removeDiacritics(food.name.toLowerCase()).includes(
@@ -98,9 +100,9 @@ export default function Products() {
         <h1 className="text-xl font-semibold text-color1 p-6 lg:text-3xl">
           MODIFICAR PLATOS
         </h1>
-        <section className="flex items-center space-x-4">
+        <section className="flex items-center text-center space-x-4">
           <ReactSearchInput
-            className="text-center justify-center items-center border-solid border-2 p-1 placeholder-red-500 text-red-500 text-sm"
+            className="text-center justify-center items-center border-solid border-2 p-1 placeholder-red-500 text-color1 text-sm"
             value={searchInput}
             onChange={handleSearchChange}
             placeholder="Buscar alimentos"
@@ -186,20 +188,28 @@ export default function Products() {
                                         id: food.id,
                                         disabled: !food.disabled,
                                       };
-                                      console.log(updatedFood);
+
                                       axios
                                         .patch(
                                           `/api/Admin/disabled/`,
                                           updatedFood
                                         )
                                         .then((response) => {
-                                          Swal.fire(
-                                            "Estado actualizado",
-                                            `El plato ${food.name} ha cambiado su estado`,
-                                            "success"
-                                          );
-                                          console.log(updatedFood);
-                                          dispatch(getFoods());
+                                          if (food.disabled) {
+                                            Swal.fire(
+                                              "Estado actualizado",
+                                              `El plato ${food.name} ha sido habilitado`,
+                                              "success"
+                                            );
+                                            dispatch(getFoods());
+                                          } else {
+                                            Swal.fire(
+                                              "Estado actualizado",
+                                              `El plato ${food.name} ha sido deshabilitado`,
+                                              "success"
+                                            );
+                                            dispatch(getFoods());
+                                          }
                                         })
                                         .catch((error) => {
                                           Swal.fire(
@@ -207,17 +217,13 @@ export default function Products() {
                                             "No se pudo cambiar el estado del elemento",
                                             "error"
                                           );
-                                          console.error(
-                                            "Error al cambiar el estado del elemento:",
-                                            error
-                                          );
                                         });
                                     }
                                   });
                                 }}
                               >
                                 {food.disabled ? (
-                                  <EyeIcon className="h-6 w-6 text-color1 text-center" />
+                                  <EyeIcon className="h-6 w-6 text-green-500 text-center" />
                                 ) : (
                                   <EyeSlashIcon class="h-6 w-6 text-red-900" />
                                 )}

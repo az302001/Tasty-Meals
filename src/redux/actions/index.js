@@ -25,7 +25,7 @@ export const CREATE_DISCOUNT = "CREATE_DISCOUNT";
 export const DELETE_DISCOUNT = "DELETE_DISCOUNT";
 export const GET_DISCOUNTS = "GET_DISCOUNTS";
 export const CREATE_TRANSACTION = "CREATE_TRANSACTION";
-
+export const GET_USER_TRANSACTIONS = "GET_USER_TRANSACTIONS";
 export const getFoods = () => {
   return async (dispatch) => {
     const response = (await axios.get("/api/Products")).data;
@@ -263,3 +263,13 @@ export const cleanState = () => {
     type: CLEAN_STATE,
   };
 };
+
+export const getTransactions = (id) =>{
+  return async (dispatch) =>{
+    const response = await axios.get(`/api/Products/addTransaction?userId=${id}`)
+    return dispatch({
+      type: GET_USER_TRANSACTIONS,
+      payload: response.data
+    })
+  }
+}

@@ -21,6 +21,7 @@ import {
   GET_DISCOUNTS,
   CLEAN_STATE,
   CLEAN_DETAIL,
+  GET_USER_TRANSACTIONS,
 } from "../actions";
 
 const initialState = {
@@ -36,6 +37,7 @@ const initialState = {
   categories: [],
   newPass: [],
   isLoading: false,
+  userTransactions: [],
 };
 
 const productsSlice = (state = initialState, action) => {
@@ -293,7 +295,11 @@ const productsSlice = (state = initialState, action) => {
       };
     case CLEAN_STATE:
       return initialState;
-
+    case GET_USER_TRANSACTIONS:
+      return {
+        ...state,
+        userTransactions: action.payload,
+      }
     default:
       return state;
   }

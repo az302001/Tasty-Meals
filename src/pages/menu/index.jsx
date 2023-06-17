@@ -18,7 +18,7 @@ const Menu = () => {
   // const foods = useSelector(allProducts)
   const foodFilter = useSelector(allProducts);
   const [paginaActual, setPaginaActual] = useState(1);
-  const elementosPorPagina = 16;
+  const elementosPorPagina = 15;
 
 
 
@@ -38,8 +38,9 @@ const Menu = () => {
 
 
   const [order, setOrder] = useState('');
-  const [minPrice, setMinPrice] = useState(1);
-  const [maxPrice, setMaxPrice] = useState(2);
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+  const [showFilter, setShowFilter] = useState(false);
 
 
   const getfoodtoshow = foodFilter;
@@ -75,15 +76,22 @@ const Menu = () => {
     dispatch(orderByRating(selectRating));
   };
 
+  const toggleFilter = () => {
+    setShowFilter(!showFilter);
+  };
+
   const handleFilterPrice = () => {
-    if (minPrice < 1) {
-      alert("El rango mínimo de precio no puede ser menor que 1.");
+    if (minPrice < 0) {
+      alert("El rango mínimo de precio no puede ser menor que 0.");
+      setMinPrice(0);
+      return;
     } else if (minPrice > maxPrice) {
       alert(
         "El rango mínimo de precio no puede ser mayor que el rango máximo."
       );
+      
     } else {
-      if (minPrice === 1 && maxPrice === 2) {
+      if (minPrice===maxPrice ) {
         if (selectedCategory === "all") {
           dispatch(getFoods()); // Obtener todos los productos si ambos inputs son 3 y no hay categoría seleccionada
         } else {
@@ -118,7 +126,7 @@ const Menu = () => {
               <ArrowLeftIcon className="h-8 w-8 text-color1" />
             </button>
           </div>
-          <div className='flex flex-col   lg:flex-row items-center justify-center gap-[1%]'>
+          <div className='flex flex-col  lg:flex-row items-center justify-center gap-[1%]'>
 
             <div className="mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3 ">
               <select
@@ -181,36 +189,42 @@ const Menu = () => {
               </select>
             </div>
 
-            <div className='mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3 w-[76%]    md:w-[25%] lg:w-[25%]'>
-              <button onClick={handleFilterPrice} className='mr-[7%]  md:mr-[0] lg:mr-[0] '> Filtrar por precio </button>
 
-              <input
-                className='md:w-[20%] lg:w-[15%] w-[28%] text-center'
-                type="number"
-                placeholder={`Precio Minimo (${Math.min(
-                  ...foodFilter.map((food) => food.price)
-                )})`}
-                value={minPrice}
-                onChange={(e) => {
-                  const value = parseInt(e.target.value);
-                  setMinPrice(value >= 1 ? value : 1);
-                }}
-              />
-              <label > :Min</label>
+            <div className='mt-2 text-lg  bg-color3  border-2 border-solid rounded-md p-0.5 pl-2 border-color1 w-[55%] lg:w-[15%] md:w-[28%]  text-center' >
+              <button onClick={toggleFilter} className=' md:mr-[0] lg:mr-[0] '>
+                Filtrar por precio
+              </button>
 
-              <input
-                className='md:w-[15%] lg:w-[15%] w-[28%] text-center'
-                type="number"
-                placeholder="Precio Máximo"
-                value={maxPrice}
-                onChange={(e) => {
-                  const value = parseInt(e.target.value);
-                  setMaxPrice(value >= 2 ? value : 2);
-                }}
-              />
-              <label > :Max</label>
+              {showFilter && (
+                <div className='border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3 w-[100%]  '>
+                  <input
+                    className='md:w-[25%] lg:w-[25%] w-[28%] text-center mr-[3%] ml-[1%]'
+                    type='number'
+                    placeholder='Min'
+                    value={minPrice}
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value);
+                      setMinPrice(value);
+                    }}
+                  />
 
+                  <input
+                    className='md:w-[25%] lg:w-[25%] w-[28%] text-center mr-[3%]'
+                    type='number'
+                    placeholder='Max'
+                    value={maxPrice}
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value);
+                      setMaxPrice(value);
+                    }}
+                  />
+
+                  <button onClick={handleFilterPrice} className='text-center lg:w-[40%]'>Filtrar</button>
+                </div>
+              )}
             </div>
+
+
           </div>
           {alimentosPaginados.length === 0 && (
             <p>No tenemos productos con ese rango de precio.</p>
