@@ -231,6 +231,11 @@ const Navbar = () => {
                   {userData?.data?.username}
                 </div>
               )}
+              {userData?.data?.role === 'admin' && (
+                <Link href="/dashboard">
+                  <button className="pb-1 md:w-28 no-underline lg:w-32 text-center md:text-[15px] lg:text-[18px] text-white hover:text-red-500">Panel de Control</button>
+                </Link>
+              )}
 
 
               {session || userData?.data?.username ? (

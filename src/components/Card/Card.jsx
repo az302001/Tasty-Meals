@@ -67,7 +67,7 @@ const Card = ({ food, discount }) => {
       return Swal.fire({
         icon: 'warning',
         title: 'Oops...',
-        text: 'Tienes que registrarte para comprar!',
+        text: 'Registrate para poder comprar!',
         footer: '<a href="/login" style="text-decoration: underline; color: blue;">Ir al registro</a>'
       })
       

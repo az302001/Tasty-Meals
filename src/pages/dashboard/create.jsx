@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import Layaout from "@/components/Layaout/Layaout";
+import AdminRoute from "@/components/AdminRoute/AdminRoute";
 
 export default function create() {
   const [submitSuccess, setSubmitSuccess] = useState();
@@ -176,6 +177,7 @@ export default function create() {
   }, []);
 
   return (
+    <AdminRoute>
     <Layaout>
       <section className="flex flex-col h-auto m-0 items-center justify-center">
         <h2 className="font-sans font-bold text-2xl text-color1">
@@ -283,5 +285,6 @@ export default function create() {
         </form>
       </section>
     </Layaout>
+    </AdminRoute>
   );
 }

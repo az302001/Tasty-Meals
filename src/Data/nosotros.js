@@ -1,6 +1,7 @@
 import avatar from "../assets/Avatar-place-holder.jpg";
 import AvatarBruno from "../assets/bruno-santimaria-avatar.png";
 import AvatarRobert from "../assets/AvatarRobert.jpeg";
+import AvatarLourdes from "../assets/AvatarLourdes.jpeg";
 const nosotros = [
   {
     nombre: "Julio Trillo",
@@ -40,9 +41,9 @@ const nosotros = [
   },
   {
     nombre: "Lourdes Candela Moreno",
-    github: "https://github.com/",
-    linkedin: "https://www.linkedin.com",
-    avatar: avatar,
+    github: "https://github.com/lulilcm",
+    linkedin: "https://www.linkedin.com/in/lourdes-moreno-901669213",
+    avatar: AvatarLourdes,
   },
   {
     nombre: "Bruno Santimaria",
