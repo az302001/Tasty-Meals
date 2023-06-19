@@ -8,13 +8,20 @@ import MercadoPagoBttn from "@/components/MercadoPagoBttn/MercadoPagoBttn";
 
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import { useSelector } from "react-redux";
 
-// import Descuentos from "@/components/Descuentos/Descuentos";
+
+
 
 
 const Cart = () => {
   const [cartItem, setCartItem] = useRecoilState(cartState);
   const [total, setTotal] = useState(0);
+  const [isReady, setIsReady] = useState(false);
+  const [showMessage, setShowMessage] = useState(true);
+  const { data: session } = useSession();
+  const userData = useSelector((state) => state.products.userData);
 
   const calculateTotalPrice = () => {
     let newTotal = 0;
@@ -43,10 +50,47 @@ const Cart = () => {
   };
 
   useEffect(() => {
+    const checkAuthentication = async () => {
+      let google = session;
+      let local = userData?.data?.username;
+      if (google) {
+        google = true;
+        local = true;
+      } else {
+        google = false;
+      }
+      if (local) {
+        google = true;
+        local = true;
+      } else {
+        local = false;
+      }
+      if (!google || !local) {
+        setShowMessage(true); 
+        setTimeout(() => {
+          router.replace("/menu"); 
+        }, 3000);
+      } else {
+        setIsReady(true);
+      }
+    };
+    checkAuthentication();
+  }, []);
+  
+
+  useEffect(() => {
     updateTotalPrice();
   }, [cartItem]);
 
- 
+  if (!isReady) {
+    return(
+      <Layaout>
+       <div className="text-center mt-[20%]">
+         <p className="text-3xl text-color1 font-bold">Por favor inicia sesión para poder comprar...</p>
+       </div>
+      </Layaout>
+    );
+  }
 
   return (
     <Layaout>

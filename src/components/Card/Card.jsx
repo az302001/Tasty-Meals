@@ -67,7 +67,7 @@ const Card = ({ food, discount }) => {
       return Swal.fire({
         icon: 'warning',
         title: 'Oops...',
-        text: 'Tienes que registrarte para comprar!',
+        text: 'Registrate para poder comprar!',
         footer: '<a href="/login" style="text-decoration: underline; color: blue;">Ir al registro</a>'
       })
       
@@ -84,7 +84,7 @@ const Card = ({ food, discount }) => {
     handleClick();
   };
 
-  const totalPrice = food.discount ? parseInt(precio - food.discount * precio / 100 * quantity ) : precio * quantity;
+  const totalPrice = food.discount ? parseInt(precio - food.discount * precio / 100 ) * quantity : precio * quantity;
 
   // console.log(totalPrice);
 

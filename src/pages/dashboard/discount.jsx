@@ -5,6 +5,7 @@ import Layaout from '@/components/Layaout/Layaout';
 import Swal from 'sweetalert2';
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import AdminRoute from '@/components/AdminRoute/AdminRoute';
 
 const Discount = () => {
   const dispatch = useDispatch();
@@ -60,51 +61,52 @@ const Discount = () => {
   }, [dispatch, categories]);
 
   return (
+    <AdminRoute>
     <Layaout>
       <div className="mb-20 rounded-lg flex flex-col items-center">
       <table className="w-11/12 mb-10 mt-[4vh] rounded-lg border-color1">
         <thead>
-  <tr>
-    <th className="bg-color1 text-color3 h-16 text-center font-semibold text-lg w-[37vw]">Categorias</th>
-    <th className="bg-color1 text-color3 h-16 text-center font-semibold text-lg w-[37vw]">Descuento</th>
-    <th className="bg-color1 text-color3 h-16 text-center font-semibold text-lg w-[37vw]">Aplicar/Quitar</th>
-  </tr>
-</thead>
-<tbody className="m-10">
-  {categories.map((category) => (
-    <tr key={category.id} className="bg-white even:bg-gray-200 rounded-lg shadow-md mb-2 border-color1 border-solid border-2">
-      <td className="w-20 text-color1 text-lg whitespace-normal text-center font-semibold">
-        <div className="flex flex-col items-center">
-          <span>{category.name}</span>
-        </div>
-      </td>
-      <td className='py-2 px-4'>
-        <div className="flex flex-col items-center">
-          <input
+          <tr>
+            <th className="bg-color1 text-color3 h-16 text-center font-semibold text-lg w-[37vw]">Categorias</th>
+            <th className="bg-color1 text-color3 h-16 text-center font-semibold text-lg w-[37vw]">Descuento</th>
+          <th className="bg-color1 text-color3 h-16 text-center font-semibold text-lg w-[37vw]">Aplicar/Quitar</th>
+          </tr>
+      </thead>
+      <tbody className="m-10">
+     {categories.map((category) => (
+       <tr key={category.id} className="bg-white even:bg-gray-200 rounded-lg shadow-md mb-2 border-color1 border-solid border-2">
+         <td className="w-20 text-color1 text-lg whitespace-normal text-center font-semibold">
+           <div className="flex flex-col items-center">
+             <span>{category.name}</span>
+           </div>
+         </td>
+         <td className='py-2 px-4'>
+           <div className="flex flex-col items-center">
+             <input
             type='number'
             className='border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:border-blue-500 ml-7 text-center w-[7vw]'
             value={discounts[category.id] || ''}
             onChange={(event) => handleChange(event, category.id)}
-          />
-          {discounts[category.id] && (
-            <h2 className='text-color3-500 mt-2'>Descuento: {discounts[category.id]}%</h2>
-          )}
-        </div>
-      </td>
-      <td className='ml-[5%]'>
-        <div className="flex flex-col items-center">
-          <button
+             />
+             {discounts[category.id] && (
+               <h2 className='text-color3-500 mt-2'>Descuento: {discounts[category.id]}%</h2>
+             )}
+           </div>
+         </td>
+         <td className='ml-[5%]'>
+           <div className="flex flex-col items-center">
+             <button
             onClick={() => handleApplyDiscount(category.id, category.name)}
           >
-            <CheckIcon className="h-6 w-6 text-green-500" />
-          </button>
-          <button
+               <CheckIcon className="h-6 w-6 text-green-500" />
+             </button>
+             <button
             onClick={() => handleRemoveDiscount(category.id)}
-          >
-            <XMarkIcon className="h-6 w-6 text-red-500" />
-          </button>
-        </div>
-      </td>
+             >
+               <XMarkIcon className="h-6 w-6 text-red-500" />
+             </button>
+           </div>
+         </td>
     </tr>
   ))}
 </tbody>
@@ -112,6 +114,7 @@ const Discount = () => {
       </table>
       </div>
     </Layaout>
+    </AdminRoute>
   );
 };
 
