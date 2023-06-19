@@ -41,6 +41,7 @@ model User {
     emailVerified DateTime?
     password      String?
     image         String?
+    role          Roles @default(user)
     Accounts      Account[]
     Sessions      Session[]
     Favorite      Favorite[]

@@ -9,7 +9,7 @@ function validateTransactionData(foodsIds, costo, userId, approved) {
 
 export default async function handler(req, res) {
   switch (req.method) {
-    case 'POST':
+    case "POST":
       try {
         const { foodsIds, costo, userId, approved } = req.body;
         if (validateTransactionData(foodsIds, costo, userId, approved)) {
@@ -38,7 +38,7 @@ export default async function handler(req, res) {
       }
       break;
 
-    case 'GET':
+    case "GET":
       try {
         const { userId } = req.query;
         const transactions = await prisma.transaction.findMany({
@@ -53,7 +53,9 @@ export default async function handler(req, res) {
         res.status(200).json(transactions);
       } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Error al obtener las transacciones del usuario" });
+        res
+          .status(500)
+          .json({ error: "Error al obtener las transacciones del usuario" });
       }
       break;
 

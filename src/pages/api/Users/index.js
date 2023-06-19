@@ -1,10 +1,9 @@
-
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
-  const { method, body} = req;
+  const { method, body } = req;
 
   switch (method) {
     case "GET":
@@ -13,10 +12,10 @@ export default async function handler(req, res) {
           include: {
             Review: {
               include: {
-                food: true
-              }
-            }
-          }
+                food: true,
+              },
+            },
+          },
         });
 
         return res.status(200).json({ users });
@@ -24,7 +23,24 @@ export default async function handler(req, res) {
         res.status(500).json({ error: error });
       }
       break;
-
+    case "DELETE":
+      try {
+        const { id } = req.query;
+        const deletedUser = await prisma.user.delete({
+          where: {
+            id: parseInt(id),
+          },
+        });
+        if (!deletedUser || parseInt(id) === NaN)
+          res.status(404).json({ msj: "No hay usuarios con ese ID" });
+        res
+          .status(200)
+          .json({ msj: `El usuario ${deletedUser.name} ha sido eliminado` });
+      } catch (error) {
+        res
+          .status(404)
+          .json({ error: "Hubo un problema al eliminar el usuario" });
+      }
     default:
       res.status(500).json({ error: "Unknown method" });
       break;

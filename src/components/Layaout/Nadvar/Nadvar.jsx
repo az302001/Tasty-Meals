@@ -79,6 +79,39 @@ const Navbar = () => {
         </Link>
         <div className='flex lg:w-[50%]  sm:w-[90%]  justify-end'>
 
+          <div className='flex items-center pr-[0.5%]'>
+            <div className='hidden sm:block   bg-color1 md:h-[3vh] md:rounded-[10px]   lg:h-[6vh] lg:flex  lg:rounded-[10px] lg:mr-5 '>
+              {Object.entries(rutas).map(([rut, nombre]) => (
+                <Link href={rut} key={rut} >
+                  <button className=" pb-1 md:w-28 no-underline  lg:w-32 text-center md:text-[15px] lg:text-[18px] text-white hover:text-red-500">{nombre}</button>
+                </Link>
+              ))}
+
+              {userData?.data?.username && (
+                <div className='flex flex-row items-center mb-4 gap-2 text-white'>
+                  {userData?.data?.username}
+                </div>
+              )}
+              {userData?.data?.role === 'admin' && (
+                <Link href="/dashboard">
+                  <button className="pb-1 md:w-28 no-underline lg:w-32 text-center md:text-[15px] lg:text-[18px] text-white hover:text-red-500">Panel de Control</button>
+                </Link>
+              )}
+
+
+              {session || userData?.data?.username ? (
+                <button type='button' className="border-b pb-1 text-color2 w-40 text-left" onClick={handleSignOut}>Cerrar sesión</button>
+              ) : (
+                <>
+                  <Link href="/login">
+                    <button type='button' className="border-b pb-1 text-color2 w-40 text-left" onClick={handleSignInState}>Iniciar sesión</button>
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+
+
           <div className='flex flex-row justify-center items-center gap-3'>
 
             <ShoppingCart className="h-[10vh] w-[10vw] text-color1" />
