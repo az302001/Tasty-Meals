@@ -22,6 +22,7 @@ const Menu = () => {
 
 
 
+
   const categories = useSelector((state) => state.products.foods.map((food) => food.Category.name));
 
   // const [previousRoutes, setPreviousRoutes] = useState([]);
@@ -33,6 +34,9 @@ const Menu = () => {
   const [filtroAplicado, setFiltroAplicado] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("all");
 
+
+
+
   const categoriesSet = new Set(categories);
   const uniqueCategories = Array.from(categoriesSet);
 
@@ -40,6 +44,7 @@ const Menu = () => {
   const [order, setOrder] = useState('');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
+  const [initialreset, setReset] = useState("reset");
   const [showFilter, setShowFilter] = useState(false);
 
 
@@ -85,22 +90,25 @@ const Menu = () => {
       alert("El rango mínimo de precio no puede ser menor que 0.");
       setMinPrice(0);
       return;
-    } else if (minPrice > maxPrice) {
+    } else if (minPrice >= maxPrice) {
       alert(
-        "El rango mínimo de precio no puede ser mayor que el rango máximo."
+        "El rango mínimo de precio no puede ser mayor o igual que el rango máximo ."
       );
-      
+
     } else {
-      if (minPrice===maxPrice ) {
-        if (selectedCategory === "all") {
-          dispatch(getFoods()); // Obtener todos los productos si ambos inputs son 3 y no hay categoría seleccionada
-        } else {
-          dispatch(orderByCategory(selectedCategory));
-        }
-      } else {
-        dispatch(rangeForPrice({ minPrice, maxPrice }));
-      }
+      dispatch(rangeForPrice({ minPrice, maxPrice }));
     }
+    // else {
+    //   if (minPrice===maxPrice ) {
+    //     if (selectedCategory === "all") {
+    //       dispatch(getFoods()); // Obtener todos los productos si ambos inputs son 3 y no hay categoría seleccionada
+    //     } else {
+    //       dispatch(orderByCategory(selectedCategory));
+    //     }
+    //   } else {
+    //     dispatch(rangeForPrice({ minPrice, maxPrice }));
+    //   }
+    // }
   };
 
   const handleOrderByPrice = (e) => {
@@ -108,6 +116,15 @@ const Menu = () => {
     setOrder(selectPrice);
     dispatch(orderByPrice(selectPrice));
   };
+
+
+  const handleResetFilter = () => {
+    setMinPrice(initialreset);
+    setMaxPrice(initialreset);
+    dispatch(rangeForPrice("reset"))
+  };
+
+
 
   const totalPaginas = Math.ceil(getfoodtoshow.length / elementosPorPagina);
   const alimentosPaginados = getfoodtoshow.slice(
@@ -190,15 +207,15 @@ const Menu = () => {
             </div>
 
 
-            <div className='mt-2 text-lg  bg-color3  border-2 border-solid rounded-md p-0.5 pl-2 border-color1 w-[55%] lg:w-[15%] md:w-[28%]  text-center' >
+            <div className='mt-2 text-lg  bg-color3  border-2 border-solid rounded-md p-0.5 pl-2 border-color1 w-[69%] lg:w-[18%] md:w-[31%]  text-center' >
               <button onClick={toggleFilter} className=' md:mr-[0] lg:mr-[0] '>
                 Filtrar por precio
               </button>
 
               {showFilter && (
-                <div className='border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3 w-[100%]  '>
+                <div className=' rounded-md   text-lg bg-color3 w-[100%]  '>
                   <input
-                    className='md:w-[25%] lg:w-[25%] w-[28%] text-center mr-[3%] ml-[1%]'
+                    className='md:w-[25%] lg:w-[22%] w-[20%] text-center lg:mr-[3%] ml-[1%]'
                     type='number'
                     placeholder='Min'
                     value={minPrice}
@@ -209,7 +226,7 @@ const Menu = () => {
                   />
 
                   <input
-                    className='md:w-[25%] lg:w-[25%] w-[28%] text-center mr-[3%]'
+                    className='md:w-[25%] lg:w-[22%] w-[20%] text-center mr-[3%]'
                     type='number'
                     placeholder='Max'
                     value={maxPrice}
@@ -218,8 +235,8 @@ const Menu = () => {
                       setMaxPrice(value);
                     }}
                   />
-
-                  <button onClick={handleFilterPrice} className='text-center lg:w-[40%]'>Filtrar</button>
+                  <button onClick={handleResetFilter} type='button' className='text-center lg:w-[22%] border-2 border-solid border-color1' >Reset</button>
+                  <button onClick={handleFilterPrice} type='button'  className=' lg:w-[20%] border-2 border-solid border-color1 ml-[1%]'>Filtrar</button>
                 </div>
               )}
             </div>
