@@ -69,7 +69,7 @@ const GoogleLogin = () => {
     if (status === "authenticated") {
       // Usuario autenticado
       console.log("Usuario autenticado:", session.user.name);
-      if (session.user.email === "tastymeals.0101@gmail.com") {
+      if (session.user.role === "admin") {
         router.push("/dashboard"); // Redirigir directamente al dashboard
       } else {
         const previousPage = sessionStorage.getItem("currentPage");

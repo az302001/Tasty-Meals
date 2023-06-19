@@ -3,6 +3,7 @@ import Layaout from "@/components/Layaout/Layaout";
 import Link from "next/link";
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
+import { PageProtection } from "@/Hocs/sesionVerify";
 const dashboard = () => {
   const router = useRouter();
   return (
@@ -45,4 +46,4 @@ const dashboard = () => {
   );
 };
 
-export default dashboard;
+export default PageProtection(dashboard);

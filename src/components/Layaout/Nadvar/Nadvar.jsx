@@ -206,7 +206,7 @@ const Navbar = () => {
   }
 
 
-
+console.log(session?.user)
   return (
     <div>
 
