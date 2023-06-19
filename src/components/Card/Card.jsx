@@ -84,7 +84,7 @@ const Card = ({ food, discount }) => {
     handleClick();
   };
 
-  const totalPrice = food.discount ? parseInt(precio - food.discount * precio / 100 * quantity ) : precio * quantity;
+  const totalPrice = food.discount ? parseInt(precio - food.discount * precio / 100 ) * quantity : precio * quantity;
 
   // console.log(totalPrice);
 
