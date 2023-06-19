@@ -54,13 +54,13 @@ const productsSlice = (state = initialState, action) => {
       const foodbyorder =
         action.payload === "atoz"
           ? state.foodFilter.sort((a, b) => {
-              if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
-              else return -1;
-            })
+            if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+            else return -1;
+          })
           : state.foodFilter.sort((a, b) => {
-              if (a.name.toLowerCase() < b.name.toLowerCase()) return 1;
-              else return -1;
-            });
+            if (a.name.toLowerCase() < b.name.toLowerCase()) return 1;
+            else return -1;
+          });
       return {
         ...state,
         foodFilter: foodbyorder,
@@ -84,52 +84,54 @@ const productsSlice = (state = initialState, action) => {
       const filterCategory =
         action.payload === "all" ? null : { categories: action.payload };
       const priceFilter = state.filters.find((obj) =>
-        obj.hasOwnProperty("price")
+        obj?.hasOwnProperty("price")
       );
 
-      const updatedFilters = state.filters.filter((filter) => {
-        // Comprobamos si el objeto filter no contiene la clave que queremos eliminar
-        if (!filter.hasOwnProperty("categories")) {
-          return true; // Mantenemos el objeto en el nuevo array
-        }
-        return false; // Excluimos el objeto del nuevo array
-      });
+      console.log(filterCategory);
+      console.log(priceFilter);
 
-      // console.log(updatedFilters);
+      // const updatedFilters = state.filters.filter((filter) => {
+      //   // Comprobamos si el objeto filter no contiene la clave que queremos eliminar
+      //   if (!filter.hasOwnProperty("categories")) {
+      //     return true; // Mantenemos el objeto en el nuevo array
+      //   }
+      //   return false; // Excluimos el objeto del nuevo array
+      // });
 
       if (priceFilter) {
         const filterByCategories =
           action.payload === "all"
             ? foods_all_categories.filter(
-                (food) =>
-                  food.disabled === false &&
-                  food.price >= priceFilter.price.minPrice &&
-                  food.price <= priceFilter.price.maxPrice
-              )
+              (food) =>
+                food.disabled === false &&
+                food.price >= priceFilter.price.minPrice &&
+                food.price <= priceFilter.price.maxPrice
+            )
             : foods_all_categories.filter(
-                (food) =>
-                  food.Category.name === action.payload &&
-                  food.disabled === false &&
-                  food.price >= priceFilter.price.minPrice &&
-                  food.price <= priceFilter.price.maxPrice
-              );
+              (food) =>
+                food.Category.name === action.payload &&
+                food.disabled === false &&
+                food.price >= priceFilter.price.minPrice &&
+                food.price <= priceFilter.price.maxPrice
+            );
         return {
           ...state,
           foodFilter: filterByCategories,
-          filters: updatedFilters,
+          filters: [filterCategory, priceFilter],
         };
       }
+
       const filterByCategories =
         action.payload === "all"
           ? foods_all_categories
           : foods_all_categories.filter(
-              (food) =>
-                food.Category.name === action.payload && food.disabled === false
-            );
+            (food) =>
+              food.Category.name === action.payload && food.disabled === false
+          );
       return {
         ...state,
         foodFilter: filterByCategories,
-        filters: updatedFilters,
+        filters: [filterCategory, priceFilter],
       };
 
     case ORDER_BY_CATEGORY_ADMIN:
@@ -153,52 +155,126 @@ const productsSlice = (state = initialState, action) => {
       let recipesByScore =
         action.payload === "MenorMayor"
           ? state.foodFilter.sort((a, b) => {
-              if (a.rating > b.rating) return 1;
-              if (b.rating > a.rating) return -1;
-              return 0;
-            })
+            if (a.rating > b.rating) return 1;
+            if (b.rating > a.rating) return -1;
+            return 0;
+          })
           : state.foodFilter.sort((a, b) => {
-              if (a.rating > b.rating) return -1;
-              if (b.rating > a.rating) return 1;
-              return 0;
-            });
+            if (a.rating > b.rating) return -1;
+            if (b.rating > a.rating) return 1;
+            return 0;
+          });
       return {
         ...state,
         foodFilter: recipesByScore,
       };
 
     case RANGE_FOR_PRICE:
-      const { minPrice, maxPrice } = action.payload;
-      const categoryFilter = state.filters.find((obj) =>
-        obj.hasOwnProperty("categories")
-      );
-      const filterPrice = { price: { minPrice, maxPrice } };
 
-      if (categoryFilter) {
-        const filteredByPrice = state.foods.filter(
-          (food) =>
-            food.price >= minPrice &&
-            food.price <= maxPrice &&
-            food.Category.name === categoryFilter.categories
-        );
-        console.log(state.filters);
-        console.log(categoryFilter.categories);
-        return {
-          ...state,
-          foodFilter: filteredByPrice,
-          filters: [filterPrice, categoryFilter],
-        };
+      const categoryFilter = state.filters.find((obj) =>
+        obj?.hasOwnProperty("categories")
+      );
+
+      console.log(action.payload)
+
+      if (action.payload === "reset") {
+
+        const filterPrice = null;
+
+        if (categoryFilter) {
+
+
+          const filteredByPrice =
+            state.foods.filter(
+              (food) =>
+                food.Category.name === categoryFilter.categories
+            )
+          return {
+            ...state,
+            foodFilter: filteredByPrice,
+            filters: [filterPrice, categoryFilter],
+          };
+        } else {
+          const filteredByPrice = state.foods
+
+          return {
+            ...state,
+            foodFilter: filteredByPrice,
+            filters: [filterPrice],
+          };
+        }
+      } else {
+        const { minPrice, maxPrice } = action.payload
+        const filterPrice = { price: { minPrice, maxPrice } };
+
+        if (categoryFilter) {
+          const filteredByPrice =
+            action.payload === "reset" ?
+              state.foods.filter(
+                (food) =>
+                  food.price >= minPrice &&
+                  food.price <= maxPrice &&
+                  food.Category.name === categoryFilter.categories
+              ) : state.foods.filter(
+                (food) =>
+                  food.price >= minPrice &&
+                  food.price <= maxPrice &&
+                  food.Category.name === categoryFilter.categories
+              );
+
+
+          console.log(categoryFilter.categories);
+          return {
+            ...state,
+            foodFilter: filteredByPrice,
+            filters: [filterPrice, categoryFilter],
+          };
+        } else {
+          const filteredByPrice = state.foods.filter(
+            (food) => food.price >= minPrice && food.price <= maxPrice
+          );
+
+          return {
+            ...state,
+            foodFilter: filteredByPrice,
+            filters: [filterPrice],
+          };
+        }
       }
 
-      const filteredByPrice = state.foods.filter(
-        (food) => food.price >= minPrice && food.price <= maxPrice
-      );
 
-      return {
-        ...state,
-        foodFilter: filteredByPrice,
-        filters: [filterPrice],
-      };
+
+
+    // guiar de la linea 85 y 179
+
+    // console.log(categoryFilter)
+    // const filterPrice = action.payload === "reset" ? null : { price: { minPrice, maxPrice } };
+
+    // if (categoryFilter) {
+    //   const filteredByPrice =
+    //     action.payload === "reset" ?
+    //       state.foods.filter(
+    //         (food) =>
+    //           food.price >= minPrice &&
+    //           food.price <= maxPrice &&
+    //           food.Category.name === categoryFilter.categories
+    //       ) : state.foods.filter(
+    //         (food) =>
+    //           food.price >= minPrice &&
+    //           food.price <= maxPrice &&
+    //           food.Category.name === categoryFilter.categories
+    //       );
+
+
+    //   console.log(categoryFilter.categories);
+    //   return {
+    //     ...state,
+    //     foodFilter: filteredByPrice,
+    //     filters: [filterPrice, categoryFilter],
+    //   };
+    // }
+
+
 
     case DELETE_FOOD:
       return {
@@ -227,13 +303,13 @@ const productsSlice = (state = initialState, action) => {
       const foodbyprice =
         action.payload === "menor"
           ? state.foodFilter.sort((a, b) => {
-              if (a.price > b.price) return 1;
-              else return -1;
-            })
+            if (a.price > b.price) return 1;
+            else return -1;
+          })
           : state.foodFilter.sort((a, b) => {
-              if (a.price < b.price) return 1;
-              else return -1;
-            });
+            if (a.price < b.price) return 1;
+            else return -1;
+          });
 
       return {
         ...state,

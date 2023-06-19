@@ -8,7 +8,6 @@ import MercadoPagoBttn from "@/components/MercadoPagoBttn/MercadoPagoBttn";
 
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
-
 // import Descuentos from "@/components/Descuentos/Descuentos";
 
 
@@ -95,3 +94,4 @@ const Cart = () => {
 };
 
 export default Cart;
+

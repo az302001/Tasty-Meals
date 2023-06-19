@@ -94,10 +94,10 @@ export const orderByRating = (payload) => {
   };
 };
 
-export const rangeForPrice = ({ minPrice, maxPrice }) => {
+export const rangeForPrice = (payload) => {
   return {
     type: RANGE_FOR_PRICE,
-    payload: { minPrice, maxPrice },
+    payload
   };
 };
 
