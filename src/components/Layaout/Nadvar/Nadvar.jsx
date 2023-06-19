@@ -55,7 +55,7 @@ const Navbar = () => {
 
     // "/dashboard/create": "Crear",
     "/mispedidos": "Mis ordenes",
-
+    // "/dashboard": "Panel Admin",
     "/discounts": "Promociones",
     // "/cart": "Mis ordenes",
   }
@@ -83,7 +83,7 @@ const Navbar = () => {
         </Link>
         <div className='flex lg:w-[50%]  sm:w-[90%]  justify-end'>
 
-      
+
           <div className='flex flex-row justify-center items-center gap-3'>
 
             <ShoppingCart className="h-[10vh] w-[10vw] text-color1" />
@@ -120,10 +120,16 @@ const Navbar = () => {
                   {session.user.name}
                 </div>
               )}
+
               {userData?.data?.username && (
                 <div className='flex flex-row items-center mb-4 gap-2 text-white'>
                   {userData?.data?.username}
                 </div>
+              )}
+              {userData?.data?.role === 'admin' && (
+                <Link href="/dashboard">
+                  <button className="border-b pb-1 w-40 text-left hover:text-white">Panel Admin</button>
+                </Link>
               )}
               {Object.entries(rutas).map(([rut, nombre]) => (
                 <Link href={rut} key={rut}>
