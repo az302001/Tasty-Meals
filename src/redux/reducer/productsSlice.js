@@ -22,6 +22,7 @@ import {
   CLEAN_STATE,
   CLEAN_DETAIL,
   GET_USER_TRANSACTIONS,
+  CLEAN_DETAIL_ORDER,
 } from "../actions";
 
 const initialState = {
@@ -293,13 +294,18 @@ const productsSlice = (state = initialState, action) => {
         ...state,
         detailFoods: [],
       };
+    case CLEAN_DETAIL_ORDER:
+      return {
+        ...state,
+        userTransactions: [],
+      };
     case CLEAN_STATE:
       return initialState;
     case GET_USER_TRANSACTIONS:
       return {
         ...state,
         userTransactions: action.payload,
-      }
+      };
     default:
       return state;
   }

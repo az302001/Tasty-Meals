@@ -46,6 +46,7 @@ export default function Products() {
   useEffect(() => {
     console.log(foods);
   }, [foods]);
+
   useEffect(() => {
     const filteredColumns =
       foods.length > 0
