@@ -52,7 +52,7 @@ const Menu = () => {
 
   useEffect(() => {
     dispatch(getFoods());
-    setFiltroAplicado(false);
+    setFiltroAplicado(true);
     setSelectedCategory("all");
   }, [dispatch, filtroAplicado]);
 
@@ -97,18 +97,8 @@ const Menu = () => {
 
     } else {
       dispatch(rangeForPrice({ minPrice, maxPrice }));
+      setPaginaActual(1);
     }
-    // else {
-    //   if (minPrice===maxPrice ) {
-    //     if (selectedCategory === "all") {
-    //       dispatch(getFoods()); // Obtener todos los productos si ambos inputs son 3 y no hay categoría seleccionada
-    //     } else {
-    //       dispatch(orderByCategory(selectedCategory));
-    //     }
-    //   } else {
-    //     dispatch(rangeForPrice({ minPrice, maxPrice }));
-    //   }
-    // }
   };
 
   const handleOrderByPrice = (e) => {
