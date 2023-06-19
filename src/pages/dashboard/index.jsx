@@ -2,7 +2,12 @@ import React from "react";
 import Layaout from "@/components/Layaout/Layaout";
 import Link from "next/link";
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
+
+import { useRouter } from "next/router";
+import { PageProtection } from "@/Hocs/sesionVerify";
+
 import AdminRoute from "@/components/AdminRoute/AdminRoute";
+
 const dashboard = () => {
   return (
     <AdminRoute>
@@ -46,4 +51,4 @@ const dashboard = () => {
   );
 };
 
-export default dashboard;
+export default PageProtection(dashboard);

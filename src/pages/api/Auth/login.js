@@ -34,21 +34,21 @@ export default async function handler(req, res) {
           // El usuario ya existe, verificar la contraseña
           const dbPassword = existingUser.password;
           const match = await bcrypt.compare(password, dbPassword);
-
           const token = await signToken({ email });
-
           if (match) {
-            // Las credenciales son válidas, redirigir al dashboard si el correo electrónico es "admin@gmail.com"
-            if (email === "tastymeals.0101@gmail.com") {
+            // Las credenciales son válidas, redirigir al dashboard si es admin
+            if (existingUser.role === "admin") {
+              const dashboardUrl = "/dashboard";
               res
                 .status(200)
-                .json({ dashboardUrl: "/dashboard", token, email });
+                .json({ dashboardUrl: "/dashboard", token, email,dashboardUrl });
               return;
-            }
+            }else{
 
             res
               .status(200)
               .json({ message: "Inicio de sesión exitoso", token, email });
+            }
           } else {
             // Contraseña incorrecta
             res.status(400).json({ error: "Contraseña incorrecta" });

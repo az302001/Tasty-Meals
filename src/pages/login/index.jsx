@@ -54,8 +54,8 @@ const index = () => {
           // Redirigir al usuario a la página de inicio después de iniciar sesión correctamente
           if (data.dashboardUrl) {
             // Redirigir al usuario al dashboard
-            window.location.href = data.dashboardUrl;
             localStorage.setItem("userToken", data.token);
+            router.push(data.dashboardUrl);
           } else {
             localStorage.setItem("userToken", data.token);
             router.push("/home");
