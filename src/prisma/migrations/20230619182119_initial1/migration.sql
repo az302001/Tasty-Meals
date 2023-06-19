@@ -35,6 +35,7 @@ CREATE TABLE "User" (
     "name" TEXT,
     "email" TEXT NOT NULL,
     "emailVerified" TIMESTAMP(3),
+    "role" "Roles" NOT NULL DEFAULT 'user',
     "password" TEXT,
     "image" TEXT,
 
@@ -89,7 +90,7 @@ CREATE TABLE "Review" (
 CREATE TABLE "Transaction" (
     "id" SERIAL NOT NULL,
     "userId" INTEGER NOT NULL,
-    "foodId" INTEGER NOT NULL,
+    "approved" BOOLEAN NOT NULL DEFAULT false,
     "cost" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "Transaction_pkey" PRIMARY KEY ("id")

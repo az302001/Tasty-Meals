@@ -42,7 +42,6 @@ model User {
     role          Roles         @default(user)
     password      String?
     image         String?
-    role          Roles @default(user)
     Accounts      Account[]
     Sessions      Session[]
     Favorite      Favorite[]
