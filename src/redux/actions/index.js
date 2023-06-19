@@ -10,7 +10,7 @@ export const ORDER_BY_CATEGORY_ADMIN = "ORDER_BY_CATEGORY_ADMIN";
 export const ORDER_BY_RATING = "ORDER_BY_RATING";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
 export const CLEAN_STATE = "CLEAN_STATE";
-
+export const CLEAN_DETAIL_ORDER = "CLEAN_DETAIL_ORDER";
 export const GET_USER_DATA = "GET_USER_DATA";
 
 export const DELETE_FOOD = "DELETE_FOOD";
@@ -94,10 +94,10 @@ export const orderByRating = (payload) => {
   };
 };
 
-export const rangeForPrice = ({ minPrice, maxPrice }) => {
+export const rangeForPrice = (payload) => {
   return {
     type: RANGE_FOR_PRICE,
-    payload: { minPrice, maxPrice },
+    payload
   };
 };
 
@@ -263,13 +263,19 @@ export const cleanState = () => {
     type: CLEAN_STATE,
   };
 };
-
-export const getTransactions = (id) =>{
-  return async (dispatch) =>{
-    const response = await axios.get(`/api/Products/addTransaction?userId=${id}`)
+export const cleanDetailOrder = () => {
+  return {
+    type: CLEAN_DETAIL_ORDER,
+  };
+};
+export const getTransactions = (id) => {
+  return async (dispatch) => {
+    const response = await axios.get(
+      `/api/Products/addTransaction?userId=${id}`
+    );
     return dispatch({
       type: GET_USER_TRANSACTIONS,
-      payload: response.data
-    })
-  }
-}
+      payload: response.data,
+    });
+  };
+};

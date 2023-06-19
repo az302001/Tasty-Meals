@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRecoilState } from "recoil";
 import { cartState } from "../../../atoms/cartState";
 import { createTransaction } from "@/redux/actions";
+import { PageProtection } from "@/Hocs/sesionVerify";
+
 
 const index = () => {
   const router = useRouter();
@@ -83,4 +85,4 @@ const index = () => {
     </Layaout>
   );
 };
-export default index;
+export default PageProtection(index);

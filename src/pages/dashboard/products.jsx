@@ -18,6 +18,7 @@ import {
 import { remove as removeDiacritics } from "diacritics";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
+import AdminRoute from "@/components/AdminRoute/AdminRoute";
 
 const columnsToExclude = [
   "id",
@@ -46,6 +47,7 @@ export default function Products() {
   useEffect(() => {
     console.log(foods);
   }, [foods]);
+
   useEffect(() => {
     const filteredColumns =
       foods.length > 0
@@ -95,6 +97,7 @@ export default function Products() {
   };
 
   return (
+    <AdminRoute>
     <Layaout>
       <div className="flex flex-col items-center p-4 w-full">
         <h1 className="text-xl font-semibold text-color1 p-6 lg:text-3xl">
@@ -267,5 +270,6 @@ export default function Products() {
         </div>
       )}
     </Layaout>
+    </AdminRoute>
   );
 }
