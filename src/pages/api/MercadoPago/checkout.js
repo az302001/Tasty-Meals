@@ -7,7 +7,7 @@ mercadopago.configure({
 const handler = async (req, res) => {
   if (req.method === "POST") {
     const product = req.body.product;
-    const URL = "localhost:3000"; //ESTA URL HAY QUE CAMBIAR POR LA DEL DEPLOY
+    const URL = "https://tasty-meals.vercel.app/"; //ESTA URL HAY QUE CAMBIAR POR LA DEL DEPLOY
     try {
       const preference = {
         items: [
