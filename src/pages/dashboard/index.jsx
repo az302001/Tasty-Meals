@@ -2,11 +2,15 @@ import React from "react";
 import Layaout from "@/components/Layaout/Layaout";
 import Link from "next/link";
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
+
 import { useRouter } from "next/router";
 import { PageProtection } from "@/Hocs/sesionVerify";
+
+import AdminRoute from "@/components/AdminRoute/AdminRoute";
+
 const dashboard = () => {
-  const router = useRouter();
   return (
+    <AdminRoute>
     <Layaout>
       <div>
         <button onClick={() => router.back()}>
@@ -43,6 +47,7 @@ const dashboard = () => {
         </div>
       </div>
     </Layaout>
+    </AdminRoute>
   );
 };
 
