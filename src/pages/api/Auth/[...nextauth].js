@@ -28,6 +28,7 @@ export default NextAuth({
     },
   },
 
+ 
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
