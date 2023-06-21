@@ -76,13 +76,13 @@ export default async function handler(req, res) {
           .status(200)
           .json({ mensaje: "Estado de transacción actualizado correctamente" });
 
-          break;
+          
       } catch (error) {
         res
           .status(500)
           .json({ error: "Error al actualizar el estado de la transacción" });
       }
-
+      break;
     default:
       res.status(405).json({ error: "Método no permitido" });
       break;
