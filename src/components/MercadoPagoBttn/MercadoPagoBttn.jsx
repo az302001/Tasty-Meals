@@ -47,7 +47,8 @@ export default function MercadoPagoBttn({ product, carro }) {
     const approved = false;
     dispatch(createTransaction(foodsIds, costo, userId, approved));
     setCartItem([]);
-    router.push(url);
+    // router.push(url);
+    // router.push("/pagoexistoso?status=approved");
   };
   return (
     <div>
