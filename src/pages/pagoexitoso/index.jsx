@@ -12,9 +12,9 @@ const index = () => {
   const dispatch = useDispatch();
   // const transactionId = useSelector((state) => state.products.transactionId);
   // const [transactionId,setransactionId]= useRecoilState(transaction);
-  console.log(transactionId);
   const { status } = router.query;
   const transactionId= localStorage.getItem('transactionID')
+  console.log( "transaction pago exitoso", transactionId);
   useEffect(() => {
     if (status === "approved") {
       dispatch(updateTransactionStatus(parseInt(transactionId)));

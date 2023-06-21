@@ -262,7 +262,7 @@ export const createTransaction = (foodsIds, costo, userId, approved) => {
 
     const { id } = response.data;
     localStorage.setItem("transactionID", id);
-    console.log(id);
+    console.log("actionID",id);
     return dispatch({
       type: CREATE_TRANSACTION,
       payload: id,
