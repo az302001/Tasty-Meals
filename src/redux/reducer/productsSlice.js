@@ -23,6 +23,8 @@ import {
   CLEAN_DETAIL,
   GET_USER_TRANSACTIONS,
   CLEAN_DETAIL_ORDER,
+  POST_REVIEW,
+  GET_REVIEW,
 } from "../actions";
 
 const initialState = {
@@ -39,6 +41,7 @@ const initialState = {
   newPass: [],
   isLoading: false,
   userTransactions: [],
+  review:[]
 };
 
 const productsSlice = (state = initialState, action) => {
@@ -370,6 +373,7 @@ const productsSlice = (state = initialState, action) => {
         ...state,
         detailFoods: [],
       };
+
     case CLEAN_DETAIL_ORDER:
       return {
         ...state,
@@ -382,6 +386,16 @@ const productsSlice = (state = initialState, action) => {
         ...state,
         userTransactions: action.payload,
       };
+      case POST_REVIEW:
+        return{
+          ...state
+        }
+      case GET_REVIEW:
+        
+        return{
+          ...state,
+          review: action.payload,
+      }
     default:
       return state;
   }

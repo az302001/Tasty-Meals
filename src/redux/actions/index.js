@@ -26,6 +26,9 @@ export const DELETE_DISCOUNT = "DELETE_DISCOUNT";
 export const GET_DISCOUNTS = "GET_DISCOUNTS";
 export const CREATE_TRANSACTION = "CREATE_TRANSACTION";
 export const GET_USER_TRANSACTIONS = "GET_USER_TRANSACTIONS";
+export const POST_REVIEW = "POST_REVIEW";
+export const GET_REVIEW = "GET_REVIEW";
+
 export const getFoods = () => {
   return async (dispatch) => {
     const response = (await axios.get("/api/Products")).data;
@@ -279,3 +282,25 @@ export const getTransactions = (id) => {
     });
   };
 };
+
+export const createReview = (objeto) =>{
+  return async (dispatch) =>{
+    const response = await axios.post(`/api/Users/reviewUsers`, objeto);
+    return dispatch({
+      type:POST_REVIEW,
+      payload:response,
+    })
+  }
+};
+
+export const getFoodComments = (foodId) => {
+  return async (dispatch) => {
+    const response = await axios.get(`/api/Users/reviewUsers?foodId=${foodId}`);
+    const data = response.data;
+    
+    return dispatch({
+      type:GET_REVIEW,
+      payload:data,
+    })
+  }
+}
