@@ -13,8 +13,8 @@ module.exports = {
       sm: "640px",
       md: "768px",
       lg: "1024px",
-      sm:"	640px",
-      md:"768px"
+      sm: "	640px",
+      md: "768px",
     },
     extend: {
       backgroundImage: {
@@ -30,8 +30,10 @@ module.exports = {
       },
       fontFamily: {
         pacifico: ["Pacifico"],
-        manrope: ["Manrope"],
-        josefin: ["Josefin"],
+        manrope: ["Manrope", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"],
+        josefin: ["Josefin", "sans-serif"],
       },
     },
   },

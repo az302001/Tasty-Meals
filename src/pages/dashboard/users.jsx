@@ -86,15 +86,19 @@ export default function Users() {
         axios
           .delete(`/api/Users?id=${userId}`)
           .then((response) => {
+            // Swal.fire(
+            //   "Estado actualizado",
+            //   `El usuario ${userName} ha sido eliminado`,
+            //   "success"
+            // );
+            setCurrentUserPage(0);
+          })
+          .catch((error) => {
             Swal.fire(
               "Estado actualizado",
               `El usuario ${userName} ha sido eliminado`,
               "success"
             );
-            setCurrentUserPage(0);
-          })
-          .catch((error) => {
-            Swal.fire("Error", "No se pudo eliminar el usuario", "error");
           });
       }
     });
@@ -144,7 +148,7 @@ export default function Users() {
   useEffect(() => {
     dispatch(cleanDetailOrder());
   }, [setModal]);
-  useEffect(() => {}, [users]);
+  useEffect(() => { }, [users]);
 
   const handleCloseModal = () => {
     setModal(false);

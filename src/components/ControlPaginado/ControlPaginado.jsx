@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-const ControlPaginado = ({ totalPaginas, cambiarPagina, paginaActual, filtroAplicado}) => {
-  
-
+const ControlPaginado = ({
+  totalPaginas,
+  cambiarPagina,
+  paginaActual,
+  filtroAplicado,
+}) => {
   const handleClickPagina = (pagina) => {
     cambiarPagina(pagina);
   };
@@ -14,8 +17,10 @@ const ControlPaginado = ({ totalPaginas, cambiarPagina, paginaActual, filtroApli
         <button
           key={i}
           onClick={() => handleClickPagina(i)}
-          className={`bg-color1 hover:bg-purple-900 text-color3 font-manrope p-1.5 mx-2 rounded-md ${
-            paginaActual === i ? 'bg-opacity-50' : ''
+          className={`bg-color1 font-poppins w-8 font-bold text-color3 p-1.5 mx-1 rounded-md ${
+            paginaActual === i
+              ? "bg-indigo-300 border-2 border-color1 font-poppins w-6 h-10 font-bold" // Clase para el color de texto deseado
+              : ""
           }`}
           disabled={paginaActual === i}
         >
@@ -26,12 +31,11 @@ const ControlPaginado = ({ totalPaginas, cambiarPagina, paginaActual, filtroApli
     return paginas;
   };
 
-
-  return <div className="flex items-center justify-center my-5">{generarPaginas()}</div>;
-
- 
-  
-
+  return (
+    <div className="flex items-center justify-center my-5">
+      {generarPaginas()}
+    </div>
+  );
 };
 
 export default ControlPaginado;
