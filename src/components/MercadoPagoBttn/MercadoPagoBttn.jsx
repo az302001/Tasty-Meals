@@ -45,6 +45,7 @@ export default function MercadoPagoBttn({ product, carro }) {
     const costo = calculateTotalPrice();
     const userId = session?.user?.id || userData?.data?.id;
     const approved = false;
+    console.log( "dispatch en mercado button",  foodsIds, costo, userId, approved)
     dispatch(createTransaction(foodsIds, costo, userId, approved));
     setCartItem([]);
     // router.push(url);

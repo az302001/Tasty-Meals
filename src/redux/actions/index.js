@@ -262,6 +262,8 @@ export const createTransaction = (foodsIds, costo, userId, approved) => {
 
     const { id } = response.data;
     localStorage.setItem("transactionID", id);
+    console.log( "response data", response.data)
+    console.log( "esto es el id",id)
     alert("revision de consola.....",id)
     return dispatch({
       type: CREATE_TRANSACTION,
