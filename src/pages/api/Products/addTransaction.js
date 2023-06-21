@@ -13,10 +13,10 @@ export default async function handler(req, res) {
       try {
         const { foodsIds, costo, userId, approved } = req.body;
         if (validateTransactionData(foodsIds, costo, userId, approved)) {
-          await prisma.transaction.create({
+          const createdTransaction = await prisma.transaction.create({
             data: {
               user: {
-                connect: { id: userId },
+                connect: { id: parseInt(userId) },
               },
               cost: costo,
               approved: approved,
@@ -26,7 +26,10 @@ export default async function handler(req, res) {
             },
           });
 
-          res.status(200).json({ mensaje: "Transacción creada correctamente" });
+          res.status(200).json({
+            id: createdTransaction.id,
+            mensaje: "Transacción creada correctamente",
+          });
         } else {
           res
             .status(400)
@@ -58,6 +61,27 @@ export default async function handler(req, res) {
           .json({ error: "Error al obtener las transacciones del usuario" });
       }
       break;
+    case "PUT":
+      try {
+        const { id } = req.body;
+        await prisma.transaction.update({
+          where: {
+            id: parseInt(id),
+          },
+          data: {
+            approved: true,
+          },
+        });
+        res
+          .status(200)
+          .json({ mensaje: "Estado de transacción actualizado correctamente" });
+
+          break;
+      } catch (error) {
+        res
+          .status(500)
+          .json({ error: "Error al actualizar el estado de la transacción" });
+      }
 
     default:
       res.status(405).json({ error: "Método no permitido" });

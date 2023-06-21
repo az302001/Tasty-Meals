@@ -28,7 +28,8 @@ export const CREATE_TRANSACTION = "CREATE_TRANSACTION";
 export const GET_USER_TRANSACTIONS = "GET_USER_TRANSACTIONS";
 export const POST_REVIEW = "POST_REVIEW";
 export const GET_REVIEW = "GET_REVIEW";
-
+export const UPDATE_TRANSACTION_STATUS = "UPDATE_TRANSACTION_STATUS"
+export const UPDATE_RATING = "UPDATE_RATING";
 export const getFoods = () => {
   return async (dispatch) => {
     const response = (await axios.get("/api/Products")).data;
@@ -100,7 +101,7 @@ export const orderByRating = (payload) => {
 export const rangeForPrice = (payload) => {
   return {
     type: RANGE_FOR_PRICE,
-    payload
+    payload,
   };
 };
 
@@ -250,14 +251,17 @@ export const getDiscounts = (payload) => {
 
 export const createTransaction = (foodsIds, costo, userId, approved) => {
   return async (dispatch) => {
-    await axios.post(`/api/Products/addTransaction`, {
+    const response = await axios.post(`/api/Products/addTransaction`, {
       foodsIds,
       costo,
       userId,
       approved,
     });
+
+    const { id } = response.data;
     return dispatch({
       type: CREATE_TRANSACTION,
+      payload: id,
     });
   };
 };
@@ -283,24 +287,42 @@ export const getTransactions = (id) => {
   };
 };
 
-export const createReview = (objeto) =>{
-  return async (dispatch) =>{
+export const createReview = (objeto) => {
+  return async (dispatch) => {
     const response = await axios.post(`/api/Users/reviewUsers`, objeto);
     return dispatch({
-      type:POST_REVIEW,
-      payload:response,
-    })
-  }
+      type: POST_REVIEW,
+      payload: response,
+    });
+  };
 };
 
 export const getFoodComments = (foodId) => {
   return async (dispatch) => {
     const response = await axios.get(`/api/Users/reviewUsers?foodId=${foodId}`);
     const data = response.data;
-    
+
     return dispatch({
-      type:GET_REVIEW,
-      payload:data,
+      type: GET_REVIEW,
+      payload: data,
+    });
+  };
+};
+
+export const updateTransactionStatus = (id) => {
+  return async (dispatch) => {
+    const response = await axios.put(`/api/Products/addTransaction`, {
+      id,
+    });
+    dispatch({ type: UPDATE_TRANSACTION_STATUS });
+  };
+};
+
+export const updateRating = (id) =>{
+  return async (dispatch) =>{
+    await axios.put(`/api/Products/updateRating`, {id})
+    dispatch({
+      type:UPDATE_RATING,
     })
   }
 }
