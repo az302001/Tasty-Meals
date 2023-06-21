@@ -93,9 +93,9 @@ export default function Users() {
             );
             setCurrentUserPage(0);
           })
-          .catch((error) => {
-            Swal.fire("Error", "No se pudo eliminar el usuario", "error");
-          });
+          // .catch((error) => {
+          //   Swal.fire("Error", "No se pudo eliminar el usuario", "error");
+          // });
       }
     });
   };
