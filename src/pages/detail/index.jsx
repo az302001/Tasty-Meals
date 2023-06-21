@@ -195,8 +195,14 @@ const index = () => {
                       <input
                         type="number"
                         value={quantity}
-                        onChange={(e) => setQuantity(parseInt(e.target.value))}
+                        // onChange={(e) => setQuantity(parseInt(e.target.value))}
                         className="w-12 h-8 px-2 py-1 text-center rounded-md border border-color2 focus:outline-none font-manrope text-color2 font-bold"
+                        onChange={(e) => {
+                          const value = parseInt(e.target.value);
+                          if (value >= 1 && value <= 5) {
+                            setQuantity(value);
+                          }
+                        }}
                       />
                       <button
                         onClick={handleIncrement}

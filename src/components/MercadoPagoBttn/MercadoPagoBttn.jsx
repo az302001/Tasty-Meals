@@ -53,7 +53,7 @@ export default function MercadoPagoBttn({ product, carro }) {
     <div>
       <button
         onClick={handleBttnClick}
-        className="text-right bg-red-600 text-white py-4 px-12 mt-4 block mx-auto hover:bg-red-800"
+        className="mt-4 px-4 py-2 w-40 h-12 bg-color1 text-color3 font-bold rounded-lg hover:bg-color2 hover:text-white transition duration-300"
       >
         Pagar
       </button>

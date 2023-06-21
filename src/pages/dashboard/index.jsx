@@ -14,20 +14,26 @@ const dashboard = () => {
 
   const router = useRouter();
 
-  if (userData?.data && userData?.data?.role !== "admin") {
-    router.replace("/menu");
-    return (
-      <Layaout>
-        <div className="text-center mt-[20%]">
-          <p className="text-3xl text-color1 font-bold">
-            No existe esta pagina.
-          </p>
-        </div>
-      </Layaout>
-    );
-  }
+
+  const router = useRouter()
+  
+
+  // if (userData?.data && userData?.data?.role !== 'admin') {
+  //   router.replace('/menu')
+  //   return (
+  //     <Layaout>
+  //     <div className="text-center mt-[20%]">
+  //       <p className="text-3xl text-color1 font-bold">No existe esta pagina.</p>
+  //     </div>
+  //   </Layaout>
+  //   );
+  // } 
+
+
 
   return (
+    <AdminRoute>
+
     <Layaout>
       <div>
         <button onClick={() => router.back()}>
@@ -64,6 +70,9 @@ const dashboard = () => {
         </div>
       </div>
     </Layaout>
+
+    </AdminRoute>
+
   );
 };
 

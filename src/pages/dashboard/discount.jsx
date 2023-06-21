@@ -88,22 +88,21 @@ const Discount = () => {
             value={discounts[category.id] || 0 } 
             onChange={(event) => handleChange(event, category.id)}
              />
-             {/* {discounts[category.id] && (
-               <h2 className='text-color3-500 mt-2'>Descuento: {discounts[category.id]}%</h2>
-             )} */}
            </div>
          </td>
          <td className='ml-[5%]'>
-           <div className="flex flex-col items-center">
+           <div className="flex flex-row justify-center items-center space-x-4">
              <button
             onClick={() => handleApplyDiscount(category.id, category.name)}
+            className="bg-green-400 text-white rounded-md p-2 focus:outline-none"
           >
-               <CheckIcon className="h-6 w-6 text-green-500" />
+               <CheckIcon className="h-6 w-6 text-darkgreen-500" />
              </button>
              <button
             onClick={() => handleRemoveDiscount(category.id)}
+            className="bg-red-500 text-white rounded-md p-2 focus:outline-none"
              >
-               <XMarkIcon className="h-6 w-6 text-red-500" />
+               <XMarkIcon className="h-6 w-6 text-darkred-400" />
              </button>
            </div>
          </td>
