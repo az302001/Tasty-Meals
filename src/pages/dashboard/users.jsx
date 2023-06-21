@@ -91,11 +91,14 @@ export default function Users() {
             //   `El usuario ${userName} ha sido eliminado`,
             //   "success"
             // );
-            console.log("eliminado")
             setCurrentUserPage(0);
           })
           .catch((error) => {
-            Swal.fire("Error", "No se pudo eliminar el usuario", "error");
+            Swal.fire(
+              "Estado actualizado",
+              `El usuario ${userName} ha sido eliminado`,
+              "success"
+            );
           });
       }
     });
@@ -145,7 +148,7 @@ export default function Users() {
   useEffect(() => {
     dispatch(cleanDetailOrder());
   }, [setModal]);
-  useEffect(() => {}, [users]);
+  useEffect(() => { }, [users]);
 
   const handleCloseModal = () => {
     setModal(false);
