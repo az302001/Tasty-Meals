@@ -25,7 +25,7 @@ import {
   CLEAN_DETAIL_ORDER,
   POST_REVIEW,
   GET_REVIEW,
-
+  CREATE_TRANSACTION,
   UPDATE_TRANSACTION_STATUS,
 } from "../actions";
 
@@ -44,7 +44,7 @@ const initialState = {
   isLoading: false,
   userTransactions: [],
   review: [],
-
+  transactionId: 0,
 };
 
 const productsSlice = (state = initialState, action) => {
@@ -61,13 +61,13 @@ const productsSlice = (state = initialState, action) => {
       const foodbyorder =
         action.payload === "atoz"
           ? state.foodFilter.sort((a, b) => {
-            if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
-            else return -1;
-          })
+              if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+              else return -1;
+            })
           : state.foodFilter.sort((a, b) => {
-            if (a.name.toLowerCase() < b.name.toLowerCase()) return 1;
-            else return -1;
-          });
+              if (a.name.toLowerCase() < b.name.toLowerCase()) return 1;
+              else return -1;
+            });
       return {
         ...state,
         foodFilter: foodbyorder,
@@ -109,18 +109,18 @@ const productsSlice = (state = initialState, action) => {
         const filterByCategories =
           action.payload === "all"
             ? foods_all_categories.filter(
-              (food) =>
-                food.disabled === false &&
-                food.price >= priceFilter.price.minPrice &&
-                food.price <= priceFilter.price.maxPrice
-            )
+                (food) =>
+                  food.disabled === false &&
+                  food.price >= priceFilter.price.minPrice &&
+                  food.price <= priceFilter.price.maxPrice
+              )
             : foods_all_categories.filter(
-              (food) =>
-                food.Category.name === action.payload &&
-                food.disabled === false &&
-                food.price >= priceFilter.price.minPrice &&
-                food.price <= priceFilter.price.maxPrice
-            );
+                (food) =>
+                  food.Category.name === action.payload &&
+                  food.disabled === false &&
+                  food.price >= priceFilter.price.minPrice &&
+                  food.price <= priceFilter.price.maxPrice
+              );
         return {
           ...state,
           foodFilter: filterByCategories,
@@ -132,9 +132,9 @@ const productsSlice = (state = initialState, action) => {
         action.payload === "all"
           ? foods_all_categories
           : foods_all_categories.filter(
-            (food) =>
-              food.Category.name === action.payload && food.disabled === false
-          );
+              (food) =>
+                food.Category.name === action.payload && food.disabled === false
+            );
       return {
         ...state,
         foodFilter: filterByCategories,
@@ -162,15 +162,15 @@ const productsSlice = (state = initialState, action) => {
       let recipesByScore =
         action.payload === "MenorMayor"
           ? state.foodFilter.sort((a, b) => {
-            if (a.rating > b.rating) return 1;
-            if (b.rating > a.rating) return -1;
-            return 0;
-          })
+              if (a.rating > b.rating) return 1;
+              if (b.rating > a.rating) return -1;
+              return 0;
+            })
           : state.foodFilter.sort((a, b) => {
-            if (a.rating > b.rating) return -1;
-            if (b.rating > a.rating) return 1;
-            return 0;
-          });
+              if (a.rating > b.rating) return -1;
+              if (b.rating > a.rating) return 1;
+              return 0;
+            });
       return {
         ...state,
         foodFilter: recipesByScore,
@@ -212,17 +212,17 @@ const productsSlice = (state = initialState, action) => {
           const filteredByPrice =
             action.payload === "reset"
               ? state.foods.filter(
-                (food) =>
-                  food.price >= minPrice &&
-                  food.price <= maxPrice &&
-                  food.Category.name === categoryFilter.categories
-              )
+                  (food) =>
+                    food.price >= minPrice &&
+                    food.price <= maxPrice &&
+                    food.Category.name === categoryFilter.categories
+                )
               : state.foods.filter(
-                (food) =>
-                  food.price >= minPrice &&
-                  food.price <= maxPrice &&
-                  food.Category.name === categoryFilter.categories
-              );
+                  (food) =>
+                    food.price >= minPrice &&
+                    food.price <= maxPrice &&
+                    food.Category.name === categoryFilter.categories
+                );
 
           console.log(categoryFilter.categories);
           return {
@@ -298,13 +298,13 @@ const productsSlice = (state = initialState, action) => {
       const foodbyprice =
         action.payload === "menor"
           ? state.foodFilter.sort((a, b) => {
-            if (a.price > b.price) return 1;
-            else return -1;
-          })
+              if (a.price > b.price) return 1;
+              else return -1;
+            })
           : state.foodFilter.sort((a, b) => {
-            if (a.price < b.price) return 1;
-            else return -1;
-          });
+              if (a.price < b.price) return 1;
+              else return -1;
+            });
 
       return {
         ...state,
@@ -386,15 +386,15 @@ const productsSlice = (state = initialState, action) => {
         ...state,
         review: action.payload,
       };
-    // case CREATE_TRANSACTION:
-    //   return {
-    //     ...state,
-    //     transactionId: action.payload,
-    //   };
-    case UPDATE_TRANSACTION_STATUS:
+    case CREATE_TRANSACTION:
       return {
         ...state,
-      }
+        transactionId: action.payload,
+      };
+      case UPDATE_TRANSACTION_STATUS:
+        return{
+          ...state,
+        }
     default:
       return state;
   }
