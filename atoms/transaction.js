@@ -1,10 +1,10 @@
 
 import { atom } from "recoil";
 
-let defaultTransaction = [];
+let defaultTransaction = 0;
 if (typeof window !== "undefined") {
   const transaction = localStorage.getItem("transactionID");
-  defaultTransaction = transaction ? JSON.parse(transaction) : [];
+  defaultTransaction = transaction ? JSON.parse(transaction) : 0;
 }
 
 export const transaction = atom({

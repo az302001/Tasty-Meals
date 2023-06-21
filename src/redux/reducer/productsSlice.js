@@ -25,7 +25,7 @@ import {
   CLEAN_DETAIL_ORDER,
   POST_REVIEW,
   GET_REVIEW,
-  CREATE_TRANSACTION,
+  // CREATE_TRANSACTION,
   UPDATE_TRANSACTION_STATUS,
 } from "../actions";
 
@@ -44,7 +44,7 @@ const initialState = {
   isLoading: false,
   userTransactions: [],
   review: [],
-  transactionId: 0,
+  // transactionId: 0,
 };
 
 const productsSlice = (state = initialState, action) => {
@@ -386,11 +386,11 @@ const productsSlice = (state = initialState, action) => {
         ...state,
         review: action.payload,
       };
-    case CREATE_TRANSACTION:
-      return {
-        ...state,
-        transactionId: action.payload,
-      };
+    // case CREATE_TRANSACTION:
+    //   return {
+    //     ...state,
+    //     transactionId: action.payload,
+    //   };
       case UPDATE_TRANSACTION_STATUS:
         return{
           ...state,
