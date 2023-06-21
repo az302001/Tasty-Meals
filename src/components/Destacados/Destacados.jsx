@@ -26,7 +26,7 @@ const Destacados = () => {
   return (
     <div>
       <h1 className="text-color1 font-semibold text-center text-xl lg:text-2xl mt-3">
-        Nuestros platos destacados
+        Recomendaciones de la casa
       </h1>
       <Swiper
         className="relative w-2/6 h-1/6 min-w-[300px] md:min-w-[500px] mt-6 border-28px "
@@ -57,14 +57,14 @@ const Destacados = () => {
                   <br />
                   <div className="flex items-center justify-between">
                     <span className="text-3xl font-bold text-gray-900 dark:text-white">
-                      ${food.price}
+                      ${Math.ceil(food.price)}
                     </span>
                     <div>
                       <Stack spacing={1}>
                         <div className="flex items-center">
                           <Rating
                             name="half-rating"
-                            value={userRating}
+                            value={food.rating}
                             precision={0.5}
                             readOnly
                           />
