@@ -6,7 +6,7 @@ import Cards from '@/components/Cards/Cards';
 import { allProducts } from '@/redux/reducer/productsSlice';
 import Layaout from '@/components/Layaout/Layaout';
 import ControlPaginado from '@/components/ControlPaginado/ControlPaginado';
-import { getFoods, orderByCategory, orderByName, orderByPrice, orderByRating, rangeForPrice } from '@/redux/actions';
+import { getDiscounts, getFoods, orderByCategory, orderByName, orderByPrice, orderByRating, rangeForPrice } from '@/redux/actions';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 // import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -112,6 +112,17 @@ const Menu = () => {
     setMinPrice(initialreset);
     setMaxPrice(initialreset);
     dispatch(rangeForPrice("reset"))
+  };
+
+
+  const handleDiscount = (e) => {
+    const discount = e.target.checked;
+    if (discount) {
+      const productsWithDiscount = foodFilter.filter((food) => food.discount > 0);
+      dispatch(getDiscounts(productsWithDiscount));
+    } else {
+      dispatch(getFoods());
+    }
   };
 
 
@@ -231,6 +242,10 @@ const Menu = () => {
               )}
             </div>
 
+            <div className="mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3 gap-1 flex">
+              <input type="checkbox" className="bg-color3" id="discount" onChange={handleDiscount} />
+              <label htmlFor="discount">Descuentos</label>
+            </div>
 
           </div>
           {alimentosPaginados.length === 0 && (
