@@ -52,14 +52,14 @@ const index = () => {
           }
         } else {
           // Redirigir al usuario a la página de inicio después de iniciar sesión correctamente
-          if (data.dashboardUrl) {
-            // Redirigir al usuario al dashboard
-            localStorage.setItem("userToken", data.token);
-            router.push(data.dashboardUrl);
-          } else {
+          // if (data.dashboardUrl) {
+          //   // Redirigir al usuario al dashboard
+          //   localStorage.setItem("userToken", data.token);
+          //   router.push(data.dashboardUrl);
+          // } else {}
             localStorage.setItem("userToken", data.token);
             router.push("/home");
-          }
+          
         }
       })
       .catch((error) => {

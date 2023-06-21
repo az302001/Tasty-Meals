@@ -12,7 +12,7 @@ export default function Home() {
       </div>
       <Link href="/home">
         <button className="bg-color1 w-44 h-20 drop-shadow-2xl mb-20">
-          <p className="text-color3 text-3xl font-manrope">Entrar</p>
+          <p className="text-color3 text-3xl font-poppins">Entrar</p>
         </button>
       </Link>
       <div className="absolute inset-0 z-[-1]"></div>

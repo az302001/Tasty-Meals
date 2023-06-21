@@ -1,7 +1,7 @@
 import avatar from "../assets/Avatar-place-holder.jpg";
 import AvatarBruno from "../assets/bruno-santimaria-avatar.png";
 import AvatarRobert from "../assets/AvatarRobert.jpeg";
-import AvatarLourdes from "../assets/AvatarLourdes.jpeg";
+import AvatarLourdes from "../assets/AvatarLourdes.jpg";
 const nosotros = [
   {
     nombre: "Julio Trillo",

@@ -123,9 +123,9 @@ const Cart = () => {
           {/* <Descuentos/> */}
 
           {cartItem.length > 0 && (
-            <div className="max-w-[800px] mx-auto mt-4">
+            <div className="max-w-[800px] mx-auto mt-4 ml-[35%]">
               <div className="flex flex-row items-center">
-                <h2 className="text-center text-2xl font-bold font-manrope">
+                <h2 className="text-center text-2xl font-bold font-manrope mr-5">
                   Total a pagar: ${total}
                 </h2>
                 <MercadoPagoBttn
@@ -133,6 +133,7 @@ const Cart = () => {
                     name: "Compra en TastyMeals",
                     price: calculateTotalPrice(),
                   }}
+                  carro = {cartItem}
                 />
               </div>
             </div>

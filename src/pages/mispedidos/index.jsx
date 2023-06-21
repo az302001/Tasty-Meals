@@ -1,5 +1,5 @@
 import Layaout from "@/components/Layaout/Layaout";
-import { createReview, getTransactions } from "@/redux/actions";
+import { createReview, getTransactions, updateRating } from "@/redux/actions";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -47,7 +47,7 @@ export default function index() {
           userId,
         })
       );
-
+      dispatch(updateRating(selectedDish.id))
       // Mostrar la alerta de éxito
       Swal.fire({
         icon: "success",

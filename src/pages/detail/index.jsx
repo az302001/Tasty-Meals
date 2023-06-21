@@ -11,6 +11,7 @@ import { cartState } from "../../../atoms/cartState";
 import { useRecoilState } from "recoil";
 import { useSession } from "next-auth/react";
 import Swal from "sweetalert2";
+import { PageProtection } from "@/Hocs/sesionVerify";
 import Loader from "@/components/Loader/index";
 
 const index = () => {
@@ -166,7 +167,7 @@ const index = () => {
                       </span>
                       <Rating
                         name="half-rating"
-                        value={userRating}
+                        value={parseInt(detailFoods.rating)}
                         precision={0.5}
                         readOnly
                       />
@@ -195,8 +196,14 @@ const index = () => {
                       <input
                         type="number"
                         value={quantity}
-                        onChange={(e) => setQuantity(parseInt(e.target.value))}
+                        // onChange={(e) => setQuantity(parseInt(e.target.value))}
                         className="w-12 h-8 px-2 py-1 text-center rounded-md border border-color2 focus:outline-none font-manrope text-color2 font-bold"
+                        onChange={(e) => {
+                          const value = parseInt(e.target.value);
+                          if (value >= 1 && value <= 5) {
+                            setQuantity(value);
+                          }
+                        }}
                       />
                       <button
                         onClick={handleIncrement}
@@ -249,4 +256,5 @@ const index = () => {
   );
 };
 
-export default index;
+// export default index;
+export default PageProtection(index);
