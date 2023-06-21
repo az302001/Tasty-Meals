@@ -133,6 +133,7 @@ const Cart = () => {
                     name: "Compra en TastyMeals",
                     price: calculateTotalPrice(),
                   }}
+                  carro = {cartItem}
                 />
               </div>
             </div>
