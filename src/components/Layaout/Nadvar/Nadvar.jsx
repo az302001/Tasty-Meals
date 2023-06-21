@@ -54,9 +54,9 @@ const Navbar = () => {
     "/menu": "Menú",
 
     // "/dashboard/create": "Crear",
-    "/mispedidos": "Mis ordenes",
+    // "/mispedidos": "Mis ordenes",
     // "/dashboard": "Panel Admin",
-    "/discounts": "Promociones",
+    // "/discounts": "Promociones",
     // "/cart": "Mis ordenes",
   }
 
@@ -130,6 +130,12 @@ const Navbar = () => {
                 <Link href="/dashboard">
                   <button className="border-b pb-1 w-40 text-left hover:text-white">Panel Admin</button>
                 </Link>
+              )}
+             {(userData?.data?.role === 'user' || session) &&  (
+                <Link href="/mispedidos">
+                  <button className="border-b pb-1 w-40 text-left hover:text-white">Mis ordenes</button>
+                </Link>
+              
               )}
               {Object.entries(rutas).map(([rut, nombre]) => (
                 <Link href={rut} key={rut}>
