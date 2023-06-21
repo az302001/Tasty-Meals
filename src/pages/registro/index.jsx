@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Layaout from "@/components/Layaout/Layaout";
 import { useRouter } from "next/router";
@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
 import { FaRegEyeSlash, FaEye } from "react-icons/fa";
+import Loader from "@/components/Loader/index";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -95,23 +96,51 @@ const RegisterForm = () => {
 
     if (password.length < 6) {
       strength = "Débil";
-    } else if (/\d/.test(password) && /[a-zA-Z]/.test(password)) {
+    } else if (
+      /\d/.test(password) &&
+      /[a-zA-Z]/.test(password) &&
+      /[A-Z]/.test(password)
+    ) {
       strength = "Fuerte";
-    } else if (/\d/.test(password) || /[a-zA-Z]/.test(password)) {
+    } else if (/\d/.test(password) && /[a-zA-Z]/.test(password)) {
       strength = "Medio";
     } else {
       strength = "Débil";
     }
 
-    setPasswordStrength(strength);
+    return strength;
+  };
+
+  const passwordColorClass = (strength) => {
+    switch (strength) {
+      case "Débil":
+        return "text-red-500"; // Red color class
+      case "Medio":
+        return "text-yellow-500"; // Yellow color class
+      case "Fuerte":
+        return "text-green-500"; // Green color class
+      default:
+        return ""; // Default color class (if strength is not valid)
+    }
   };
 
   return (
     <Layaout>
       <div>
-        {/* <ToastContainer /> */}
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={true}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
         {success ? (
-          <p>Registro exitoso</p>
+          <Loader />
         ) : (
           <div className="container mx-auto py-8">
             <h1 className="text-2xl font-bold mb-6 text-center">
@@ -119,12 +148,15 @@ const RegisterForm = () => {
             </h1>
             <form
               onSubmit={handleSubmit}
-              className="w-full max-w-sm mx-auto bg-white p-8 rounded-md shadow-md"
+              className="w-full max-w-xl mx-auto bg-white p-8 rounded-md shadow-md"
             >
               {error && <p className="text-red-500 mb-4">{error}</p>}
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Nombre
+                  Nombre (*)
+                  <span className="float-right text-sm text-gray-500">
+                    (*) Campos obligatorios
+                  </span>
                 </label>
                 <input
                   className={`w-full px-3 py-2 border ${
@@ -140,13 +172,18 @@ const RegisterForm = () => {
                   onClick={handleClick}
                   placeholder="Ingrese su Nombre"
                 />
+                {fieldBlur && !name && (
+                  <p className="text-red-500 text-sm mt-1">
+                    Por favor, ingrese su nombre.
+                  </p>
+                )}
               </div>
               <div className="mb-4">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
                   for="email"
                 >
-                  Correo Electronico
+                  Correo Electronico (*)
                 </label>
                 <input
                   className={`w-full px-3 py-2 border ${
@@ -158,13 +195,18 @@ const RegisterForm = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
+                {fieldBlur && !email && (
+                  <p className="text-red-500 text-sm mt-1">
+                    Por favor, ingrese su correo electrónico.
+                  </p>
+                )}
               </div>
               <div className="mb-4">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
                   for="password"
                 >
-                  Contraseña
+                  Contraseña (*)
                 </label>
                 <div className="relative">
                   <input
@@ -188,19 +230,31 @@ const RegisterForm = () => {
                   >
                     {showPassword ? <FaEye /> : <FaRegEyeSlash />}
                   </button>
-                  {passwordStrength && (
-                    <p className="text-sm text-gray-500 mt-1">
-                      Nivel de seguridad: {passwordStrength}
+                  {password && (
+                    <p className="text-sm mt-1">
+                      Nivel de seguridad:{" "}
+                      <span
+                        className={passwordColorClass(
+                          evaluatePasswordStrength(password)
+                        )}
+                      >
+                        {evaluatePasswordStrength(password)}
+                      </span>
                     </p>
                   )}
                 </div>
+                {fieldBlur && !password && (
+                  <p className="text-red-500 text-sm mt-1">
+                    Por favor, ingrese su contraseña.
+                  </p>
+                )}
               </div>
               <div className="mb-4">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
                   for="confirm-password"
                 >
-                  Confirmar Contraseña
+                  Confirmar Contraseña (*)
                 </label>
                 <div className="relative">
                   <input
@@ -222,6 +276,11 @@ const RegisterForm = () => {
                     {showConfirmPassword ? <FaEye /> : <FaRegEyeSlash />}
                   </button>
                 </div>
+                {fieldBlur && !confirmPassword && (
+                  <p className="text-red-500 text-sm mt-1">
+                    Por favor, confirme su contraseña.
+                  </p>
+                )}
               </div>
               <button
                 className="w-full bg-indigo-500 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300"
