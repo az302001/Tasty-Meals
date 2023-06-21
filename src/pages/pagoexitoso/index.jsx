@@ -17,8 +17,8 @@ const index = () => {
   console.log( "transaction pago exitoso", transactionId);
   useEffect(() => {
     if (status === "approved") {
-      dispatch(updateTransactionStatus(parseInt(transactionId)));
-      // setransactionId(0);
+      dispatch(updateTransactionStatus(parseInt(transactionId))).then (localStorage.setItem("transactionID",0));
+     
     } 
   }, []);
 
