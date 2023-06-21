@@ -85,12 +85,12 @@ const Discount = () => {
              <input
             type='number'
             className='border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:border-blue-500 ml-7 text-center w-[7vw]'
-            value={discounts[category.id] || ''}
+            value={discounts[category.id] || 0 } 
             onChange={(event) => handleChange(event, category.id)}
              />
-             {discounts[category.id] && (
+             {/* {discounts[category.id] && (
                <h2 className='text-color3-500 mt-2'>Descuento: {discounts[category.id]}%</h2>
-             )}
+             )} */}
            </div>
          </td>
          <td className='ml-[5%]'>
