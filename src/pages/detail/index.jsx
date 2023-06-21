@@ -166,7 +166,7 @@ const index = () => {
                       </span>
                       <Rating
                         name="half-rating"
-                        value={userRating}
+                        value={parseInt(detailFoods.rating)}
                         precision={0.5}
                         readOnly
                       />
