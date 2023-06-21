@@ -11,6 +11,7 @@ import { cartState } from "../../../atoms/cartState";
 import { useRecoilState } from "recoil";
 import { useSession } from "next-auth/react";
 import Swal from "sweetalert2";
+import { PageProtection } from "@/Hocs/sesionVerify";
 import Loader from "@/components/Loader/index";
 
 const index = () => {
@@ -255,4 +256,5 @@ const index = () => {
   );
 };
 
-export default index;
+// export default index;
+export default PageProtection(index);

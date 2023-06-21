@@ -4,6 +4,7 @@ import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { useRecoilState } from 'recoil';
 import { cartState } from '../../../atoms/cartState';
 import { toast } from 'react-toastify';
+import { Rating, Stack } from "@mui/material";
 import 'react-toastify/dist/ReactToastify.css';
 import { signOut, useSession } from 'next-auth/react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +14,7 @@ import Discounts from '../../assets/Discounts.png';
 import Image from 'next/image';
 
 const Card = ({ food, discount }) => {
-  const { id, name, image, price, description } = food;
+  const { id, name, image, price, description,rating } = food;
   const [quantity, setQuantity] = useState(1);
   const [cartItem, setCartItem] = useRecoilState(cartState);
 
@@ -30,7 +31,7 @@ const Card = ({ food, discount }) => {
   const handleIncrement = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
   };
-  
+
 
   const handleDecrement = () => {
     if (quantity > 1) {
@@ -40,11 +41,11 @@ const Card = ({ food, discount }) => {
 
   const precio = Math.round(food.price)
   // console.log (precio);
-  
+
 
   const { data: session } = useSession();
   const userData = useSelector((state) => state.products.userData);
- 
+
 
   const addItemToCart = () => {
     const newItem = { ...food, quantity };
@@ -70,7 +71,7 @@ const Card = ({ food, discount }) => {
         text: 'Registrate para poder comprar!',
         footer: '<a href="/login" style="text-decoration: underline; color: blue;">Ir al registro</a>'
       })
-      
+
     }
     if (cartItem.findIndex((fo) => fo.id === food.id) === -1) {
       setCartItem((prevState) => [...prevState, newItem]);
@@ -84,7 +85,7 @@ const Card = ({ food, discount }) => {
     handleClick();
   };
 
-  const totalPrice = food.discount ? parseInt(precio - food.discount * precio / 100 ) * quantity : precio * quantity;
+  const totalPrice = food.discount ? parseInt(precio - food.discount * precio / 100) * quantity : precio * quantity;
 
   // console.log(totalPrice);
 
@@ -92,7 +93,7 @@ const Card = ({ food, discount }) => {
     <div className=" w-[100%] h-[100%] bg-gradient-to-r bg-color3   shadow-lg rounded-lg text-white p-4 transition duration-300 hover:-translate-y-2 ">
       <div>
         <Link href={`/detail?id=${id}`}>
-          <h1 className="font-pacifico text-3xl text-color1 p-1 cursor-pointer">{name}</h1>
+          <h1 className="font-pacifico text-3xl text-color1 font-bold  p-1 cursor-pointer">{name}</h1>
         </Link>
       </div>
 
@@ -136,20 +137,33 @@ const Card = ({ food, discount }) => {
             <PlusCircleIcon className="h-10 w-10 bg-#E96479 inset-13 top-13 left-89.92 right-4.9 bottom-68 text-color2" />
           </div>
           {
-            food.discount > 0 ? 
-            <div className='flex flex-cols text-[18px]  md:text-[20px] font-pacifico font-bold'>
-              <h2 className="   text-color1  ml-2">Antes: ${parseInt(food.price)}</h2>
-              <h2 className=" text-color1">Ahora: ${parseInt(totalPrice)}</h2>
-              <div className="h-[5vh] w-[12vw] md:w-[10vw] lg:w-[8vw] mb-10"  ><Image src={Discounts} /></div>
-            </div>
-            :  <div className="text-pacifico text-2xl text-color1">${parseInt(totalPrice)}</div>
+            food.discount > 0 ?
+              <div className='flex flex-cols text-[18px]  md:text-[20px] font-pacifico font-bold'>
+                <h2 className="   text-color1  ml-2">Antes: ${parseInt(food.price)}</h2>
+                <h2 className=" text-color1">Ahora: ${parseInt(totalPrice)}</h2>
+                <div className="h-[5vh] w-[12vw] md:w-[10vw] lg:w-[8vw] mb-10"  ><Image src={Discounts} /></div>
+              </div>
+              : <div className="text-pacifico text-2xl text-color1">${parseInt(totalPrice)}</div>
           }
           {/* <div className="text-pacifico text-2xl text-color1">${parseInt(totalPrice)}</div> */}
         </div>
       </div>
 
       <div>
-        <p className="px-4 py-2 text-color2 font-josefin text-base">{description}</p>
+        <Stack spacing={1}>
+          <div className="flex items-center pl-[13%] pt-[1%] font-bold text-color1">
+            <Rating
+              name="half-rating"
+              value={parseInt(rating)}
+              precision={0.5}
+              readOnly
+            />
+          </div>
+        </Stack>
+      </div>
+
+      <div>
+        <p className="px-4 py-2 text-color1 font-semibold  font-josefin text-base">{description}</p>
       </div>
     </div>
   );

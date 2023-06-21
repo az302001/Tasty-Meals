@@ -170,7 +170,7 @@ const Menu = () => {
                 className="bg-color3 w-52"
               >
                 <option hidden value="DEFAULT">
-                  Alfabeticamente
+                 Orden Alfabeticamente
                 </option>
                 <option value="atoz">A hasta la Z</option>
                 <option value="ztoa">Z hasta la A</option>
@@ -185,10 +185,10 @@ const Menu = () => {
                 className="bg-color3 w-52"
               >
                 <option hidden value="DEFAULT">
-                  Puntuacion
+                 Orden por Puntuacion
                 </option>
-                <option value="MenorMayor">De Min a Max</option>
-                <option value="MayorMenor">De Max a Min</option>
+                <option value="MenorMayor">Puntuacion Min a Max</option>
+                <option value="MayorMenor">Puntuacion Max a Min</option>
               </select>
             </div>
 
@@ -200,7 +200,7 @@ const Menu = () => {
                 className="bg-color3 w-52"
               >
                 <option hidden value="DEFAULT">
-                  Precio
+                 Ordenar por Precio
                 </option>
                 <option value="menor">De Menor precio</option>
                 <option value="mayor">De Mayor precio</option>
@@ -208,7 +208,7 @@ const Menu = () => {
             </div>
 
 
-            <div className='mt-2 text-lg  bg-color3  border-2 border-solid rounded-md p-0.5 pl-2 border-color1 w-[69%] lg:w-[18%] md:w-[31%]  text-center' >
+            <div className='mt-2 text-lg  bg-color3  border-2 border-solid rounded-md p-0.5 pl-2 border-color1 w-[83%] lg:w-[18%] md:w-[42%]  text-center' >
               <button onClick={toggleFilter} className=' md:mr-[0] lg:mr-[0] '>
                 Filtrar por precio
               </button>
@@ -220,6 +220,7 @@ const Menu = () => {
                     type='number'
                     placeholder='Min'
                     value={minPrice}
+                    min='0'
                     onChange={(e) => {
                       const value = parseInt(e.target.value);
                       setMinPrice(value);
@@ -230,13 +231,14 @@ const Menu = () => {
                     className='md:w-[25%] lg:w-[22%] w-[20%] text-center mr-[3%]'
                     type='number'
                     placeholder='Max'
+                    min='0'
                     value={maxPrice}
                     onChange={(e) => {
                       const value = parseInt(e.target.value);
                       setMaxPrice(value);
                     }}
                   />
-                  <button onClick={handleResetFilter} type='button' className='text-center lg:w-[22%] border-2 border-solid border-color1' >Reset</button>
+                  <button onClick={handleResetFilter} type='button' className='text-center lg:w-[28%] border-2 border-solid border-color1' >Resetear</button>
                   <button onClick={handleFilterPrice} type='button'  className=' lg:w-[20%] border-2 border-solid border-color1 ml-[1%]'>Filtrar</button>
                 </div>
               )}
