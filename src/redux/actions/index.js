@@ -1,4 +1,6 @@
 import axios from "axios";
+import { transaction } from "../../../atoms/transaction";
+import { useRecoilState } from "recoil";
 
 export const RANGE_FOR_PRICE = "RANGE_FOR_PRICE";
 export const GET_FOODS = "GET_FOODS";
