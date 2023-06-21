@@ -4,15 +4,19 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateTransactionStatus } from "@/redux/actions";
 import { PageProtection } from "@/Hocs/sesionVerify";
+import { useRecoilState } from "recoil";
+import { transaction } from "../../../atoms/transaction";
 
 const index = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const transactionId = useSelector((state) => state.products.transactionId);
+  // const transactionId = useSelector((state) => state.products.transactionId);
+  const [transactionId,setransactionId]= useRecoilState(transaction);
   const { status } = router.query;
   useEffect(() => {
     if (status === "approved") {
       dispatch(updateTransactionStatus(transactionId));
+      setransactionId(0);
     } 
   }, []);
 
