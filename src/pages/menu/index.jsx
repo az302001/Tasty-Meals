@@ -208,7 +208,7 @@ const Menu = () => {
             </div>
 
 
-            <div className='mt-2 text-lg  bg-color3  border-2 border-solid rounded-md p-0.5 pl-2 border-color1 w-[69%] lg:w-[18%] md:w-[31%]  text-center' >
+            <div className='mt-2 text-lg  bg-color3  border-2 border-solid rounded-md p-0.5 pl-2 border-color1 w-[83%] lg:w-[18%] md:w-[42%]  text-center' >
               <button onClick={toggleFilter} className=' md:mr-[0] lg:mr-[0] '>
                 Filtrar por precio
               </button>
@@ -236,7 +236,7 @@ const Menu = () => {
                       setMaxPrice(value);
                     }}
                   />
-                  <button onClick={handleResetFilter} type='button' className='text-center lg:w-[22%] border-2 border-solid border-color1' >Reset</button>
+                  <button onClick={handleResetFilter} type='button' className='text-center lg:w-[28%] border-2 border-solid border-color1' >Resetear</button>
                   <button onClick={handleFilterPrice} type='button'  className=' lg:w-[20%] border-2 border-solid border-color1 ml-[1%]'>Filtrar</button>
                 </div>
               )}
