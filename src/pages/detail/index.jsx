@@ -23,7 +23,7 @@ const index = () => {
   const [cartItem, setCartItem] = useRecoilState(cartState);
   const [isLoading, setIsLoading] = useState(true);
   const reviews = useSelector((state) => state.products.review);
-  
+
   const handleClick = () => {
     Swal.fire(`${detailFoods.name} añadido al carrito!`);
   };
@@ -35,7 +35,7 @@ const index = () => {
   const handleIncrement = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
   };
-  
+
 
   const handleDecrement = () => {
     if (quantity > 1) {
@@ -89,14 +89,14 @@ const index = () => {
 
   useEffect(() => {
     setIsLoading(true); // Establecer isLoading en true al iniciar la carga
-   
+
     const fetchData = async () => {
       try {
         // Obtener los detalles de la comida por el id
         dispatch(getFoodById(id));
-    dispatch(getFoodComments(id));
-        
-        
+        dispatch(getFoodComments(id));
+
+
         setIsLoading(false); // Marcar que los datos se han cargado correctamente
       } catch (error) {
         // Manejo de errores al obtener los detalles de la comida o los comentarios
@@ -104,14 +104,14 @@ const index = () => {
         console.error(error);
       }
     };
-  
+
     if (id) {
       fetchData(); // Llamar a la función fetchData para obtener los datos
     } else {
       setIsLoading(false); // Marcar que los datos se han cargado correctamente si no hay id
     }
   }, [dispatch, id]);
- 
+
   useEffect(() => {
     return () => {
       dispatch(cleanDetail());
@@ -141,7 +141,7 @@ const index = () => {
           <h2 className="flex font-pacifico justify-center font-monrope text-4xl font-semibold tracking-tight text-color1 pb-6 dark:text-black">
             {detailFoods.name}
           </h2>
-  
+
           <div className="w-full max-w-2xl mx-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <img src={detailFoods.image} alt={detailFoods.name} />
             <div className="px-5 pb-5">
@@ -151,16 +151,16 @@ const index = () => {
               <br />
               <div className="flex items-center justify-between">
                 <span className="text-3xl font-semibold text-color1 dark:text-white">
-                      ${detailFoods.price*quantity} 
+                  ${Math.ceil(detailFoods.price * quantity)}
                 </span>
 
-                <span className="text-3xl font-semibold text-color1 dark:text-white">
+                {/* <span className="text-3xl font-semibold text-color1 dark:text-white">
                   ${detailFoods.price}
-                </span>
+                </span> */}
                 <div>
                   <Stack spacing={1}>
                     <div className="flex items-center">
-                      
+
                       <span className="text-lg font-semibold text-gray-900 dark:text-white">
                         Clasificación:
                       </span>
@@ -185,28 +185,28 @@ const index = () => {
                       </a>
                     )}
                     <div className='flex items-center'>
-            <button
-              onClick={handleDecrement}
-              className='px-2 py-1 rounded-l-md border text-color2 border-color2 focus:outline-none'
-              disabled={quantity < 1}
-            >
-              -
-            </button>
-            <input
-              type="number"
-              value={quantity}
-              onChange={(e) => setQuantity(parseInt(e.target.value))}
-              className="w-12 h-8 px-2 py-1 text-center rounded-md border border-color2 focus:outline-none font-manrope text-color2 font-bold"
-            />
-            <button
-              onClick={handleIncrement}
-              className='px-2 py-1 rounded-r-md border text-color2 border-color2 focus:outline-none'
-              disabled={quantity >= 5}
-            >
-              +
-            </button>
-          </div>
-                    
+                      <button
+                        onClick={handleDecrement}
+                        className='px-2 py-1 rounded-l-md border text-color2 border-color2 focus:outline-none'
+                        disabled={quantity < 1}
+                      >
+                        -
+                      </button>
+                      <input
+                        type="number"
+                        value={quantity}
+                        onChange={(e) => setQuantity(parseInt(e.target.value))}
+                        className="w-12 h-8 px-2 py-1 text-center rounded-md border border-color2 focus:outline-none font-manrope text-color2 font-bold"
+                      />
+                      <button
+                        onClick={handleIncrement}
+                        className='px-2 py-1 rounded-r-md border text-color2 border-color2 focus:outline-none'
+                        disabled={quantity >= 5}
+                      >
+                        +
+                      </button>
+                    </div>
+
                     <br />
                   </Stack>
                 </div>
@@ -214,35 +214,35 @@ const index = () => {
             </div>
 
           </div>
-  
+
           {/* Sección de comentarios */}
           <div className="w-full max-w-2xl mx-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 px-5 py-5 mt-5">
-  <h3 className="text-lg font-semibold text-color1 dark:text-white">
-    Comentarios:
-  </h3>
-  {reviews && reviews.length > 0 ? (
-    <div className="flex flex-col items-center">
-      {reviews.map((review) => (
-        <div
-          key={review.id}
-          className="my-3 p-3 bg-gray-200 dark:bg-gray-600 rounded-lg text-center w-full"
-        >
-          <p className="text-gray-700 dark:text-gray-300">{review.comentary}</p>
-          <Rating
-            name={`rating-${review.id}`}
-            value={review.rating}
-            precision={0.5}
-            readOnly
-          />
-        </div>
-      ))}
-    </div>
-  ) : (
-    <p className="text-gray-700 dark:text-gray-300">
-      No hay comentarios disponibles.
-    </p>
-  )}
-</div>
+            <h3 className="text-lg font-semibold text-color1 dark:text-white">
+              Comentarios:
+            </h3>
+            {reviews && reviews.length > 0 ? (
+              <div className="flex flex-col items-center">
+                {reviews.map((review) => (
+                  <div
+                    key={review.id}
+                    className="my-3 p-3 bg-gray-200 dark:bg-gray-600 rounded-lg text-center w-full"
+                  >
+                    <p className="text-gray-700 dark:text-gray-300">{review.comentary}</p>
+                    <Rating
+                      name={`rating-${review.id}`}
+                      value={review.rating}
+                      precision={0.5}
+                      readOnly
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-700 dark:text-gray-300">
+                No hay comentarios disponibles.
+              </p>
+            )}
+          </div>
         </>
       )}
     </Layaout>

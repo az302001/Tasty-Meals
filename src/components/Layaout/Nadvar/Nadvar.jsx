@@ -56,7 +56,7 @@ const Navbar = () => {
     // "/dashboard/create": "Crear",
     // "/mispedidos": "Mis ordenes",
     // "/dashboard": "Panel Admin",
-    "/discounts": "Promociones",
+    // "/discounts": "Promociones",
     // "/cart": "Mis ordenes",
   }
 
@@ -131,10 +131,11 @@ const Navbar = () => {
                   <button className="border-b pb-1 w-40 text-left hover:text-white">Panel Admin</button>
                 </Link>
               )}
-              {userData?.data?.role === 'user' && (
+             {(userData?.data?.role === 'user' || session) &&  (
                 <Link href="/mispedidos">
                   <button className="border-b pb-1 w-40 text-left hover:text-white">Mis ordenes</button>
                 </Link>
+              
               )}
               {Object.entries(rutas).map(([rut, nombre]) => (
                 <Link href={rut} key={rut}>
