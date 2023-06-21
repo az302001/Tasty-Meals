@@ -1,4 +1,3 @@
-
 import prisma from "@/prisma/prisma";
 import cloudinary from "cloudinary";
 import formidable from "formidable-serverless";
@@ -51,7 +50,7 @@ export default async function handler(req, res) {
         const createdFood = await prisma.food.create({
           data: {
             name: name,
-            price: parseInt(price),
+            price: parseFloat(price),
             description: description,
             image: imageUrl,
             Category: {
@@ -66,7 +65,7 @@ export default async function handler(req, res) {
         });
 
         return res.status(201).json({
-          mensaje: `Platillo almacenado con éxito!`,
+          mensaje: `El plato ${name} se ha creado correctamente`,
           food: createdFood,
         });
       } catch (error) {

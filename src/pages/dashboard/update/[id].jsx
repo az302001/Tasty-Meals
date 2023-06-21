@@ -6,7 +6,6 @@ import { getFoodById, cleanDetail } from "@/redux/actions";
 import Image from "next/image";
 import axios from "axios";
 import Layaout from "@/components/Layaout/Layaout";
-import { ToastContainer, toast } from "react-toastify";
 import ReactLoading from "react-loading";
 const Swal = require("sweetalert2");
 import "react-toastify/dist/ReactToastify.css";
@@ -23,6 +22,13 @@ export default function Update() {
       .then((response) => {
         const categories = response.data;
         setExistingCategories(categories);
+
+        if (food && food.categoryId) {
+          const defaultCategory = categories.find(
+            (category) => category.id === food.categoryId
+          );
+          setValue("categoryId", defaultCategory?.id || "");
+        }
       })
       .catch((error) => {
         console.error("Error al realizar la solicitud:", error);
@@ -37,6 +43,7 @@ export default function Update() {
       dispatch(cleanDetail());
     };
   }, [dispatch, id]);
+  const defaultCategoryId = food?.categoryId || "";
 
   const {
     register,
@@ -51,7 +58,7 @@ export default function Update() {
       price: "",
       description: "",
       image: "",
-      categoryId: "",
+      categoryId: defaultCategoryId,
       discount: "",
     },
   });
@@ -105,7 +112,7 @@ export default function Update() {
       const requestData = {
         id: food?.id || "",
         name: data.name,
-        price: parseInt(data.price),
+        price: parseFloat(data.price),
         description: data.description,
         image: uploadedImageUrl || food?.image || "",
         Category: { connect: { id: parseInt(data.categoryId) } },
@@ -148,6 +155,41 @@ export default function Update() {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col items-center "
       >
+        <label htmlFor="image" className="text-xl p-3 text-color1">
+          Imagen:
+        </label>
+
+        {uploadedImageUrl ? (
+          <Image
+            src={uploadedImageUrl}
+            width={120}
+            height={120}
+            alt="Imagen de Comida"
+            className="rounded-full"
+          />
+        ) : (
+          <Image
+            src={food?.image}
+            width={120}
+            height={120}
+            alt="Imagen de Comida"
+            className="rounded-full"
+          />
+        )}
+
+        <label
+          htmlFor="upload-image"
+          className="bg-transparent hover:bg-blue-500 mt-5 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+        >
+          Subir imagen
+        </label>
+        <input
+          type="file"
+          accept="image/*"
+          id="upload-image"
+          class="hidden bg-transparent lg:w-1/6 hover:bg-blue-500 w-4/6 mt-5 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+          onChange={handleImageChange}
+        />
         <label htmlFor="name" className="text-xl p-3 text-color1 ">
           Nombre:
         </label>
@@ -227,17 +269,19 @@ export default function Update() {
             trigger("categoryId");
           }}
         >
-          <option value="">Selecciona una categoría</option>
+          <option value="" className="hidden">
+            Selecciona una categoría
+          </option>
           {existingCategories?.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
+            <option key={category?.id} value={category?.id}>
+              {category?.name}
             </option>
           ))}
         </select>
         {errors.categoryId && errors.categoryId.type === "required" && (
           <p className="text-red-700">Este campo es requerido</p>
         )}
-        <div className="w-full lg:w-1/2 px-2">
+        <div className="w-full lg:w-1/2 px-2 text-center flex items-center flex-col">
           <label htmlFor="discount" className="text-xl p-3 text-color1">
             Descuento:
           </label>
@@ -245,7 +289,7 @@ export default function Update() {
             type="number"
             id="discount"
             placeholder="Descuento"
-            className="shadow appearance-none border rounded lg:w-3/4 w-4/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded lg:w-1/6 text-center w-4/6 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             {...register("discount", {
               required: true,
               min: 0,
@@ -268,34 +312,7 @@ export default function Update() {
             </p>
           )}
         </div>
-        <label htmlFor="image" className="text-xl p-3 text-color1">
-          Imagen:
-        </label>
 
-        {uploadedImageUrl ? (
-          <Image
-            src={uploadedImageUrl}
-            width={100}
-            height={80}
-            alt="Imagen de Comida"
-          />
-        ) : (
-          <Image
-            src={food?.image}
-            width={140}
-            height={100}
-            alt="Imagen de Comida"
-          />
-        )}
-        <label htmlFor="image" className="text-xl p-3 text-color1">
-          Subir una imagen:
-        </label>
-        <input
-          type="file"
-          accept="image/*"
-          class="bg-transparent lg:w-1/6 hover:bg-blue-500 w-4/6 mt-5 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-          onChange={handleImageChange}
-        />
         <div className="mb-10 mt-5">
           {isLoading ? (
             <ReactLoading
@@ -309,7 +326,7 @@ export default function Update() {
               <input
                 type="submit"
                 value="Enviar"
-                className="bg-blue-500 text-white font-semibold py-2 px-4 border border-blue-500 rounded cursor-pointer"
+                className="bg-transparent hover:bg-blue-500 mt-5 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
               />
               <button
                 type="button"
@@ -317,14 +334,13 @@ export default function Update() {
                   dispatch(getFoodById(id));
                   setUploadedImageUrl("");
                 }}
-                className="bg-gray-500 text-white font-semibold py-2 px-4 border border-gray-500 rounded cursor-pointer"
+                className="bg-gray-500 text-white font-semibold py-2 px-4 mt-5 border border-gray-500 rounded cursor-pointer"
               >
                 Revertir
               </button>
             </div>
           )}
         </div>
-        {serverResponse && <p>{serverResponse}</p>}
       </form>
     </Layaout>
   );
