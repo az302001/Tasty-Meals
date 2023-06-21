@@ -251,26 +251,8 @@ export const getDiscounts = (payload) => {
   };
 };
 
-// export const createTransaction = (foodsIds, costo, userId, approved) => {
-//   return async (dispatch) => {
-//     const response = await axios.post(`/api/Products/addTransaction`, {
-//       foodsIds,
-//       costo,
-//       userId,
-//       approved,
-//     });
-
-//     const { id } = response.data;
-//     return dispatch({
-//       type: CREATE_TRANSACTION,
-//       payload: id,
-//     });
-//   };
-// };
-
 export const createTransaction = (foodsIds, costo, userId, approved) => {
-  const [transactionId, settransactionId]= useRecoilState(transaction)
-  return async () => {
+  return async (dispatch) => {
     const response = await axios.post(`/api/Products/addTransaction`, {
       foodsIds,
       costo,
@@ -279,12 +261,32 @@ export const createTransaction = (foodsIds, costo, userId, approved) => {
     });
 
     const { id } = response.data;
-    settransactionId(id)
-    // return dispatch({
-    //   type: CREATE_TRANSACTION,
-    // });
+    localStorage.setItem("transactionID", id);
+    console.log(id);
+    return dispatch({
+      type: CREATE_TRANSACTION,
+      payload: id,
+    });
   };
 };
+
+// export const createTransaction = (foodsIds, costo, userId, approved) => {
+//   const [transactionId, settransactionId]= useRecoilState(transaction)
+//   return async () => {
+//     const response = await axios.post(`/api/Products/addTransaction`, {
+//       foodsIds,
+//       costo,
+//       userId,
+//       approved,
+//     });
+
+//     const { id } = response.data;
+//     settransactionId(id)
+//     // return dispatch({
+//     //   type: CREATE_TRANSACTION,
+//     // });
+//   };
+// };
 
 
 

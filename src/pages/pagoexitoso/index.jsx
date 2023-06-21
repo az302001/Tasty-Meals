@@ -11,13 +11,14 @@ const index = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   // const transactionId = useSelector((state) => state.products.transactionId);
-  const [transactionId,setransactionId]= useRecoilState(transaction);
+  // const [transactionId,setransactionId]= useRecoilState(transaction);
   console.log(transactionId);
   const { status } = router.query;
+  const transactionId= localStorage.getItem('transactionID')
   useEffect(() => {
     if (status === "approved") {
-      dispatch(updateTransactionStatus(transactionId));
-      setransactionId(0);
+      dispatch(updateTransactionStatus(parseInt(transactionId)));
+      // setransactionId(0);
     } 
   }, []);
 
