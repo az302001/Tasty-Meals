@@ -86,16 +86,17 @@ export default function Users() {
         axios
           .delete(`/api/Users?id=${userId}`)
           .then((response) => {
-            Swal.fire(
-              "Estado actualizado",
-              `El usuario ${userName} ha sido eliminado`,
-              "success"
-            );
+            // Swal.fire(
+            //   "Estado actualizado",
+            //   `El usuario ${userName} ha sido eliminado`,
+            //   "success"
+            // );
+            console.log("eliminado")
             setCurrentUserPage(0);
           })
-          // .catch((error) => {
-          //   Swal.fire("Error", "No se pudo eliminar el usuario", "error");
-          // });
+          .catch((error) => {
+            Swal.fire("Error", "No se pudo eliminar el usuario", "error");
+          });
       }
     });
   };
