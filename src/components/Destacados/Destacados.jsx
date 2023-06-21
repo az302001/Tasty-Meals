@@ -26,7 +26,7 @@ const Destacados = () => {
   return (
     <div>
       <h1 className="text-color1 font-semibold text-center text-xl lg:text-2xl mt-3">
-        Nuestros platos destacados de hoy
+        Nuestros platos destacados
       </h1>
       <Swiper
         className="relative w-2/6 h-1/6 min-w-[300px] md:min-w-[500px] mt-6 border-28px "
@@ -38,7 +38,7 @@ const Destacados = () => {
           shadowOffset: 20,
           shadowScale: 0.94,
         }}
-        pagination={true}
+        pagination={false}
         modules={[EffectCube, Pagination]}
       >
         {shuffledFoods.map((food, index) => (

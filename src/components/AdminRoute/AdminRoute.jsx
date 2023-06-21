@@ -11,14 +11,15 @@ const AdminRoute = ({ children }) => {
   useEffect(() => {
     const checkAuthentication = async () => {
       const isAuthenticated = userData?.data?.role === "admin";
+      // console.log(isAuthenticated);
       if (!isAuthenticated) {
-        router.replace("/menu");
+        router.push("/menu");
       } else {
         setIsReady(true);
       }
     };
     checkAuthentication();
-  }, []);
+  }, [userData]);
 
   if (!isReady) {
     return (
