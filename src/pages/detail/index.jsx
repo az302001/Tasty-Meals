@@ -31,6 +31,17 @@ const index = () => {
   const userData = useSelector((state) => state.products.userData);
   const router = useRouter();
 
+  const handleIncrement = () => {
+    setQuantity((prevQuantity) => prevQuantity + 1);
+  };
+  
+
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      setQuantity((prevQuantity) => prevQuantity - 1);
+    }
+  };
+
   const addItemToCart = () => {
     const newItem = { ...detailFoods, quantity };
     let google = session;
@@ -125,7 +136,7 @@ const index = () => {
           <br />
           <div className="flex items-center justify-between">
             <span className="text-3xl font-semibold text-color1 dark:text-white">
-              ${detailFoods.price}
+              ${detailFoods.price*quantity} 
             </span>
             <div>
               <Stack spacing={1}>
@@ -140,7 +151,7 @@ const index = () => {
                 </span> */}
                 <div className="flex items-center">
                   <span className="text-lg font-semibold text-gray-900 dark:text-white">
-                    Clasificación:
+                    Calificación:
                   </span>
                   <Rating
                     name="half-rating"
@@ -162,6 +173,28 @@ const index = () => {
                     Añadir al carrito
                   </a>
                 )}
+            <div className='flex items-center'>
+            <button
+              onClick={handleDecrement}
+              className='px-2 py-1 rounded-l-md border text-color2 border-color2 focus:outline-none'
+              disabled={quantity < 1}
+            >
+              -
+            </button>
+            <input
+              type="number"
+              value={quantity}
+              onChange={(e) => setQuantity(parseInt(e.target.value))}
+              className="w-12 h-8 px-2 py-1 text-center rounded-md border border-color2 focus:outline-none font-manrope text-color2 font-bold"
+            />
+            <button
+              onClick={handleIncrement}
+              className='px-2 py-1 rounded-r-md border text-color2 border-color2 focus:outline-none'
+              disabled={quantity >= 5}
+            >
+              +
+            </button>
+          </div>
                 <br />
               </Stack>
             </div>
@@ -195,7 +228,7 @@ const index = () => {
           </figcaption>
           <div className="flex items-center">
             <span className="text-lg font-semibold text-gray-900 dark:text-white">
-              Clasificación:
+              Calificación:
             </span>
             <Rating
               name="half-rating"
@@ -230,7 +263,7 @@ const index = () => {
           </figcaption>
           <div className="flex items-center">
             <span className="text-lg font-semibold text-gray-900 dark:text-white">
-              Clasificación:
+              Calificación:
             </span>
             <Rating
               name="half-rating"
@@ -265,7 +298,7 @@ const index = () => {
           </figcaption>
           <div className="flex items-center">
             <span className="text-lg font-semibold text-gray-900 dark:text-white">
-              Clasificación:
+              Calificación:
             </span>
             <Rating
               name="half-rating"
@@ -300,7 +333,7 @@ const index = () => {
           </figcaption>
           <div className="flex items-center ">
             <span className="text-lg font-semibold text-gray-900 dark:text-white">
-              Clasificación:
+              Calificación:
             </span>
             <Rating
               name="half-rating"
