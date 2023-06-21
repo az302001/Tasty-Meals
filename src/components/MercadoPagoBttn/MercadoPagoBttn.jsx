@@ -47,10 +47,14 @@ export default function MercadoPagoBttn({ product, carro }) {
     const approved = false;
     console.log( "dispatch en mercado button",  foodsIds, costo, userId, approved)
     localStorage.setItem("transactionID",0)
-    dispatch(createTransaction(foodsIds, costo, userId, approved));
-    setCartItem([]);
-    // router.push(url);
-    router.push("/pagoexitoso?status=approved");
+    dispatch(createTransaction(foodsIds, costo, userId, approved)).then (()=>{
+      setCartItem([]) 
+      router.push("/pagoexitoso?status=approved")
+    });
+
+    // setCartItem([]);
+    // // router.push(url);
+    // router.push("/pagoexitoso?status=approved");
   };
   return (
     <div>
