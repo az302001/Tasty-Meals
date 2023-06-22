@@ -28,6 +28,7 @@ import {
   CREATE_TRANSACTION,
   UPDATE_TRANSACTION_STATUS,
 } from "../actions";
+import { filterfoods } from "@/utils/general";
 
 const initialState = {
   originalFoods: [],
@@ -61,13 +62,13 @@ const productsSlice = (state = initialState, action) => {
       const foodbyorder =
         action.payload === "atoz"
           ? state.foodFilter.sort((a, b) => {
-              if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
-              else return -1;
-            })
+            if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+            else return -1;
+          })
           : state.foodFilter.sort((a, b) => {
-              if (a.name.toLowerCase() < b.name.toLowerCase()) return 1;
-              else return -1;
-            });
+            if (a.name.toLowerCase() < b.name.toLowerCase()) return 1;
+            else return -1;
+          });
       return {
         ...state,
         foodFilter: foodbyorder,
@@ -86,49 +87,20 @@ const productsSlice = (state = initialState, action) => {
       };
 
     case ORDER_BY_CATEGORY:
-      const foods_all_categories = state.foods;
-
-      const filterCategory =
-        action.payload === "all" ? null : { categories: action.payload };
-      const priceFilter = state.filters.find((obj) =>
-        obj?.hasOwnProperty("price")
-      );
 
 
-
-      if (priceFilter) {
-        const filterByCategories =
-          action.payload === "all"
-            ? foods_all_categories.filter(
-                (food) =>
-                  !food.disabled &&
-                  food.price >= priceFilter.price.minPrice &&
-                  food.price <= priceFilter.price.maxPrice
-              )
-            : foods_all_categories.filter(
-                (food) =>
-                  food.Category.name === action.payload &&
-                  !food.disabled &&
-                  food.price >= priceFilter.price.minPrice &&
-                  food.price <= priceFilter.price.maxPrice
-              );
-        return {
-          ...state,
-          foodFilter: filterByCategories,
-          filters: [filterCategory, priceFilter],
-        };
+      const categoryfilters = { category: action.payload }
+      const objToReplace = state.filters.find(item => Object.keys(item).includes(Object.keys(categoryfilters)[0]));
+      const index = state.filters.indexOf(objToReplace);
+      if (index !== -1) {
+        state.filters.splice(index, 1, categoryfilters);
+      } else {
+        state.filters.push(categoryfilters);
       }
 
-      const filterByCategories =
-        action.payload === "all"
-          ? foods_all_categories.filter((food) => !food.disabled)
-          : foods_all_categories.filter(
-              (food) => food.Category.name === action.payload && !food.disabled
-            );
       return {
         ...state,
-        foodFilter: filterByCategories,
-        filters: [filterCategory, priceFilter],
+        foodFilter: filterfoods([...state.foods], [...state.filters]),
       };
 
     case ORDER_BY_CATEGORY_ADMIN:
@@ -152,86 +124,33 @@ const productsSlice = (state = initialState, action) => {
       let recipesByScore =
         action.payload === "MenorMayor"
           ? state.foodFilter.sort((a, b) => {
-              if (a.rating > b.rating) return 1;
-              if (b.rating > a.rating) return -1;
-              return 0;
-            })
+            if (a.rating > b.rating) return 1;
+            if (b.rating > a.rating) return -1;
+            return 0;
+          })
           : state.foodFilter.sort((a, b) => {
-              if (a.rating > b.rating) return -1;
-              if (b.rating > a.rating) return 1;
-              return 0;
-            });
+            if (a.rating > b.rating) return -1;
+            if (b.rating > a.rating) return 1;
+            return 0;
+          });
       return {
         ...state,
         foodFilter: recipesByScore,
       };
 
     case RANGE_FOR_PRICE:
-      const categoryFilter = state.filters.find((obj) =>
-        obj?.hasOwnProperty("categories")
-      );
-
-      console.log(action.payload);
-
-      if (action.payload === "reset") {
-        const filterPrice = null;
-
-        if (categoryFilter) {
-          const filteredByPrice = state.foods.filter(
-            (food) => food.Category.name === categoryFilter.categories
-          );
-          return {
-            ...state,
-            foodFilter: filteredByPrice,
-            filters: [filterPrice, categoryFilter],
-          };
-        } else {
-          const filteredByPrice = state.foods;
-
-          return {
-            ...state,
-            foodFilter: filteredByPrice,
-            filters: [filterPrice],
-          };
-        }
+      const pricefilters = action.payload  === "all-prices"? {price: action.payload} : { price: `${action.payload.minPrice}-${action.payload.maxPrice}` }
+      const objToReplaceprice = state.filters.find(item => Object.keys(item).includes(Object.keys(pricefilters)[0]));
+      const indexprice = state.filters.indexOf(objToReplaceprice);
+      if (indexprice !== -1) {
+        state.filters.splice(indexprice, 1, pricefilters);
       } else {
-        const { minPrice, maxPrice } = action.payload;
-        const filterPrice = { price: { minPrice, maxPrice } };
-
-        if (categoryFilter) {
-          const filteredByPrice =
-            action.payload === "reset"
-              ? state.foods.filter(
-                  (food) =>
-                    food.price >= minPrice &&
-                    food.price <= maxPrice &&
-                    food.Category.name === categoryFilter.categories
-                )
-              : state.foods.filter(
-                  (food) =>
-                    food.price >= minPrice &&
-                    food.price <= maxPrice &&
-                    food.Category.name === categoryFilter.categories
-                );
-
-          console.log(categoryFilter.categories);
-          return {
-            ...state,
-            foodFilter: filteredByPrice,
-            filters: [filterPrice, categoryFilter],
-          };
-        } else {
-          const filteredByPrice = state.foods.filter(
-            (food) => food.price >= minPrice && food.price <= maxPrice
-          );
-
-          return {
-            ...state,
-            foodFilter: filteredByPrice,
-            filters: [filterPrice],
-          };
-        }
+        state.filters.push(pricefilters);
       }
+      return {
+        ...state,
+        foodFilter: filterfoods([...state.foods], [...state.filters]),
+      };
 
     case DELETE_FOOD:
       return {
@@ -260,13 +179,13 @@ const productsSlice = (state = initialState, action) => {
       const foodbyprice =
         action.payload === "menor"
           ? state.foodFilter.sort((a, b) => {
-              if (a.price > b.price) return 1;
-              else return -1;
-            })
+            if (a.price > b.price) return 1;
+            else return -1;
+          })
           : state.foodFilter.sort((a, b) => {
-              if (a.price < b.price) return 1;
-              else return -1;
-            });
+            if (a.price < b.price) return 1;
+            else return -1;
+          });
 
       return {
         ...state,
@@ -313,14 +232,20 @@ const productsSlice = (state = initialState, action) => {
       };
 
     case GET_DISCOUNTS:
-      const showDiscounts = state.foodFilter.filter(
-        (food) => food.discount > 0
-      );
-      console.log(showDiscounts);
+      const discountfilters = { discount: action.payload }
+      const objToReplaceDiscount = state.filters.find(item => Object.keys(item).includes(Object.keys(discountfilters)[0]));
+      const indexDiscount = state.filters.indexOf(objToReplaceDiscount);
+      if (indexDiscount !== -1) {
+        state.filters.splice(indexDiscount, 1, discountfilters);
+      } else {
+        state.filters.push(discountfilters);
+      }
       return {
         ...state,
-        discounts: showDiscounts,
+        foodFilter: filterfoods([...state.foods], [...state.filters]),
       };
+
+      
     case CLEAN_DETAIL:
       return {
         ...state,
@@ -357,7 +282,9 @@ const productsSlice = (state = initialState, action) => {
     case UPDATE_TRANSACTION_STATUS:
       return {
         ...state,
-      };
+
+      }
+
     default:
       return state;
   }

@@ -6,8 +6,8 @@ import AvatarLourdes from "../assets/AvatarLourdes.jpg";
 const nosotros = [
   {
     nombre: "Julio Trillo",
-    github: "https://github.com/",
-    linkedin: "https://www.linkedin.com",
+    github: "https://github.com/TrilloJulioFrancisco",
+    linkedin: "https://www.linkedin.com/in/julio-trillo-87707b234/",
     avatar: avatar,
   },
   {
@@ -30,7 +30,7 @@ const nosotros = [
   },
   {
     nombre: "Robert Henrry Leon Huaman",
-    github: "https://github.com/",
+    github: "https://github.com/az302001",
     linkedin: "https://www.linkedin.com",
     avatar: AvatarRobert,
   },
