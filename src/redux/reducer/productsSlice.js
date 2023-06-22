@@ -88,6 +88,7 @@ const productsSlice = (state = initialState, action) => {
 
     case ORDER_BY_CATEGORY:
 
+
       const categoryfilters = { category: action.payload }
       const objToReplace = state.filters.find(item => Object.keys(item).includes(Object.keys(categoryfilters)[0]));
       const index = state.filters.indexOf(objToReplace);
@@ -96,6 +97,7 @@ const productsSlice = (state = initialState, action) => {
       } else {
         state.filters.push(categoryfilters);
       }
+
       return {
         ...state,
         foodFilter: filterfoods([...state.foods], [...state.filters]),
@@ -258,9 +260,10 @@ const productsSlice = (state = initialState, action) => {
     case CLEAN_STATE:
       return initialState;
     case GET_USER_TRANSACTIONS:
+      const sortedTransactions = action.payload.sort((a, b) => b.id - a.id);
       return {
         ...state,
-        userTransactions: action.payload,
+        userTransactions: sortedTransactions,
       };
     case POST_REVIEW:
       return {
@@ -279,7 +282,9 @@ const productsSlice = (state = initialState, action) => {
     case UPDATE_TRANSACTION_STATUS:
       return {
         ...state,
+
       }
+
     default:
       return state;
   }

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { recuperarPasswordRequest } from '../../redux/actions/index';
+import Layaout from '@/components/Layaout/Layaout';
 
 const RecuperarPass = () => {
   const [email, setEmail] = useState('');
@@ -51,6 +52,7 @@ const RecuperarPass = () => {
   };
 
   return (
+    <Layaout>
     <div className="flex items-center justify-center min-h-screen">
       <div className="max-w-md mx-auto">
         <h2 className="text-2xl font-bold mb-4">Recuperar contraseña</h2>
@@ -77,6 +79,7 @@ const RecuperarPass = () => {
         {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
       </div>
     </div>
+    </Layaout>
   );
 };
 

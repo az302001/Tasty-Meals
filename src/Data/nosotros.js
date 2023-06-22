@@ -1,6 +1,7 @@
 import avatar from "../assets/Avatar-place-holder.jpg";
 import AvatarBruno from "../assets/bruno-santimaria-avatar.png";
 import AvatarRobert from "../assets/AvatarRobert.jpeg";
+import AvatarErick from "../assets/AvatarErick.jpeg";
 import AvatarLourdes from "../assets/AvatarLourdes.jpg";
 const nosotros = [
   {
@@ -11,8 +12,8 @@ const nosotros = [
   },
   {
     nombre: "Fernando Trillo",
-    github: "https://github.com/",
-    linkedin: "https://www.linkedin.com",
+    github: "https://github.com/FeerTT",
+    linkedin: "https://www.linkedin.com/in/fernando-trillo-573a371b3/",
     avatar: avatar,
   },
   {
@@ -35,9 +36,9 @@ const nosotros = [
   },
   {
     nombre: "Erick Ricardo Inga Calle",
-    github: "https://github.com/",
-    linkedin: "https://www.linkedin.com",
-    avatar: avatar,
+    github: "https://github.com/Erick0909sc",
+    linkedin: "https://www.linkedin.com/in/erick-ricardo-inga-calle-490352225/",
+    avatar: AvatarErick ,
   },
   {
     nombre: "Lourdes Candela Moreno",

@@ -144,11 +144,11 @@ export default function Users() {
 
   useEffect(() => {
     dispatch(getUsers());
-  }, [dispatch, users]);
+  }, [dispatch]);
+
   useEffect(() => {
     dispatch(cleanDetailOrder());
   }, [setModal]);
-  useEffect(() => { }, [users]);
 
   const handleCloseModal = () => {
     setModal(false);
@@ -174,7 +174,11 @@ export default function Users() {
             <h1 className="text-xl font-semibold text-color1 p-6 lg:text-3xl">
               LISTA DE USUARIOS
             </h1>
-            <table {...getTableProps()} className="mb-20 text-center w-11/12">
+
+            <table
+              {...getTableProps()}
+              className="mb-20 text-center  lg:w-11/12"
+            >
               <thead className="bg-color1 text-color3 h-16 text-center font-semibold text-lg">
                 {headerGroups.map((headerGroup) => {
                   return (
