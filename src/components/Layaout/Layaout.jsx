@@ -6,7 +6,7 @@ import BackgroundImage from "@/assets/background.jpg";
 
 const Layaout = ({ children }) => {
   return (
-    <div className="flex flex-col min-h-screen relative">
+    <div className="flex flex-col min-h-screen relative ">
       <div className="sticky top-0 z-10">
         <Nadvar />
       </div>
