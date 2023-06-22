@@ -14,6 +14,7 @@ export default function MercadoPagoBttn({ product, carro }) {
   const [cartItem, setCartItem] = useRecoilState(cartState);
   const userData = useSelector((state) => state.products.userData);
   const { data: session } = useSession();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const calculateTotalPrice = () => {
     let newTotal = 0;
@@ -48,9 +49,13 @@ export default function MercadoPagoBttn({ product, carro }) {
 
     localStorage.setItem("transactionID", 0)
     dispatch(createTransaction(foodsIds, costo, userId, approved)).then(() => {
-      setCartItem([])
-      router.push(url);
+      // setCartItem([])
+      setIsModalOpen(true); // Open the modal when button is clicked
+      // url?router.push(url):'cargando...'
     });
+  };
+  const closeModal = () => {
+    setIsModalOpen(false); // Close the modal
   };
   return (
     <div>
@@ -60,6 +65,18 @@ export default function MercadoPagoBttn({ product, carro }) {
       >
         Pagar
       </button>
+      {isModalOpen && (
+        <div className="modal fixed top-0 left-0 w-screen h-screen flex items-center justify-center">
+          <div className="modal-content bg-white p-6 rounded-lg shadow-lg">
+            <span  className="close absolute top-2 right-2 text-gray-400 cursor-pointer" onClick={closeModal}>
+              &times;
+            </span>
+            <a href={url} target="_blank" rel="noopener noreferrer"  className="text-xl font-bold text-blue-600">
+              Mercado Pago
+            </a>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

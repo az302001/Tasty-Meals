@@ -6,10 +6,12 @@ import { updateTransactionStatus } from "@/redux/actions";
 import { PageProtection } from "@/Hocs/sesionVerify";
 import { useRecoilState } from "recoil";
 import { transaction } from "../../../atoms/transaction";
+import { cartState } from "../../../atoms/cartState";
 
 const index = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [cartItem, setCartItem] = useRecoilState(cartState);
   // const transactionId = useSelector((state) => state.products.transactionId);
   // const [transactionId,setransactionId]= useRecoilState(transaction);
   // const { status } = router.query;
@@ -25,7 +27,7 @@ const index = () => {
    
     if (status === "approved") {
       dispatch(updateTransactionStatus(parseInt(transactionId))).then (localStorage.setItem("transactionID",0));
-     
+     setCartItem([]);
     } 
   }, []);
 
