@@ -16,19 +16,26 @@ const index = () => {
   // const [transactionId,setransactionId]= useRecoilState(transaction);
   // const { status } = router.query;
 
-  const urlParams= new URLSearchParams(window.location.search)
-  const status = urlParams.get('status');
+  const urlParams = new URLSearchParams(window.location.search);
+  const status = urlParams.get("status");
 
-  const transactionId= localStorage.getItem('transactionID')
- 
+  const transactionId = localStorage.getItem("transactionID");
+
   useEffect(() => {
     // const urlParams= new URLSearchParams(window.location.search)
     // var status = urlParams.get('status');
-   
+
     if (status === "approved") {
+
       dispatch(updateTransactionStatus(parseInt(transactionId))).then (localStorage.setItem("transactionID",0));
      setCartItem([]);
     } 
+
+//       dispatch(updateTransactionStatus(parseInt(transactionId))).then(
+//         localStorage.setItem("transactionID", 0)
+//       );
+//     }
+
   }, []);
 
   return (
@@ -36,21 +43,30 @@ const index = () => {
       <br></br>
       <br></br>
       <div className="text-center">
-        <h1 className="text-blue-500 text-4xl font-bold mb-4">
-          {status === "approved"
-            ? "¡Tu pago se realizó con éxito!"
-            : "Parece que hubo un error al procesar el pago."}
-        </h1>
-        <p className="text-green-500 text-lg mb-8">{status === "approved"
-            ? "En breve te llegará un correo con los detalles del envío."
-            : "Por favor, intenta nuevamente."}</p>
-        <button
-          className="bg-blue-500 text-white font-semibold py-2 px-4 rounded"
-          onClick={() => (window.location.href = "/home")}
-        >
-          Ir a la página de inicio
-        </button>
-      </div>
+  <h1
+    className="text-4xl font-bold mb-4"
+    style={{ color: status === "approved" ? "#0000FF" : "#FF0000" }}
+  >
+    {status === "approved"
+      ? "¡Tu pago se realizó con éxito!"
+      : "¡Parece que hubo un error al procesar el pago!"}
+  </h1>
+  <p
+    className="text-lg mb-8"
+    style={{ color: status === "approved" ? "#008000" : "#FF0000" }}
+  >
+    {status === "approved"
+      ? "En breve te llegará un correo con los detalles del envío."
+      : "Por favor, intenta nuevamente."}
+  </p>
+  <button
+    className="bg-blue-500 text-white font-semibold py-2 px-4 rounded"
+    onClick={() => (window.location.href = "/home")}
+  >
+    Ir a la página de inicio
+  </button>
+</div>
+
       <br></br>
       <br></br>{" "}
       {/*agregué saltos de linea solo para que no se renderice tan arriba el footer. */}
