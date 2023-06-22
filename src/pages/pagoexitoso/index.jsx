@@ -18,11 +18,11 @@ const index = () => {
   const status = urlParams.get('status');
 
   const transactionId= localStorage.getItem('transactionID')
-  console.log( "transaction pago exitoso", transactionId);
+ 
   useEffect(() => {
     // const urlParams= new URLSearchParams(window.location.search)
     // var status = urlParams.get('status');
-    console.log("status en pago exitoso",status)
+   
     if (status === "approved") {
       dispatch(updateTransactionStatus(parseInt(transactionId))).then (localStorage.setItem("transactionID",0));
      

@@ -94,16 +94,6 @@ const productsSlice = (state = initialState, action) => {
         obj?.hasOwnProperty("price")
       );
 
-      console.log(filterCategory);
-      console.log(priceFilter);
-
-      // const updatedFilters = state.filters.filter((filter) => {
-      //   // Comprobamos si el objeto filter no contiene la clave que queremos eliminar
-      //   if (!filter.hasOwnProperty("categories")) {
-      //     return true; // Mantenemos el objeto en el nuevo array
-      //   }
-      //   return false; // Excluimos el objeto del nuevo array
-      // });
 
       if (priceFilter) {
         const filterByCategories =
@@ -242,34 +232,6 @@ const productsSlice = (state = initialState, action) => {
           };
         }
       }
-
-    // guiar de la linea 85 y 179
-
-    // console.log(categoryFilter)
-    // const filterPrice = action.payload === "reset" ? null : { price: { minPrice, maxPrice } };
-
-    // if (categoryFilter) {
-    //   const filteredByPrice =
-    //     action.payload === "reset" ?
-    //       state.foods.filter(
-    //         (food) =>
-    //           food.price >= minPrice &&
-    //           food.price <= maxPrice &&
-    //           food.Category.name === categoryFilter.categories
-    //       ) : state.foods.filter(
-    //         (food) =>
-    //           food.price >= minPrice &&
-    //           food.price <= maxPrice &&
-    //           food.Category.name === categoryFilter.categories
-    //       );
-
-    //   console.log(categoryFilter.categories);
-    //   return {
-    //     ...state,
-    //     foodFilter: filteredByPrice,
-    //     filters: [filterPrice, categoryFilter],
-    //   };
-    // }
 
     case DELETE_FOOD:
       return {
