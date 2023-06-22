@@ -95,19 +95,20 @@ const productsSlice = (state = initialState, action) => {
       );
 
 
+
       if (priceFilter) {
         const filterByCategories =
           action.payload === "all"
             ? foods_all_categories.filter(
                 (food) =>
-                  food.disabled === false &&
+                  !food.disabled &&
                   food.price >= priceFilter.price.minPrice &&
                   food.price <= priceFilter.price.maxPrice
               )
             : foods_all_categories.filter(
                 (food) =>
                   food.Category.name === action.payload &&
-                  food.disabled === false &&
+                  !food.disabled &&
                   food.price >= priceFilter.price.minPrice &&
                   food.price <= priceFilter.price.maxPrice
               );
@@ -120,10 +121,9 @@ const productsSlice = (state = initialState, action) => {
 
       const filterByCategories =
         action.payload === "all"
-          ? foods_all_categories
+          ? foods_all_categories.filter((food) => !food.disabled)
           : foods_all_categories.filter(
-              (food) =>
-                food.Category.name === action.payload && food.disabled === false
+              (food) => food.Category.name === action.payload && !food.disabled
             );
       return {
         ...state,
@@ -335,9 +335,10 @@ const productsSlice = (state = initialState, action) => {
     case CLEAN_STATE:
       return initialState;
     case GET_USER_TRANSACTIONS:
+      const sortedTransactions = action.payload.sort((a, b) => b.id - a.id);
       return {
         ...state,
-        userTransactions: action.payload,
+        userTransactions: sortedTransactions,
       };
     case POST_REVIEW:
       return {
@@ -353,10 +354,10 @@ const productsSlice = (state = initialState, action) => {
         ...state,
         transactionId: action.payload,
       };
-      case UPDATE_TRANSACTION_STATUS:
-        return{
-          ...state,
-        }
+    case UPDATE_TRANSACTION_STATUS:
+      return {
+        ...state,
+      };
     default:
       return state;
   }
