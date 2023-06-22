@@ -16,6 +16,7 @@ const index = () => {
   const transactionId= localStorage.getItem('transactionID')
   console.log( "transaction pago exitoso", transactionId);
   useEffect(() => {
+    console.log("status en pago exitoso",status)
     if (status === "approved") {
       dispatch(updateTransactionStatus(parseInt(transactionId))).then (localStorage.setItem("transactionID",0));
      
