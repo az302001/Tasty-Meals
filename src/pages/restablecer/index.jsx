@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { actualizarPassword } from '@/redux/actions';
+import Layaout from '@/components/Layaout/Layaout';
 
 const RestablecerContraseña = () => {
   const router = useRouter();
@@ -45,7 +46,8 @@ const RestablecerContraseña = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <Layaout>
+    <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="max-w-md w-full mx-auto">
         <h2 className="text-2xl font-semibold text-center mb-4">Restablecer Contraseña</h2>
         <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -87,6 +89,7 @@ const RestablecerContraseña = () => {
         </form>
       </div>
     </div>
+    </Layaout>
   );
 };
 

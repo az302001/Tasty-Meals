@@ -1,4 +1,5 @@
 import prisma from "@/prisma/prisma";
+import enviarEmailCompra from "../Correos/mailPago";
 
 function validateTransactionData(foodsIds, costo, userId, approved) {
   if (!foodsIds || !costo || !userId || approved === undefined) {
@@ -72,17 +73,37 @@ export default async function handler(req, res) {
             approved: true,
           },
         });
+        
+        const transactionCorreo = await prisma.transaction.findFirst({
+          where: {
+            id: parseInt(id),
+          },
+          include: {
+            user: true,
+            food: true,
+          },
+        });
+        
+        if (transactionCorreo) {
+          const { food, cost, user } = transactionCorreo;
+          const email = user.email;
+          const foodNames = food.map((item) => item.name).join(', ');
+          console.log(enviarEmailCompra, "ENVIAREMAILCOMPRA")
+          await enviarEmailCompra(foodNames, cost, email);
+        }
         res
           .status(200)
           .json({ mensaje: "Estado de transacción actualizado correctamente" });
-
           
       } catch (error) {
         res
           .status(500)
           .json({ error: "Error al actualizar el estado de la transacción" });
       }
+      
+      
       break;
+
     default:
       res.status(405).json({ error: "Método no permitido" });
       break;
