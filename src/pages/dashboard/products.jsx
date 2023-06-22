@@ -5,7 +5,6 @@ import Link from "next/link";
 import Layaout from "@/components/Layaout/Layaout";
 import FilterByCategory from "@/components/Filtros/filterByCategory";
 import ReactSearchInput from "react-search-input";
-import AboutUs from "@/pages/about";
 import axios from "axios";
 
 import {
@@ -54,7 +53,7 @@ export default function Products() {
         ? Object.keys(foods[0]).filter((key) => !columnsToExclude.includes(key))
         : [];
     setColumns(filteredColumns);
-  }, [foods]);
+  }, [foods, valueFilter]);
 
   useEffect(() => {
     const alimentosFiltrados = foods.sort((a, b) => a.id - b.id);
@@ -71,9 +70,10 @@ export default function Products() {
 
   const [columns, setColumns] = useState([]);
   const [alimentosPaginados, setAlimentosPaginados] = useState([]);
-
+  const [valueFilter, setValueFilter] = useState();
   const handleChange = (e) => {
     const { value } = e.target;
+    setValueFilter(value);
     dispatch(orderByCategoryAdmin(value));
   };
 
@@ -204,15 +204,30 @@ export default function Products() {
                                                 `El plato ${food.name} ha sido habilitado`,
                                                 "success"
                                               );
-                                              dispatch(getFoods());
                                             } else {
                                               Swal.fire(
                                                 "Estado actualizado",
                                                 `El plato ${food.name} ha sido deshabilitado`,
                                                 "success"
                                               );
-                                              dispatch(getFoods());
                                             }
+                                            dispatch(getFoods())
+                                              .then(() => {
+                                                if (valueFilter) {
+                                                  dispatch(
+                                                    orderByCategoryAdmin(
+                                                      valueFilter
+                                                    )
+                                                  );
+                                                }
+                                              })
+                                              .catch((error) => {
+                                                Swal.fire(
+                                                  "Error",
+                                                  "No se pudo cambiar el estado del elemento",
+                                                  "error"
+                                                );
+                                              });
                                           })
                                           .catch((error) => {
                                             Swal.fire(
@@ -228,7 +243,7 @@ export default function Products() {
                                   {food.disabled ? (
                                     <EyeIcon className="h-6 w-6 text-green-500 text-center" />
                                   ) : (
-                                    <EyeSlashIcon class="h-6 w-6 text-red-900" />
+                                    <EyeSlashIcon className="h-6 w-6 text-red-900" />
                                   )}
                                 </a>
                               </div>

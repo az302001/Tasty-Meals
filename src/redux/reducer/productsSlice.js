@@ -373,9 +373,10 @@ const productsSlice = (state = initialState, action) => {
     case CLEAN_STATE:
       return initialState;
     case GET_USER_TRANSACTIONS:
+      const sortedTransactions = action.payload.sort((a, b) => b.id - a.id);
       return {
         ...state,
-        userTransactions: action.payload,
+        userTransactions: sortedTransactions,
       };
     case POST_REVIEW:
       return {
@@ -391,10 +392,10 @@ const productsSlice = (state = initialState, action) => {
         ...state,
         transactionId: action.payload,
       };
-      case UPDATE_TRANSACTION_STATUS:
-        return{
-          ...state,
-        }
+    case UPDATE_TRANSACTION_STATUS:
+      return {
+        ...state,
+      };
     default:
       return state;
   }
