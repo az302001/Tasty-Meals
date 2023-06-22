@@ -66,6 +66,7 @@ const Menu = () => {
     const selectedOrder = e.target.value;
     setOrder(selectedOrder);
     dispatch(orderByName(selectedOrder));
+    setPaginaActual(1);
   };
 
   const handleFilterCategories = (e) => {
@@ -79,6 +80,7 @@ const Menu = () => {
     const selectRating = e.target.value;
     setOrder(selectRating);
     dispatch(orderByRating(selectRating));
+    setPaginaActual(1);
   };
 
   const toggleFilter = () => {
@@ -105,6 +107,7 @@ const Menu = () => {
     const selectPrice = e.target.value;
     setOrder(selectPrice);
     dispatch(orderByPrice(selectPrice));
+    setPaginaActual(1);
   };
 
 

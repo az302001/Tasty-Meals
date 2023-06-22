@@ -11,8 +11,8 @@ const nosotros = [
   },
   {
     nombre: "Fernando Trillo",
-    github: "https://github.com/",
-    linkedin: "https://www.linkedin.com",
+    github: "https://github.com/FeerTT",
+    linkedin: "https://www.linkedin.com/in/fernando-trillo-573a371b3/",
     avatar: avatar,
   },
   {
