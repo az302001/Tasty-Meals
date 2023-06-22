@@ -10,7 +10,7 @@ import { getDiscounts, getFoods, orderByCategory, orderByName, orderByPrice, ord
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 // import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
 
 
 const Menu = () => {
@@ -90,11 +90,11 @@ const Menu = () => {
 
   const handleFilterPrice = () => {
     if (minPrice < 0) {
-      alert("El rango mínimo de precio no puede ser menor que 0.");
+      toast.error("El rango mínimo de precio no puede ser menor que 0.");
       setMinPrice(0);
       return;
     } else if (minPrice >= maxPrice) {
-      alert(
+      toast.error(
         "El rango mínimo de precio no puede ser mayor o igual que el rango máximo ."
       );
 

@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps, session }) {
         <SessionProvider session={session}>
           <RecoilRoot>
             <ToastContainer
-              position="top-right"
+              position="top-center"
               autoClose={3000}
               hideProgressBar={false}
               newestOnTop={false}

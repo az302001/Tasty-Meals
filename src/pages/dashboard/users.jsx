@@ -138,6 +138,11 @@ export default function Users() {
   const indexOfLastUser = (currentUserPage + 1) * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
 
+  const selectedOrdersPage = selectedOrder?.slice(
+    indexOfFirstOrder,
+    indexOfLastOrder
+  );
+
   const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data: currentUsers });
@@ -216,7 +221,7 @@ export default function Users() {
           </section>
           {modal ? (
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70">
-              <div className="bg-white p-4 rounded-lg w-screen lg:w-4/6 relative">
+              <div className="bg-white p-4 rounded-lg w-screen lg:w-4/6 top-10 relative">
                 <button
                   className="absolute top-2 right-2 text-gray-500"
                   onClick={handleCloseModal}
@@ -321,7 +326,7 @@ export default function Users() {
           )}
           {showDetailsModal && selectedOrder && (
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70">
-              <div className="bg-white p-8 rounded-lg w-full lg:w-4/6 relative">
+              <div className="bg-white p-8 rounded-lg w-full lg:w-4/6 top-10 relative">
                 <button
                   className="absolute top-2 right-2 text-gray-500"
                   onClick={handleCloseDetailsModal}
@@ -333,20 +338,19 @@ export default function Users() {
                   DETALLES DE LA ORDEN {orderId}
                 </h2>
 
-                <table className="w-full rounded-lg border-color1text-center items-center content-center justify-center">
+                <table className="w-full rounded-lg border-color1 text-center items-center content-center justify-center">
                   <thead>
                     <tr className="bg-white h-10 lg:h-20 text-center even:bg-gray-200 rounded-lg shadow-md mb-2 border-color1 font-semibold text-color1 border-solid border-2">
                       <th className="bg-color1 text-color3 h-16 text-center font-semibold text-lg">
                         Nombre plato
                       </th>
-
                       <th className="bg-color1 text-color3 h-16 text-center font-semibold text-lg">
                         Precio unidad
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {selectedOrder.map((food, index) => {
+                    {selectedOrdersPage.map((food, index) => {
                       if (
                         selectedOrder.findIndex(
                           (item) => item.id === food.id
@@ -358,16 +362,39 @@ export default function Users() {
                             className="bg-white h-10 lg:h-20 text-center even:bg-gray-200 rounded-lg shadow-md mb-2 border-color1 font-semibold text-color1 border-solid border-2"
                           >
                             <td>{food.name}</td>
-
                             <td>${food.price}</td>
                           </tr>
                         );
                       }
-
                       return null;
                     })}
                   </tbody>
                 </table>
+
+                <div className="flex text-center justify-center items-center mt-4">
+                  <ReactPaginate
+                    previousLabel={
+                      <ArrowSmallLeftIcon className="text-center h-8 w-8 text-gray-500" />
+                    }
+                    nextLabel={
+                      <ArrowSmallRightIcon className="h-8 w-8 text-gray-500 " />
+                    }
+                    breakLabel={"..."}
+                    pageCount={Math.ceil(selectedOrder.length / ordersPerPage)}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={({ selected }) => setCurrentPage(selected)}
+                    containerClassName="flex"
+                    subContainerClassName="pages pagination flex items-center space-x-2"
+                    activeClassName="active text-color1 bg-color3"
+                    previousClassName="border bg-color3 border-gray-300 rounded-md px-3 py-1 hover:bg-gray-100"
+                    nextClassName="border bg-color3 border-gray-300 rounded-md px-3 py-1 hover:bg-gray-100"
+                    disabledClassName="text-gray-300 cursor-not-allowed"
+                    pageClassName="border bg-color1 border-gray-300 rounded-md px-3 py-1 hover:bg-color3 group cursor-pointer hover:text-color1"
+                    pageLinkClassName="text-color3 font-semibold group-hover:text-color1"
+                    activeLinkClassName="text-current"
+                  />
+                </div>
               </div>
             </div>
           )}

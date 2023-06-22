@@ -89,27 +89,23 @@ const index = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setIsLoading(true); // Establecer isLoading en true al iniciar la carga
-
     const fetchData = async () => {
       try {
-        // Obtener los detalles de la comida por el id
         dispatch(getFoodById(id));
         dispatch(getFoodComments(id));
-
-
-        setIsLoading(false); // Marcar que los datos se han cargado correctamente
+        // Simulate loading delay for 2,5 seconds
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        setIsLoading(false);
       } catch (error) {
-        // Manejo de errores al obtener los detalles de la comida o los comentarios
-        setIsLoading(false); // Marcar que los datos se han cargado correctamente incluso en caso de error
+        setIsLoading(false);
         console.error(error);
       }
     };
 
     if (id) {
-      fetchData(); // Llamar a la función fetchData para obtener los datos
+      fetchData();
     } else {
-      setIsLoading(false); // Marcar que los datos se han cargado correctamente si no hay id
+      setIsLoading(false);
     }
   }, [dispatch, id]);
 
@@ -118,11 +114,11 @@ const index = () => {
       dispatch(cleanDetail());
       dispatch(cleanState());
 
-      setIsLoading(true); // Establecer isLoading en true antes de iniciar la carga siguiente
+      setIsLoading(true);
 
       setTimeout(() => {
-        setIsLoading(false); // Establecer isLoading en falso después de 3 segundos
-      }, 3000); // Retraso de 3 segundos (3000 milisegundos)
+        setIsLoading(false);
+      }, 2500);
     };
   }, [dispatch]);
   return (
