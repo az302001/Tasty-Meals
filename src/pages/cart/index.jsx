@@ -70,7 +70,7 @@ const Cart = () => {
       } else {
         local = false;
       }
-      if (!google || !local) {
+      if (!google && !local) {
         setShowMessage(true); 
         setTimeout(() => {
           router.replace("/menu"); 
@@ -131,7 +131,7 @@ const Cart = () => {
                 <MercadoPagoBttn
                   product={{
                     name: "Compra en TastyMeals",
-                    price: calculateTotalPrice(),
+                    price: total,
                   }}
                   carro = {cartItem}
                 />

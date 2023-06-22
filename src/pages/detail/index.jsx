@@ -144,7 +144,7 @@ const index = () => {
           </h2>
 
           <div className="w-full max-w-2xl mx-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <img src={detailFoods.image} alt={detailFoods.name} />
+            <img className="w-full" src={detailFoods.image} alt={detailFoods.name} />
             <div className="px-5 pb-5">
               <h5 className="text-xl font-semibold tracking-tight text-color1 pt-2  dark:text-white">
                 {detailFoods.description}
