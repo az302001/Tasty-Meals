@@ -13,7 +13,7 @@ const GoogleLogin = () => {
     if (status === "authenticated") {
       // Usuario autenticado
 
-      console.log("Usuario autenticado:", session.user.name);
+      
       if (session.user.role === "admin") {
 
 
@@ -24,7 +24,7 @@ const GoogleLogin = () => {
       }
     } else if (status === "unauthenticated") {
       // Usuario cerró sesión
-      console.log("Usuario cerró sesión");
+     
     }
   }, [status, session, router]);
 

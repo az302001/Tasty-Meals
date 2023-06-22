@@ -1,4 +1,6 @@
 import axios from "axios";
+import { transaction } from "../../../atoms/transaction";
+import { useRecoilState } from "recoil";
 
 export const RANGE_FOR_PRICE = "RANGE_FOR_PRICE";
 export const GET_FOODS = "GET_FOODS";
@@ -259,12 +261,40 @@ export const createTransaction = (foodsIds, costo, userId, approved) => {
     });
 
     const { id } = response.data;
+    localStorage.setItem("transactionID", id );
+    console.log( "response data", response.data)
+    console.log( "esto es el id",id)
     return dispatch({
       type: CREATE_TRANSACTION,
       payload: id,
     });
   };
 };
+
+// export const createTransaction = (foodsIds, costo, userId, approved) => {
+//   const [transactionId, settransactionId]= useRecoilState(transaction)
+//   return async () => {
+//     const response = await axios.post(`/api/Products/addTransaction`, {
+//       foodsIds,
+//       costo,
+//       userId,
+//       approved,
+//     });
+
+//     const { id } = response.data;
+//     settransactionId(id)
+//     // return dispatch({
+//     //   type: CREATE_TRANSACTION,
+//     // });
+//   };
+// };
+
+
+
+
+
+
+
 export const cleanState = () => {
   return {
     type: CLEAN_STATE,

@@ -14,8 +14,8 @@ function MyApp({ Component, pageProps, session }) {
         <SessionProvider session={session}>
           <RecoilRoot>
             <ToastContainer
-              position="bottom-center"
-              autoClose={1200}
+              position="top-right"
+              autoClose={3000}
               hideProgressBar={false}
               newestOnTop={false}
               closeOnClick
@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps, session }) {
               pauseOnFocusLoss
               draggable
               pauseOnHover
-              theme="light"
+              theme="colored"
             />
             <Head>
               <meta charSet="UTF-8" />
