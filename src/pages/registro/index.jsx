@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Layaout from "@/components/Layaout/Layaout";
 import { useRouter } from "next/router";
-import { ToastContainer, toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
 import { FaRegEyeSlash, FaEye } from "react-icons/fa";
@@ -18,7 +18,6 @@ const RegisterForm = () => {
   const [fieldBlur, setFieldBlur] = useState(false);
   const [fieldClicked, setFieldClicked] = useState(false);
   const router = useRouter();
-  const Swal = require("sweetalert2");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState("");
@@ -49,9 +48,9 @@ const RegisterForm = () => {
       toast.error("El nombre solo debe contener letras y espacios");
       return;
     }
-    if (passwordStrength === "Débil") {
+    if (evaluatePasswordStrength(password)  === "Débil") {
       toast.error(
-        "La contraseña es débil. Por favor, elige una contraseña más segura."
+        "La contraseña es débil. Por favor, elige una contraseña más segura. Incluya números y mayúscula"
       );
       return;
     }
@@ -126,12 +125,163 @@ const RegisterForm = () => {
 
   return (
     <Layaout>
-      <div>
+      <div className="container mx-auto py-8">
+        <h1 className="text-2xl font-bold mb-6 text-center">
+          Formulario de Registro
+        </h1>
+        {success ? (
+          <Loader />
+        ) : (
+          <form
+            onSubmit={handleSubmit}
+            className="w-full max-w-xl mx-auto bg-white p-8 rounded-md shadow-md"
+          >
+            {error && <p className="text-red-500 mb-4">{error}</p>}
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                Nombre (*)
+                <span className="float-right text-sm text-gray-500">
+                  (*) Campos obligatorios
+                </span>
+              </label>
+              <input
+                className={`w-full px-3 py-2 border ${
+                  fieldBlur && !name && "border-red-500"
+                } rounded-md focus:outline-none focus:border-indigo-500`}
+                type="text"
+                id="name"
+                name="name"
+                title="Por favor, ingrese solo letras y espacios."
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                onBlur={handleBlur}
+                onClick={handleClick}
+                placeholder="Ingrese su Nombre"
+              />
+              {fieldBlur && !name && (
+                <p className="text-red-500 text-sm mt-1">
+                  Por favor, ingrese su nombre.
+                </p>
+              )}
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                for="email"
+              >
+                Correo Electronico (*)
+              </label>
+              <input
+                className={`w-full px-3 py-2 border ${
+                  fieldBlur && !email && "border-red-500"
+                } rounded-md focus:outline-none focus:border-indigo-500`}
+                id="email"
+                name="email"
+                placeholder="Ejemplo@ejemplo.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              {fieldBlur && !email && (
+                <p className="text-red-500 text-sm mt-1">
+                  Por favor, ingrese su correo electrónico.
+                </p>
+              )}
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                for="password"
+              >
+                Contraseña (*)
+              </label>
+              <div className="relative">
+                <input
+                  className={`w-full px-3 py-2 border ${
+                    fieldBlur && !password && "border-red-500"
+                  } rounded-md focus:outline-none focus:border-indigo-500`}
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  name="password"
+                  placeholder="********"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    evaluatePasswordStrength(e.target.value);
+                  }}
+                />
+                <button
+                  type="button"
+                  className="absolute right-2 top-5 transform -translate-y-1/2"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <FaEye /> : <FaRegEyeSlash />}
+                </button>
+                {password && (
+                  <p className="text-sm mt-1">
+                    Nivel de seguridad:{" "}
+                    <span
+                      className={passwordColorClass(
+                        evaluatePasswordStrength(password)
+                      )}
+                    >
+                      {evaluatePasswordStrength(password)}
+                    </span>
+                  </p>
+                )}
+              </div>
+              {fieldBlur && !password && (
+                <p className="text-red-500 text-sm mt-1">
+                  Por favor, ingrese su contraseña. Incluya números, letras y
+                  mayúsculas
+                </p>
+              )}
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                for="confirm-password"
+              >
+                Confirmar Contraseña (*)
+              </label>
+              <div className="relative">
+                <input
+                  className={`w-full px-3 py-2 border ${
+                    fieldBlur && !confirmPassword && "border-red-500"
+                  } rounded-md focus:outline-none focus:border-indigo-500`}
+                  type={showConfirmPassword ? "text" : "password"}
+                  id="confirm-password"
+                  name="confirm-password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="********"
+                />
+                <button
+                  type="button"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? <FaEye /> : <FaRegEyeSlash />}
+                </button>
+              </div>
+              {fieldBlur && !confirmPassword && (
+                <p className="text-red-500 text-sm mt-1">
+                  Por favor, confirme su contraseña.
+                </p>
+              )}
+            </div>
+            <button
+              className="w-full bg-indigo-500 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300"
+              type="submit"
+            >
+              Registrar
+            </button>
+          </form>
+        )}
         <ToastContainer
-          position="top-right"
-          autoClose={5000}
+          position="top-center"
+          autoClose={3000}
           hideProgressBar={false}
-          newestOnTop={true}
+          newestOnTop={false}
           closeOnClick
           rtl={false}
           pauseOnFocusLoss
@@ -139,158 +289,6 @@ const RegisterForm = () => {
           pauseOnHover
           theme="colored"
         />
-        {success ? (
-          <Loader />
-        ) : (
-          <div className="container mx-auto py-8">
-            <h1 className="text-2xl font-bold mb-6 text-center">
-              Formulario de Registro
-            </h1>
-            <form
-              onSubmit={handleSubmit}
-              className="w-full max-w-xl mx-auto bg-white p-8 rounded-md shadow-md"
-            >
-              {error && <p className="text-red-500 mb-4">{error}</p>}
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Nombre (*)
-                  <span className="float-right text-sm text-gray-500">
-                    (*) Campos obligatorios
-                  </span>
-                </label>
-                <input
-                  className={`w-full px-3 py-2 border ${
-                    fieldBlur && !name && "border-red-500"
-                  } rounded-md focus:outline-none focus:border-indigo-500`}
-                  type="text"
-                  id="name"
-                  name="name"
-                  title="Por favor, ingrese solo letras y espacios."
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  onBlur={handleBlur}
-                  onClick={handleClick}
-                  placeholder="Ingrese su Nombre"
-                />
-                {fieldBlur && !name && (
-                  <p className="text-red-500 text-sm mt-1">
-                    Por favor, ingrese su nombre.
-                  </p>
-                )}
-              </div>
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  for="email"
-                >
-                  Correo Electronico (*)
-                </label>
-                <input
-                  className={`w-full px-3 py-2 border ${
-                    fieldBlur && !email && "border-red-500"
-                  } rounded-md focus:outline-none focus:border-indigo-500`}
-                  id="email"
-                  name="email"
-                  placeholder="Ejemplo@ejemplo.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                {fieldBlur && !email && (
-                  <p className="text-red-500 text-sm mt-1">
-                    Por favor, ingrese su correo electrónico.
-                  </p>
-                )}
-              </div>
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  for="password"
-                >
-                  Contraseña (*)
-                </label>
-                <div className="relative">
-                  <input
-                    className={`w-full px-3 py-2 border ${
-                      fieldBlur && !password && "border-red-500"
-                    } rounded-md focus:outline-none focus:border-indigo-500`}
-                    type={showPassword ? "text" : "password"}
-                    id="password"
-                    name="password"
-                    placeholder="********"
-                    value={password}
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                      evaluatePasswordStrength(e.target.value);
-                    }}
-                  />
-                  <button
-                    type="button"
-                    className="absolute right-2 top-5 transform -translate-y-1/2"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? <FaEye /> : <FaRegEyeSlash />}
-                  </button>
-                  {password && (
-                    <p className="text-sm mt-1">
-                      Nivel de seguridad:{" "}
-                      <span
-                        className={passwordColorClass(
-                          evaluatePasswordStrength(password)
-                        )}
-                      >
-                        {evaluatePasswordStrength(password)}
-                      </span>
-                    </p>
-                  )}
-                </div>
-                {fieldBlur && !password && (
-                  <p className="text-red-500 text-sm mt-1">
-                    Por favor, ingrese su contraseña.
-                  </p>
-                )}
-              </div>
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  for="confirm-password"
-                >
-                  Confirmar Contraseña (*)
-                </label>
-                <div className="relative">
-                  <input
-                    className={`w-full px-3 py-2 border ${
-                      fieldBlur && !confirmPassword && "border-red-500"
-                    } rounded-md focus:outline-none focus:border-indigo-500`}
-                    type={showConfirmPassword ? "text" : "password"}
-                    id="confirm-password"
-                    name="confirm-password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="********"
-                  />
-                  <button
-                    type="button"
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  >
-                    {showConfirmPassword ? <FaEye /> : <FaRegEyeSlash />}
-                  </button>
-                </div>
-                {fieldBlur && !confirmPassword && (
-                  <p className="text-red-500 text-sm mt-1">
-                    Por favor, confirme su contraseña.
-                  </p>
-                )}
-              </div>
-              <button
-                className="w-full bg-indigo-500 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300"
-                type="submit"
-              >
-                Registrar
-              </button>
-            </form>
-          </div>
-        )}
       </div>
     </Layaout>
   );

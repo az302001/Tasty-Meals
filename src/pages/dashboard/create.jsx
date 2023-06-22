@@ -64,7 +64,7 @@ export default function create() {
         setErrors({ ...errors, [name]: "" });
       }
     } else if (name === "price") {
-      const parsedValue = parseInt(value);
+      const parsedValue = parseFloat(value);
       setFormData({ ...formData, [name]: parsedValue });
 
       if (parsedValue) {

@@ -10,6 +10,7 @@ import { getDiscounts, getFoods, orderByCategory, orderByName, orderByPrice, ord
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 // import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import Swal from 'sweetalert2';
 
 
 const Menu = () => {
@@ -44,7 +45,7 @@ const Menu = () => {
   const [order, setOrder] = useState('');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
-  const [initialreset, setReset] = useState("reset");
+  const [initialreset, setReset] = useState("all-prices");
   const [showFilter, setShowFilter] = useState(false);
 
 
@@ -66,6 +67,7 @@ const Menu = () => {
     const selectedOrder = e.target.value;
     setOrder(selectedOrder);
     dispatch(orderByName(selectedOrder));
+    setPaginaActual(1);
   };
 
   const handleFilterCategories = (e) => {
@@ -79,6 +81,7 @@ const Menu = () => {
     const selectRating = e.target.value;
     setOrder(selectRating);
     dispatch(orderByRating(selectRating));
+    setPaginaActual(1);
   };
 
   const toggleFilter = () => {
@@ -105,23 +108,33 @@ const Menu = () => {
     const selectPrice = e.target.value;
     setOrder(selectPrice);
     dispatch(orderByPrice(selectPrice));
+    setPaginaActual(1);
   };
 
 
   const handleResetFilter = () => {
     setMinPrice(initialreset);
     setMaxPrice(initialreset);
-    dispatch(rangeForPrice("reset"))
+    dispatch(rangeForPrice("all-prices"))
   };
 
 
-  const handleDiscount = (e) => {
-    const discount = e.target.checked;
-    if (discount) {
-      const productsWithDiscount = foodFilter.filter((food) => food.discount > 0);
-      dispatch(getDiscounts(productsWithDiscount));
+  // const handleDiscount = (e) => {
+  //   const discount = e.target.checked;
+  //   if (discount) {
+  //     const productsWithDiscount = foodFilter.filter((food) => food.discount > 0);
+  //     dispatch(getDiscounts(productsWithDiscount));
+  //   } else {
+  //     dispatch(getFoods());
+  //   }
+  // };
+
+  const handleFilterDiscount = (e) => {
+    const discount = e.target.value;
+    if (discount == "true") {
+      dispatch(getDiscounts(discount));
     } else {
-      dispatch(getFoods());
+      dispatch(getDiscounts("all-discounts"));
     }
   };
 
@@ -152,7 +165,7 @@ const Menu = () => {
                 value={selectedCategory}
                 className="bg-color3 w-52 "
               >
-                <option value="all">
+                <option value="all-categories">
                   Todas las categorias
                 </option>
                 {uniqueCategories.map((category) => (
@@ -170,7 +183,7 @@ const Menu = () => {
                 className="bg-color3 w-52"
               >
                 <option hidden value="DEFAULT">
-                 Orden Alfabeticamente
+                  Orden Alfabeticamente
                 </option>
                 <option value="atoz">A hasta la Z</option>
                 <option value="ztoa">Z hasta la A</option>
@@ -185,7 +198,7 @@ const Menu = () => {
                 className="bg-color3 w-52"
               >
                 <option hidden value="DEFAULT">
-                 Orden por Puntuacion
+                  Orden por Puntuacion
                 </option>
                 <option value="MenorMayor">Puntuacion Min a Max</option>
                 <option value="MayorMenor">Puntuacion Max a Min</option>
@@ -200,7 +213,7 @@ const Menu = () => {
                 className="bg-color3 w-52"
               >
                 <option hidden value="DEFAULT">
-                 Ordenar por Precio
+                  Ordenar por Precio
                 </option>
                 <option value="menor">De Menor precio</option>
                 <option value="mayor">De Mayor precio</option>
@@ -239,19 +252,21 @@ const Menu = () => {
                     }}
                   />
                   <button onClick={handleResetFilter} type='button' className='text-center lg:w-[28%] border-2 border-solid border-color1' >Resetear</button>
-                  <button onClick={handleFilterPrice} type='button'  className=' lg:w-[20%] border-2 border-solid border-color1 ml-[1%]'>Filtrar</button>
+                  <button onClick={handleFilterPrice} type='button' className=' lg:w-[20%] border-2 border-solid border-color1 ml-[1%]'>Filtrar</button>
                 </div>
               )}
             </div>
 
             <div className="mt-2 border-2 border-solid rounded-md p-0.5 pl-2 border-color1 text-lg bg-color3 gap-1 flex">
-              <input type="checkbox" className="bg-color3" id="discount" onChange={handleDiscount} />
-              <label htmlFor="discount">Descuentos</label>
+              <select onChange={handleFilterDiscount} className="bg-color3 w-21">
+                <option value="false">Todos</option>
+                <option value="true">Con Descuento</option>
+              </select>
             </div>
 
           </div>
           {alimentosPaginados.length === 0 && (
-            <p>No tenemos productos con ese rango de precio.</p>
+           <p>No se encontraron coincidencias .....</p>
           )}
           <Cards foods={alimentosPaginados} />
         </div>
